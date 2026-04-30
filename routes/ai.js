@@ -10,10 +10,18 @@ const express = require('express');
 const multer  = require('multer');
 
 const { complete, completeJson } = require('../lib/anthropic');
-const storage  = require('../lib/storage');
+const storage   = require('../lib/storage');
 const extractor = require('../lib/extract');
+const authRoute = require('./auth');
+const requireAuth = authRoute.requireAuth;
 
 const router = express.Router();
+
+// ALL AI routes require an authenticated user
+router.use(requireAuth);
+
+// Helper — pull the right API key for this request (user's first, env fallback)
+const userKey = (req) => (req.user && req.user.api_key) ? req.user.api_key : (process.env.ANTHROPIC_API_KEY || '');
 
 // 25MB cap covers most RFPs comfortably
 const upload = multer({
@@ -67,6 +75,7 @@ router.post('/chat', async (req, res, next) => {
     ].filter(Boolean).join('\n');
 
     const { text } = await complete({
+      apiKey: userKey(req),
       system,
       messages: [{ role: 'user', content: message }],
       maxTokens: 1500,
@@ -130,6 +139,7 @@ router.post('/generate', async (req, res, next) => {
     ].filter(Boolean).join('\n');
 
     const { text } = await complete({
+      apiKey: userKey(req),
       system,
       messages: [{ role: 'user', content: userContent }],
       maxTokens: 6000,
@@ -160,6 +170,7 @@ router.post('/improve', async (req, res, next) => {
     if (!text || text.length < 10) return res.status(400).json({ error: 'text required' });
 
     const { text: out } = await complete({
+      apiKey: userKey(req),
       system: 'You are a senior bid editor. You rewrite text per the user\'s instruction without losing factual content. Output ONLY the rewritten text — no preamble, no markdown fences.',
       messages: [{ role: 'user', content: `INSTRUCTION:\n${instruction}\n\nTEXT:\n${text}` }],
       maxTokens: 4000,
@@ -224,6 +235,7 @@ router.post('/analyze-rfp', upload.single('rfpDoc'), async (req, res, next) => {
     ].join('\n');
 
     const { data: brief } = await completeJson({
+      apiKey: userKey(req),
       system,
       messages: [{ role: 'user', content: `RFP TEXT (${ext.kind}, ${ext.pages} pages, ${ext.words} words):\n\n${ext.text.slice(0, 30000)}` }],
       maxTokens: 4000,
@@ -279,6 +291,7 @@ router.post('/estimate-effort', upload.single('rfpDoc'), async (req, res, next) 
     ].join('\n');
 
     const { data } = await completeJson({
+      apiKey: userKey(req),
       system,
       messages: [{ role: 'user', content:
         `DEPLOYMENT: ${deploymentType}\nMONTHS: ${months}\nSCOPE: ${projectScope}\n\nRFP TEXT:\n${rfpText.slice(0, 20000)}` }],

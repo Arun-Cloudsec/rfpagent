@@ -7,11 +7,17 @@
 
 const express = require('express');
 const router = express.Router();
+const authRoute = require('./auth');
+const requireAuth = authRoute.requireAuth;
+
+// All integration routes require auth
+router.use(requireAuth);
 
 const azureConfigured = () =>
   !!(process.env.AZURE_TENANT_ID && process.env.AZURE_CLIENT_ID && process.env.AZURE_CLIENT_SECRET);
 
-const elevenConfigured = () => !!process.env.ELEVENLABS_API_KEY;
+// Per-request ElevenLabs key — user's first, env fallback
+const elevenKey = (req) => (req.user && req.user.eleven_labs_key) ? req.user.eleven_labs_key : (process.env.ELEVENLABS_API_KEY || '');
 
 // ── Azure: connection test ─────────────────────────────────────────────────
 router.get('/azure/test', async (_req, res) => {
@@ -76,11 +82,10 @@ router.post('/azure/billing/recommend', (_req, res) => {
 
 // ── ElevenLabs: text-to-speech ─────────────────────────────────────────────
 router.get('/elevenlabs/test', async (_req, res) => {
-  if (!elevenConfigured()) {
-    return res.status(503).json({ error: 'ElevenLabs not configured. Add ELEVENLABS_API_KEY in Railway → Variables.' });
-  }
+  const key = elevenKey(req);
+  if (!key) return res.status(503).json({ error: 'ElevenLabs not configured. Add your key in Settings → ElevenLabs Voice API Key, or set ELEVENLABS_API_KEY in Railway → Variables.' });
   try {
-    const r = await fetch('https://api.elevenlabs.io/v1/user', { headers: { 'xi-api-key': process.env.ELEVENLABS_API_KEY } });
+    const r = await fetch('https://api.elevenlabs.io/v1/user', { headers: { 'xi-api-key': key } });
     if (!r.ok) return res.status(r.status).json({ error: 'ElevenLabs returned ' + r.status });
     const data = await r.json();
     res.json({ success: true, subscription: data.subscription || null });
@@ -90,7 +95,8 @@ router.get('/elevenlabs/test', async (_req, res) => {
 });
 
 router.post('/elevenlabs/speak', async (req, res) => {
-  if (!elevenConfigured()) return res.status(503).json({ error: 'ElevenLabs not configured.' });
+  const key = elevenKey(req);
+  if (!key) return res.status(503).json({ error: 'ElevenLabs not configured.' });
   const { text, voice_id, language_code } = req.body || {};
   if (!text) return res.status(400).json({ error: 'text required' });
   const voice = voice_id || 'nPczCjzI2devNBz1zQrb';
@@ -98,7 +104,7 @@ router.post('/elevenlabs/speak', async (req, res) => {
     const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voice}`, {
       method: 'POST',
       headers: {
-        'xi-api-key': process.env.ELEVENLABS_API_KEY,
+        'xi-api-key': key,
         'Content-Type': 'application/json',
         'Accept': 'audio/mpeg',
       },

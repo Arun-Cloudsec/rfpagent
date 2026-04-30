@@ -11,7 +11,15 @@ const Anthropic = require('@anthropic-ai/sdk');
 const { complete, completeJson, DEFAULT_MODEL } = require('../lib/anthropic');
 const extractor = require('../lib/extract');
 
+const authRoute = require('./auth');
+const requireAuth = authRoute.requireAuth;
 const router = express.Router();
+
+// All routes in this file require auth
+router.use(requireAuth);
+
+// Pull the right API key for this request — user's saved key first, env fallback
+const userKey = (req) => (req.user && req.user.api_key) ? req.user.api_key : (process.env.ANTHROPIC_API_KEY || '');
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
 
 // ── /api/mp/ingest — server-side text extraction for any file type ─────────
@@ -40,6 +48,7 @@ router.post('/clarifications/ai-suggest', async (req, res, next) => {
     ].join('\n');
 
     const { data } = await completeJson({
+      apiKey: userKey(req),
       system,
       messages: [{ role: 'user', content:
         `EXISTING CLARIFICATIONS:\n${(existing || []).map(e => '- ' + (e.topic || e.question || '')).join('\n') || '(none)'}\n\nRFP TEXT:\n${rfpText.slice(0, 20000)}` }],
@@ -65,6 +74,7 @@ router.post('/outline/check-coverage', async (req, res, next) => {
     ].join('\n');
 
     const { data } = await completeJson({
+      apiKey: userKey(req),
       system,
       messages: [{ role: 'user', content:
         `RESPONSE OUTLINE:\n${(sections || []).map(s => `- ${s.num || ''} ${s.title || s.heading || ''}`).join('\n')}\n\nRFP TEXT:\n${rfpText.slice(0, 20000)}` }],
@@ -82,6 +92,7 @@ router.post('/section-edit', async (req, res, next) => {
     if (!instruction) return res.status(400).json({ error: 'instruction required' });
 
     const { text } = await complete({
+      apiKey: userKey(req),
       system: 'You are a senior bid writer. Apply the user\'s instruction to the section text. Keep RFP citations like [REQ-XXX], "Section X.Y", "Page N" intact and add new ones where appropriate. Output ONLY the rewritten section — no preamble.',
       messages: [{ role: 'user', content:
         `SECTION: ${sectionTitle}\nINSTRUCTION: ${instruction}\n\nCURRENT TEXT:\n${currentText}\n\nRFP CONTEXT (excerpt):\n${(rfpContext || '').slice(0, 6000)}` }],
@@ -99,6 +110,7 @@ router.post('/section-polish', async (req, res, next) => {
     if (!text) return res.status(400).json({ error: 'text required' });
 
     const { text: out } = await complete({
+      apiKey: userKey(req),
       system: 'You are an executive bid editor. Improve clarity, parallelism, and precision. Tighten verbose passages by 10–20%. Preserve all citations like [REQ-XXX], "Section X.Y", "Page N". Output ONLY the polished text.',
       messages: [{ role: 'user', content: text }],
       maxTokens: 3500,
@@ -124,6 +136,7 @@ router.post('/validate-draft', async (req, res, next) => {
     ].join('\n');
 
     const { data } = await completeJson({
+      apiKey: userKey(req),
       system,
       messages: [{ role: 'user', content: `DRAFT:\n${draft.slice(0, 15000)}\n\nRFP TEXT:\n${(rfpText || '').slice(0, 12000)}` }],
       maxTokens: 3500,
@@ -137,10 +150,12 @@ router.post('/validate-draft', async (req, res, next) => {
 router.post('/analyze-image', upload.single('image'), async (req, res, next) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'image required' });
-    if (!process.env.ANTHROPIC_API_KEY) {
-      const e = new Error('ANTHROPIC_API_KEY is not set'); e.status = 503; throw e;
+    const key = userKey(req);
+    if (!key) {
+      const e = new Error('No Anthropic API key configured. Add yours in Settings → Anthropic API Key.');
+      e.status = 503; throw e;
     }
-    const c = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const c = new Anthropic({ apiKey: key });
     const mediaType = req.file.mimetype || 'image/png';
     const base64    = req.file.buffer.toString('base64');
     const prompt    = req.body.prompt || 'Describe this image in detail. If it is an architecture diagram, list the components.';

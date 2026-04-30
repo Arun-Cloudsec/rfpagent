@@ -13,7 +13,15 @@ const multer  = require('multer');
 const { complete } = require('../lib/anthropic');
 const extractor    = require('../lib/extract');
 
+const authRoute = require('./auth');
+const requireAuth = authRoute.requireAuth;
 const router = express.Router();
+
+// All routes in this file require auth
+router.use(requireAuth);
+
+// Pull the right API key for this request — user's saved key first, env fallback
+const userKey = (req) => (req.user && req.user.api_key) ? req.user.api_key : (process.env.ANTHROPIC_API_KEY || '');
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
 
 // Build a minimal-but-valid .docx using the Word HTML wrapper trick. This
@@ -114,6 +122,7 @@ router.post('/fill-docx', upload.single('rfpDoc'), async (req, res, next) => {
     const industry = req.body.industry || '';
 
     const { text: md } = await complete({
+      apiKey: userKey(req),
       system: [
         'You are a senior RFP bid writer. Generate a complete vendor response in markdown.',
         'Sections: Executive Summary, Understanding of Requirements, Proposed Solution, Implementation Approach, Compliance Matrix (use a markdown table), Team & Experience, Risk Management, Pricing Approach, References, Why Us.',
