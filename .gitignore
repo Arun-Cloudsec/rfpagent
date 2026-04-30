@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# secrets — NEVER commit
+.env
+.env.*
+!.env.example
+
+# runtime data (file-backed JSON store — reset on redeploy anyway)
+data/*.json
+!data/.gitkeep
+
+# build artefacts
+dist/
+build/
+.cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# logs
+logs/
+*.log
+
+# local test bundles
+*.zip
