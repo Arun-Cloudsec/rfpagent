@@ -273,6 +273,87 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .bs-go-pill.conditional{background:rgba(251,191,36,0.15);color:#fcd34d;border:1px solid rgba(251,191,36,0.3)}
 .bs-footer-meta{font-size:10px;color:rgba(255,255,255,0.3);font-style:italic}
 
+/* ─── Full-width sections (Decision Rationale, Clarifications, Effort) ─── */
+.bs-fullsection{padding:18px 28px;border-top:1px solid #ECE7F4;background:#fff}
+.bs-fullsection:nth-of-type(odd){background:#FAF6FE}
+.bs-fullsec-head{margin-bottom:12px}
+.bs-fullsec-title{font-size:14px;font-weight:800;color:var(--navy);letter-spacing:-0.2px}
+.bs-fullsec-sub{font-size:11px;font-weight:600;color:var(--text3);margin-top:2px;letter-spacing:0.04em;text-transform:uppercase}
+
+/* Decision Rationale */
+.bs-rationale-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:900px){.bs-rationale-grid{grid-template-columns:1fr}}
+.bs-rat-row{display:flex;gap:10px;padding:10px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;border-left:3px solid #6D69F0;align-items:flex-start}
+.bs-rat-row:has(.bs-rat-verdict.met){border-left-color:#16a34a}
+.bs-rat-row:has(.bs-rat-verdict.gap){border-left-color:#dc2626}
+.bs-rat-row:has(.bs-rat-verdict.partial){border-left-color:#ea580c}
+.bs-rat-row:has(.bs-rat-verdict.unknown){border-left-color:#94a3b8}
+.bs-rat-verdict{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
+.bs-rat-verdict.met{background:#dcfce7;color:#15803d}
+.bs-rat-verdict.partial{background:#ffedd5;color:#c2410c}
+.bs-rat-verdict.gap{background:#fee2e2;color:#b91c1c}
+.bs-rat-verdict.unknown{background:#f1f5f9;color:#475569}
+.bs-rat-body{flex:1;min-width:0}
+.bs-rat-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.bs-rat-criterion{font-size:12.5px;font-weight:700;color:var(--navy);line-height:1.3}
+.bs-rat-weight{font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.bs-rat-weight.w-high{background:#fef3f2;color:#be123c;border:1px solid #fecdd3}
+.bs-rat-weight.w-medium{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.bs-rat-weight.w-low{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
+.bs-rat-rationale{font-size:11.5px;color:var(--text2);line-height:1.5}
+.bs-rat-empty{padding:14px;font-size:12px;color:var(--text3);font-style:italic;text-align:center;background:#fff;border-radius:8px;border:1px dashed #ECE7F4}
+
+/* Clarifications */
+.bs-clar-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:900px){.bs-clar-grid{grid-template-columns:1fr}}
+.bs-clar-row{display:flex;gap:10px;padding:11px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;align-items:flex-start}
+.bs-clar-kind{font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:99px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.bs-clar-kind.ambig{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.bs-clar-kind.contra{background:#fef3f2;color:#be123c;border:1px solid #fecdd3}
+.bs-clar-kind.gap{background:#fffbeb;color:#a16207;border:1px solid #fde68a}
+.bs-clar-kind.rule{background:#f3e8ff;color:#6b21a8;border:1px solid #e9d5ff}
+.bs-clar-body{flex:1;min-width:0}
+.bs-clar-q{font-size:12.5px;color:var(--navy);font-weight:600;line-height:1.5;margin-bottom:6px}
+.bs-clar-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bs-clar-where{font-size:10.5px;color:var(--violet);font-weight:600;background:rgba(109,105,240,0.08);padding:2px 8px;border-radius:99px;border:1px solid rgba(109,105,240,0.18)}
+.bs-clar-impact{font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px;letter-spacing:1px;text-transform:uppercase}
+.bs-clar-impact.i-high{background:#fee2e2;color:#b91c1c}
+.bs-clar-impact.i-medium{background:#fef3c7;color:#92400e}
+.bs-clar-impact.i-low{background:#f1f5f9;color:#475569}
+
+/* Effort & Skills */
+.bs-team-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:14px}
+.bs-team-tile{padding:12px;background:linear-gradient(135deg,#fff,#FAF6FE);border:1px solid rgba(110,105,240,0.18);border-radius:8px;border-top:3px solid #6D69F0;text-align:center}
+.bs-team-tile:nth-child(odd){border-top-color:#F28D64}
+.bs-team-tile:nth-child(3n){border-top-color:#9E9AE8}
+.bs-team-name{font-size:10.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px}
+.bs-team-days{font-size:22px;font-weight:800;color:var(--navy);line-height:1;background:linear-gradient(90deg,#F28D64,#6D69F0);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.bs-team-days-l{font-size:9.5px;color:var(--text3);margin-top:3px;letter-spacing:0.05em}
+.bs-team-fte{font-size:10px;color:var(--violet);margin-top:6px;font-weight:600}
+.bs-crit-skills{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:10px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;margin-bottom:14px}
+.bs-crit-skills-l{font-size:10.5px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-right:4px}
+.bs-skill-pill{display:inline-block;font-size:10.5px;padding:3px 9px;border-radius:99px;background:rgba(110,105,240,0.07);border:1px solid rgba(110,105,240,0.18);color:var(--violet);font-weight:600}
+.bs-skill-pill.crit{background:linear-gradient(90deg,rgba(242,141,100,0.1),rgba(110,105,240,0.1));border-color:rgba(242,141,100,0.35);color:#9a3412}
+.bs-phases{display:flex;flex-direction:column;gap:8px}
+.bs-phase-row{padding:10px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;border-left:3px solid #6D69F0}
+.bs-phase-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.bs-phase-name{font-size:12.5px;font-weight:700;color:var(--navy)}
+.bs-phase-meta{font-size:10.5px;color:var(--violet);font-weight:600;background:rgba(109,105,240,0.08);padding:2px 9px;border-radius:99px}
+.bs-phase-teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.bs-phase-team{padding:8px 10px;background:#FAF6FE;border-radius:6px;border:1px solid #ECE7F4}
+.bs-phase-team-head{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:5px;flex-wrap:wrap}
+.bs-team-chip{font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;letter-spacing:0.05em;text-transform:uppercase}
+.bs-team-chip.team-infrastructure{background:#dbeafe;color:#1e40af}
+.bs-team-chip.team-devops{background:#dcfce7;color:#166534}
+.bs-team-chip.team-application{background:#fef3c7;color:#a16207}
+.bs-team-chip.team-aidata,.bs-team-chip.team-ai{background:#ede9fe;color:#6b21a8}
+.bs-team-chip.team-security{background:#fee2e2;color:#b91c1c}
+.bs-team-chip.team-pmo{background:#f1f5f9;color:#475569}
+.bs-team-chip.team-qa{background:#fce7f3;color:#9d174d}
+.bs-phase-team-meta{font-size:10px;color:var(--text3);font-weight:600}
+.bs-skills{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.bs-skills .bs-skill-pill{font-size:9.5px;padding:2px 7px}
+
 .brief-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .lang-selector{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
 .lang-btn{border:1.5px solid var(--border);background:white;border-radius:7px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);transition:all 0.15s;white-space:nowrap}
@@ -425,10 +506,43 @@ textarea.improve-input::placeholder{color:var(--text3)}
 .chat-msg-act:hover{border-color:var(--violet);color:var(--violet);background:var(--blue-light)}
 .chat-msg-act.copied{border-color:var(--green);color:var(--green);background:var(--green-bg)}
 /* Source/citation pills inside AI replies */
-.chat-cite{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:99px;border:1px solid;margin:0 2px;vertical-align:baseline;line-height:1.4;white-space:nowrap}
+.chat-cite{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:99px;border:1px solid;margin:0 2px;vertical-align:baseline;line-height:1.4;white-space:nowrap;cursor:pointer;user-select:none;transition:transform .12s ease,box-shadow .12s ease,filter .12s ease;text-decoration:none}
+.chat-cite:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.08);filter:brightness(0.97)}
+.chat-cite:active{transform:translateY(0);filter:brightness(0.93)}
 .chat-cite.req{background:#fef3f2;border-color:#fecdd3;color:#be123c}
 .chat-cite.sec{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
 .chat-cite.pg{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
+.chat-cite.pri{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
+/* ── Source Panel (slide-out drawer for RFP source jumping) ─────────────── */
+.src-panel{position:fixed;top:0;right:-680px;width:660px;max-width:96vw;height:100vh;background:#fff;box-shadow:-6px 0 28px rgba(15,12,46,0.18);z-index:9998;display:flex;flex-direction:column;transition:right .28s cubic-bezier(.4,0,.2,1);font-family:'DM Sans',Arial,sans-serif}
+.src-panel.open{right:0}
+.src-panel-backdrop{position:fixed;inset:0;background:rgba(15,12,46,0.32);z-index:9997;opacity:0;pointer-events:none;transition:opacity .28s}
+.src-panel-backdrop.open{opacity:1;pointer-events:auto}
+.src-panel-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid #ECE7F4;background:linear-gradient(135deg,#0F0C2E,#272160);color:#fff}
+.src-panel-icon{width:30px;height:30px;border-radius:8px;background:rgba(110,105,240,0.25);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.src-panel-title{flex:1;min-width:0}
+.src-panel-title-l{font-size:10px;font-weight:700;color:#9E9AE8;letter-spacing:1.5px;text-transform:uppercase;line-height:1.1}
+.src-panel-title-v{font-size:14px;font-weight:700;color:#fff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.src-panel-close{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.src-panel-close:hover{background:rgba(255,255,255,0.2)}
+.src-panel-tabs{display:flex;gap:0;padding:0 18px;border-bottom:1px solid #ECE7F4;background:#FAF6FE}
+.src-panel-tab{flex:1;padding:11px 4px;background:none;border:none;font-family:inherit;font-size:12px;font-weight:600;color:#8C84B0;cursor:pointer;border-bottom:2.5px solid transparent;transition:all .15s}
+.src-panel-tab.active{color:#272160;border-bottom-color:#6D69F0}
+.src-panel-tab:hover:not(.active){color:#272160}
+.src-panel-body{flex:1;overflow:auto;background:#fff;position:relative}
+.src-panel-pdf-frame{width:100%;height:100%;border:0;background:#525659}
+.src-panel-text{padding:18px 22px;font-size:13.5px;line-height:1.7;color:#2A2640;white-space:pre-wrap;word-break:break-word;font-family:'DM Sans',Arial,sans-serif}
+.src-panel-text .page-marker{display:flex;align-items:center;gap:8px;margin:18px 0 10px;padding:6px 10px;background:linear-gradient(90deg,rgba(110,105,240,0.08),transparent);border-left:3px solid #6D69F0;font-size:11px;font-weight:700;color:#6D69F0;letter-spacing:1.2px;text-transform:uppercase}
+.src-panel-text .src-hl{background:linear-gradient(120deg,#FEF08A 0%,#FCD34D 100%);padding:1px 4px;border-radius:3px;font-weight:600;color:#0F0C2E;box-shadow:0 0 0 2px rgba(252,211,77,0.4);animation:srcPulse 1.4s ease-out 1}
+@keyframes srcPulse{0%{box-shadow:0 0 0 0 rgba(252,211,77,0.7)}70%{box-shadow:0 0 0 14px rgba(252,211,77,0)}100%{box-shadow:0 0 0 0 rgba(252,211,77,0)}}
+.src-panel-empty{padding:40px 22px;text-align:center;color:#8C84B0;font-size:13px}
+.src-panel-empty-icon{font-size:42px;margin-bottom:10px;opacity:0.5}
+.src-panel-foot{padding:10px 18px;border-top:1px solid #ECE7F4;background:#FAF6FE;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:#8C84B0}
+.src-panel-foot a{color:#6D69F0;font-weight:600;text-decoration:none}
+.src-panel-foot a:hover{text-decoration:underline}
+/* Pulse highlight for requirement card jumps */
+.req-pulse{animation:reqPulse 1.6s ease-out 1;border-radius:8px}
+@keyframes reqPulse{0%{box-shadow:0 0 0 0 rgba(109,105,240,0.55)}60%{box-shadow:0 0 0 18px rgba(109,105,240,0)}100%{box-shadow:0 0 0 0 rgba(109,105,240,0)}}
 .chat-action-card{background:white;border:1.5px solid var(--orange);border-radius:8px;padding:10px 12px;margin-top:4px;font-size:11.5px}
 .chat-action-title{font-weight:700;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .chat-action-desc{color:var(--text2);margin-bottom:8px;line-height:1.5}
@@ -2745,6 +2859,30 @@ textarea.improve-input::placeholder{color:var(--text3)}
 </div>
 <div class="toasts" id="toasts"></div>
 
+<!-- Source Panel — opens when a citation pill is clicked -->
+<div class="src-panel-backdrop" id="src-panel-backdrop" onclick="closeSrcPanel()"></div>
+<div class="src-panel" id="src-panel" role="dialog" aria-modal="true" aria-labelledby="src-panel-title-v">
+  <div class="src-panel-head">
+    <div class="src-panel-icon" id="src-panel-icon">📄</div>
+    <div class="src-panel-title">
+      <div class="src-panel-title-l" id="src-panel-title-l">SOURCE</div>
+      <div class="src-panel-title-v" id="src-panel-title-v">RFP Document</div>
+    </div>
+    <button class="src-panel-close" onclick="closeSrcPanel()" title="Close (Esc)">✕</button>
+  </div>
+  <div class="src-panel-tabs" id="src-panel-tabs" style="display:none">
+    <button class="src-panel-tab active" id="src-panel-tab-pdf"  onclick="switchSrcPanelTab('pdf')">📕 Original document</button>
+    <button class="src-panel-tab"        id="src-panel-tab-text" onclick="switchSrcPanelTab('text')">📝 Extracted text</button>
+  </div>
+  <div class="src-panel-body" id="src-panel-body">
+    <div class="src-panel-empty"><div class="src-panel-empty-icon">📭</div>No document loaded.</div>
+  </div>
+  <div class="src-panel-foot">
+    <span id="src-panel-foot-info">—</span>
+    <a href="#" id="src-panel-foot-action" onclick="return false">—</a>
+  </div>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function esc(str){return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');}
 
@@ -2911,7 +3049,7 @@ async function handleHistFiles(input){
 }
 
 // ── Lazy library loader ───────────────────────────────────────────────────────
-const LIB_FALLBACKS={'/libs/mammoth.min.js':'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js','/libs/xlsx.min.js':'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js','/libs/pdf.min.js':'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','/libs/pdf.worker.min.js':'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'};
+const LIB_FALLBACKS={'/libs/mammoth.min.js':'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js','/libs/xlsx.min.js':'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js','/libs/pdf.min.js':'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','/libs/pdf.worker.min.js':'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js','/libs/pptxgen.bundle.min.js':'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js'};
 function loadScript(src){
   return new Promise((res,rej)=>{
     if(document.querySelector('script[src="'+src+'"]')){res();return;}
@@ -3841,6 +3979,94 @@ function renderBriefSlide(b) {
   const sentences   = summaryFull.split(/(?<=[.!?])\s+/);
   const summaryShort = sentences.slice(0,2).join(' ');
 
+  // ── Decision Rationale (NEW) — GO/NO-GO criteria with verdicts & citations
+  const goCriteria = Array.isArray(b.go_nogo_criteria) ? b.go_nogo_criteria : [];
+  const verdictMeta = {
+    MET:     { cls:'met',     icon:'✓', label:'MET' },
+    PARTIAL: { cls:'partial', icon:'◐', label:'PARTIAL' },
+    GAP:     { cls:'gap',     icon:'✗', label:'GAP' },
+    UNKNOWN: { cls:'unknown', icon:'?', label:'UNKNOWN' },
+  };
+  const rationaleHtml = goCriteria.length ? goCriteria.map(c => {
+    const v  = (c.verdict||'UNKNOWN').toUpperCase();
+    const vm = verdictMeta[v] || verdictMeta.UNKNOWN;
+    const wt = (c.weight||'MEDIUM').toUpperCase();
+    return `<div class="bs-rat-row">
+      <span class="bs-rat-verdict ${vm.cls}" title="${vm.label}">${vm.icon}</span>
+      <div class="bs-rat-body">
+        <div class="bs-rat-head">
+          <span class="bs-rat-criterion">${esc(c.criterion||'')}</span>
+          <span class="bs-rat-weight w-${wt.toLowerCase()}">${esc(wt)} IMPACT</span>
+        </div>
+        <div class="bs-rat-rationale">${esc(c.rationale||'—')}</div>
+      </div>
+    </div>`;
+  }).join('') : `<div class="bs-rat-empty">${esc(b.go_nogo_reason || 'No detailed criteria captured. Re-run the analysis to populate the decision rationale.')}</div>`;
+
+  // ── Clarifications (NEW) — ambiguities / contradictions / gaps
+  const clars = Array.isArray(b.clarifications) ? b.clarifications : [];
+  const kindMeta = {
+    AMBIGUITY:     { cls:'ambig', icon:'❓', label:'Ambiguity' },
+    CONTRADICTION: { cls:'contra', icon:'⚠️', label:'Contradiction' },
+    GAP:           { cls:'gap',   icon:'🔍', label:'Information Gap' },
+    RULE:          { cls:'rule',  icon:'📜', label:'Rule Confirmation' },
+  };
+  const clarHtml = clars.length ? clars.map(c => {
+    const k  = (c.kind||'AMBIGUITY').toUpperCase();
+    const km = kindMeta[k] || kindMeta.AMBIGUITY;
+    const im = (c.impact||'MEDIUM').toUpperCase();
+    return `<div class="bs-clar-row">
+      <span class="bs-clar-kind ${km.cls}">${km.icon} ${km.label}</span>
+      <div class="bs-clar-body">
+        <div class="bs-clar-q">${esc(c.question||'—')}</div>
+        <div class="bs-clar-foot">
+          ${c.where ? `<span class="bs-clar-where">${esc(c.where)}</span>` : ''}
+          <span class="bs-clar-impact i-${im.toLowerCase()}">${esc(im)} IMPACT</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('') : '<div class="bs-rat-empty">No clarification items extracted.</div>';
+
+  // ── Effort & Skills (NEW) — phases × teams matrix
+  const eb = b.effort_breakdown || {};
+  const phases = Array.isArray(eb.phases) ? eb.phases : [];
+  const teamSummary = Array.isArray(eb.team_summary) ? eb.team_summary : [];
+  const critSkills = Array.isArray(eb.critical_skills) ? eb.critical_skills : [];
+  const totalDays = eb.total_person_days || phases.reduce((s,p)=>s+(p.teams||[]).reduce((t,x)=>t+(x.person_days||0),0),0);
+
+  // Team summary tiles
+  const teamTilesHtml = teamSummary.length ? teamSummary.map(t =>
+    `<div class="bs-team-tile">
+      <div class="bs-team-name">${esc(t.team||'')}</div>
+      <div class="bs-team-days">${esc(String(t.total_person_days||'—'))}</div>
+      <div class="bs-team-days-l">person-days</div>
+      ${t.fte_peak ? `<div class="bs-team-fte">peak FTE: ${esc(String(t.fte_peak))}</div>` : ''}
+    </div>`
+  ).join('') : '<div class="bs-rat-empty" style="grid-column:1/-1">No team summary extracted.</div>';
+
+  // Phases — compact stacked bars
+  const phaseRowsHtml = phases.length ? phases.map(ph => {
+    const teams = Array.isArray(ph.teams) ? ph.teams : [];
+    const phasePD = teams.reduce((s,t)=>s+(t.person_days||0), 0);
+    const teamsHtml = teams.map(t => {
+      const skills = Array.isArray(t.skills) ? t.skills.slice(0,5) : [];
+      return `<div class="bs-phase-team">
+        <div class="bs-phase-team-head">
+          <span class="bs-team-chip team-${(t.team||'').toLowerCase().replace(/[^a-z]/g,'')}">${esc(t.team||'')}</span>
+          <span class="bs-phase-team-meta">${esc(String(t.fte_count||'—'))} FTE · ${esc(String(t.person_days||'—'))} pd</span>
+        </div>
+        ${skills.length ? `<div class="bs-skills">${skills.map(s=>`<span class="bs-skill-pill">${esc(s)}</span>`).join('')}</div>` : ''}
+      </div>`;
+    }).join('') || '<div class="bs-rat-empty">No team breakdown</div>';
+    return `<div class="bs-phase-row">
+      <div class="bs-phase-head">
+        <span class="bs-phase-name">${esc(ph.phase||'')}</span>
+        <span class="bs-phase-meta">${esc(String(ph.duration_weeks||'—'))} wks · ${phasePD} pd</span>
+      </div>
+      <div class="bs-phase-teams">${teamsHtml}</div>
+    </div>`;
+  }).join('') : '<div class="bs-rat-empty">No phase breakdown extracted.</div>';
+
   document.getElementById('brief-slide').innerHTML = `
   <div class="bs-header" ${isRTL ? 'dir="rtl" style="text-align:right"' : ''}>
     <div class="bs-header-top">
@@ -3895,6 +4121,39 @@ function renderBriefSlide(b) {
       </div>
     </div>
   </div>
+
+  <!-- Decision Rationale (full width) — why GO / NO-GO with citations -->
+  <div class="bs-fullsection">
+    <div class="bs-fullsec-head">
+      <div class="bs-fullsec-title">⚖️ Decision Rationale</div>
+      <div class="bs-fullsec-sub">Criteria evaluated · ${goCriteria.length || 0} factors · ${esc(b.go_nogo||'GO')}</div>
+    </div>
+    <div class="bs-rationale-grid">${rationaleHtml}</div>
+  </div>
+
+  <!-- Clarifications & Open Questions -->
+  <div class="bs-fullsection">
+    <div class="bs-fullsec-head">
+      <div class="bs-fullsec-title">❓ Clarifications &amp; Open Questions</div>
+      <div class="bs-fullsec-sub">Ambiguities, contradictions, and gaps to raise with the issuer · ${clars.length} item${clars.length===1?'':'s'}</div>
+    </div>
+    <div class="bs-clar-grid">${clarHtml}</div>
+  </div>
+
+  <!-- Effort & Skills Breakdown -->
+  <div class="bs-fullsection">
+    <div class="bs-fullsec-head">
+      <div class="bs-fullsec-title">📊 Effort &amp; Skills — End-to-End Delivery</div>
+      <div class="bs-fullsec-sub">Total estimate: <strong>${totalDays || '—'} person-days</strong>${critSkills.length ? ' · '+critSkills.length+' critical skills' : ''}</div>
+    </div>
+    <div class="bs-team-tiles">${teamTilesHtml}</div>
+    ${critSkills.length ? `<div class="bs-crit-skills">
+      <span class="bs-crit-skills-l">Critical skills:</span>
+      ${critSkills.slice(0,12).map(s=>`<span class="bs-skill-pill crit">${esc(s)}</span>`).join('')}
+    </div>` : ''}
+    <div class="bs-phases">${phaseRowsHtml}</div>
+  </div>
+
   <div class="bs-footer">
     <div class="bs-win-bar">
       <span class="bs-win-label">Win Probability</span>
@@ -3916,6 +4175,55 @@ function renderBriefSlide(b) {
       setTimeout(() => { bar.style.width = bar.style.width; }, i * 80);
     });
   }, 400);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// PptxGenJS loader — pulls the lib from a CDN at first use
+// ────────────────────────────────────────────────────────────────────────────
+async function ensurePptxGen(){
+  if (typeof window.PptxGenJS !== 'undefined') return window.PptxGenJS;
+  // Local first (bundled in /public/libs), fallback to CDNs
+  const sources = [
+    '/libs/pptxgen.bundle.min.js',
+    'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.min.js',
+  ];
+  let lastErr = null;
+  for (const src of sources) {
+    try {
+      await loadScript(src);
+      if (typeof window.PptxGenJS !== 'undefined') return window.PptxGenJS;
+      lastErr = new Error('Loaded ' + src + ' but PptxGenJS global is still undefined');
+    } catch (e) {
+      console.warn('[ensurePptxGen] failed', src, e);
+      lastErr = e;
+    }
+  }
+  throw new Error('Could not load PptxGenJS. ' + (lastErr && lastErr.message ? lastErr.message : 'All sources failed.') + ' Check browser console + network tab.');
+}
+
+// Copy the executive brief as styled HTML to the clipboard
+function copyBriefHTML(){
+  const node = document.getElementById('brief-render');
+  if (!node) { toast('Brief not rendered yet', 'error'); return; }
+  const html = node.outerHTML;
+  if (navigator.clipboard && navigator.clipboard.write) {
+    const blobHtml = new Blob([html], { type: 'text/html' });
+    const blobText = new Blob([node.innerText || node.textContent || ''], { type: 'text/plain' });
+    navigator.clipboard.write([new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })])
+      .then(() => toast('✓ Slide HTML copied', 'success'))
+      .catch(() => fallbackCopy(html));
+  } else {
+    fallbackCopy(html);
+  }
+  function fallbackCopy(s){
+    const ta = document.createElement('textarea');
+    ta.value = s; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('✓ Slide HTML copied', 'success'); }
+    catch(_) { toast('Copy failed — select & copy manually', 'error'); }
+    document.body.removeChild(ta);
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -4146,7 +4454,10 @@ body{padding:0;margin:0}
 }
 
 .brief-body{
-  flex:1;padding:0 14mm 8mm;display:flex;flex-direction:column;min-height:0;
+  padding:0 14mm 8mm;
+  /* Block flow — sections stack naturally and the footer always sits AFTER
+     the content. Previously this was flex with flex:1 cols, but inline-block
+     children overflowed the flex height and drew over the dark footer. */
 }
 
 .brief-title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:14mm;margin-bottom:4mm}
@@ -4186,7 +4497,7 @@ body{padding:0;margin:0}
 .kpi.accent .kpi-v{background:linear-gradient(90deg,#F28D64,#6D69F0);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 
 /* 3-column body — inline-block for cross-engine print support */
-.cols{font-size:0;letter-spacing:0;flex:1;min-height:0}
+.cols{font-size:0;letter-spacing:0;margin-bottom:3mm}
 .col{
   display:inline-block;width:32.4%;margin-right:1.2%;vertical-align:top;
   background:#fff;border:1px solid #ECE7F4;border-radius:7px;
@@ -6743,6 +7054,12 @@ function injectChatCitations(bubble){
     {re:/\bSection\s+(\d+(?:\.\d+)*[A-Za-z]?)\b/g,  cls:'sec', icon:'§'},
     {re:/\bPage\s+(\d+)\b/g,                       cls:'pg',  icon:'📄'},
     {re:/\bp\.\s*(\d+)\b/g,                        cls:'pg',  icon:'📄'},
+    // Priority levels — P1 / P2 / P3 / P4 followed by a context word like
+    // "incident", "priority", "severity", "level". Click → search the source
+    // for the term so the user can see the full definition in context.
+    {re:/\b(P[1-4])\s+(?=incident|priority|severity|level|ticket|case|issue|alert)/gi, cls:'pri', icon:'🔥'},
+    {re:/\bpriority\s+(P[1-4])\b/gi,                                                    cls:'pri', icon:'🔥'},
+    {re:/\bseverity\s+(\d)\b/gi,                                                        cls:'pri', icon:'🔥'},
   ];
   targets.forEach(node=>{
     let text = node.textContent;
@@ -6767,11 +7084,19 @@ function injectChatCitations(bubble){
     let cursor = 0;
     filtered.forEach(m=>{
       if(m.start > cursor) frag.appendChild(document.createTextNode(text.slice(cursor, m.start)));
-      const span = document.createElement('span');
-      span.className = 'chat-cite ' + m.cls;
-      span.textContent = m.icon + ' ' + (m.cls==='req' ? m.val.toUpperCase() : (m.cls==='sec' ? '§ '+m.val : 'p.'+m.val));
-      span.title = m.raw;
-      frag.appendChild(span);
+      // Pills are now <button>s — clickable, accessible, keyboard-friendly
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'chat-cite ' + m.cls;
+      btn.textContent = m.icon + ' ' + (m.cls==='req' ? m.val.toUpperCase() : (m.cls==='sec' ? '§ '+m.val : m.cls==='pg' ? 'p.'+m.val : m.val.toUpperCase()));
+      btn.title = 'Open source · ' + m.raw;
+      btn.dataset.citeKind  = m.cls;
+      btn.dataset.citeValue = m.val;
+      btn.addEventListener('click', (ev) => {
+        ev.preventDefault(); ev.stopPropagation();
+        openCitation(m.cls, m.val);
+      });
+      frag.appendChild(btn);
       cursor = m.end;
       modified = true;
     });
@@ -6779,6 +7104,258 @@ function injectChatCitations(bubble){
     if(modified) node.parentNode.replaceChild(frag, node);
   });
 }
+
+// ════════════════════════════════════════════════════════════════════════════
+// Source Panel — opens when a citation pill is clicked
+// ────────────────────────────────────────────────────────────────────────────
+// Behaviour:
+//   • [REQ-001] → navigate to Briefing page, scroll to the requirement card,
+//                 pulse-highlight it (no panel needed).
+//   • Section X.Y → open panel on "Extracted text" tab, scroll to "Section X.Y"
+//                   in the extracted RFP text, highlight that line.
+//   • Page N    → if PDF: open panel with the original PDF in an iframe
+//                 (#page=N). DOCX/other: open "Extracted text" tab scrolled
+//                 to the [[PAGE n]] marker.
+// ════════════════════════════════════════════════════════════════════════════
+
+let _srcPanelPdfUrl = null;       // current blob URL (revoked when panel closes)
+let _srcPanelPdfPage = 1;
+let _srcPanelMode = 'text';        // 'pdf' | 'text'
+
+function openCitation(kind, value){
+  // [REQ-XXX] → jump to the requirement card on Briefing
+  if (kind === 'req') return jumpToRequirement(value);
+  // P1/P2/P3 priority reference → reuse the section-search code path
+  // but with the priority value as the search term.
+  // Open the slide-out panel for Section / Page / Priority citations
+  openSrcPanel(kind, value);
+}
+
+function jumpToRequirement(reqId){
+  reqId = String(reqId).toUpperCase().replace(/\s+/g,'-');
+  // 1) Switch to Briefing page if not already there
+  const briefingActive = document.getElementById('page-briefing') &&
+                         document.getElementById('page-briefing').classList.contains('active');
+  if (!briefingActive) { try { goPage('briefing'); } catch(_){} }
+  // 2) Find the requirement card. Cards in the brief are rendered with
+  //    data-req-id, but if the renderer didn't add one we fall back to a
+  //    text-content search.
+  setTimeout(() => {
+    let card = document.querySelector('[data-req-id="' + reqId + '"]');
+    if (!card) {
+      // Fallback — scan brief render for matching id text
+      const root = document.getElementById('brief-render');
+      if (root) {
+        const all = root.querySelectorAll('*');
+        for (const el of all) {
+          if (el.children.length === 0 && el.textContent && el.textContent.trim() === reqId) {
+            card = el.closest('.req-card,.brief-req,.card,.req-item,div'); break;
+          }
+        }
+      }
+    }
+    if (card) {
+      card.scrollIntoView({ behavior:'smooth', block:'center' });
+      card.classList.add('req-pulse');
+      setTimeout(()=>card.classList.remove('req-pulse'), 1700);
+      toast('Jumped to ' + reqId,'success');
+    } else {
+      // No brief loaded — fall back to opening the source panel
+      openSrcPanel('req', reqId);
+    }
+  }, 120);
+}
+
+function openSrcPanel(kind, value){
+  if (!S.rfpFile && !S.rfpText) {
+    toast('No RFP source available — upload a file first','error');
+    return;
+  }
+  const panel    = document.getElementById('src-panel');
+  const backdrop = document.getElementById('src-panel-backdrop');
+  const head_l   = document.getElementById('src-panel-title-l');
+  const head_v   = document.getElementById('src-panel-title-v');
+  const head_ic  = document.getElementById('src-panel-icon');
+  const tabs     = document.getElementById('src-panel-tabs');
+  const foot     = document.getElementById('src-panel-foot-info');
+  const footAct  = document.getElementById('src-panel-foot-action');
+
+  // Header text
+  if (kind === 'pg')  { head_ic.textContent = '📄'; head_l.textContent = 'PAGE REFERENCE'; head_v.textContent = 'Page ' + value; }
+  if (kind === 'sec') { head_ic.textContent = '§';  head_l.textContent = 'SECTION REFERENCE'; head_v.textContent = 'Section ' + value; }
+  if (kind === 'req') { head_ic.textContent = '📌'; head_l.textContent = 'REQUIREMENT'; head_v.textContent = String(value).toUpperCase(); }
+  if (kind === 'pri') { head_ic.textContent = '🔥'; head_l.textContent = 'PRIORITY LEVEL'; head_v.textContent = String(value).toUpperCase(); }
+
+  // Footer
+  foot.textContent = (S.rfpFileName || 'RFP source');
+  footAct.style.display = 'none';
+
+  // Decide which mode (PDF iframe vs extracted text) is available
+  const hasPdf = !!(S.rfpFile && /\.pdf$/i.test(S.rfpFile.name||''));
+  if (hasPdf) {
+    tabs.style.display = 'flex';
+    document.getElementById('src-panel-tab-pdf').style.display  = 'block';
+    document.getElementById('src-panel-tab-text').style.display = 'block';
+    // For Page citations on PDFs: prefer the PDF tab; for Section: prefer text
+    _srcPanelMode = (kind === 'pg') ? 'pdf' : 'text';
+  } else {
+    tabs.style.display = 'none';
+    _srcPanelMode = 'text';
+  }
+
+  // Open the drawer first so the user sees motion immediately
+  panel.classList.add('open');
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Render the body
+  renderSrcPanelBody(kind, value);
+}
+
+function switchSrcPanelTab(mode){
+  _srcPanelMode = mode;
+  document.getElementById('src-panel-tab-pdf').classList.toggle('active', mode==='pdf');
+  document.getElementById('src-panel-tab-text').classList.toggle('active', mode==='text');
+  // Pull the kind+value back from the title for re-render
+  const v = (document.getElementById('src-panel-title-v').textContent || '').trim();
+  let kind = 'pg', val = '';
+  if (v.startsWith('Page '))    { kind = 'pg';  val = v.slice(5); }
+  else if (v.startsWith('Section ')) { kind = 'sec'; val = v.slice(8); }
+  else if (v.startsWith('REQ-'))     { kind = 'req'; val = v; }
+  renderSrcPanelBody(kind, val);
+}
+
+function renderSrcPanelBody(kind, value){
+  const body = document.getElementById('src-panel-body');
+  const foot = document.getElementById('src-panel-foot-info');
+  const footAct = document.getElementById('src-panel-foot-action');
+
+  // ── PDF mode — iframe the original ────────────────────────────────────
+  if (_srcPanelMode === 'pdf' && S.rfpFile) {
+    if (!_srcPanelPdfUrl) _srcPanelPdfUrl = URL.createObjectURL(S.rfpFile);
+    const page = (kind === 'pg') ? Math.max(1, parseInt(value,10) || 1) : 1;
+    _srcPanelPdfPage = page;
+    // PDF.js / browser default viewer respects #page=N
+    const url = _srcPanelPdfUrl + '#page=' + page + '&view=FitH';
+    body.innerHTML = '<iframe class="src-panel-pdf-frame" src="'+ url +'"></iframe>';
+    foot.textContent = (S.rfpFileName || 'PDF') + ' · Page ' + page;
+    footAct.style.display = 'inline-block';
+    footAct.textContent   = 'Open in new tab ↗';
+    footAct.onclick = (e) => { e.preventDefault(); window.open(url, '_blank'); };
+    return;
+  }
+
+  // ── Extracted-text mode ───────────────────────────────────────────────
+  const raw = S.rfpText || '';
+  if (!raw) {
+    body.innerHTML = '<div class="src-panel-empty"><div class="src-panel-empty-icon">📭</div>No extracted text available.</div>';
+    return;
+  }
+  // Convert [[PAGE n]] markers into visible page dividers (and remember positions)
+  const pageStarts = []; // { page, charIdx in stripped text }
+  let html = '';
+  let lastIdx = 0;
+  const reMarker = /\[\[PAGE\s+(\d+)\]\]/gi;
+  let strippedLen = 0;
+  let m;
+  while ((m = reMarker.exec(raw)) !== null) {
+    const before = raw.slice(lastIdx, m.index);
+    html += escapeHtml(before);
+    strippedLen += before.length;
+    pageStarts.push({ page: parseInt(m[1],10), idx: strippedLen });
+    html += '<div class="page-marker" data-page="'+ m[1] +'">📄 Page ' + m[1] + '</div>';
+    lastIdx = m.index + m[0].length;
+  }
+  const tail = raw.slice(lastIdx);
+  html += escapeHtml(tail);
+  // If we never saw a marker, push a synthetic page-1 anchor at the top
+  if (!pageStarts.length) pageStarts.push({ page: 1, idx: 0 });
+
+  body.innerHTML = '<div class="src-panel-text" id="src-panel-text-inner">' + html + '</div>';
+  const inner = document.getElementById('src-panel-text-inner');
+
+  // Locate + highlight the right text
+  let target = null;
+  if (kind === 'pg') {
+    const want = parseInt(value, 10);
+    target = inner.querySelector('.page-marker[data-page="' + want + '"]');
+    foot.textContent = (S.rfpFileName || 'Extracted text') + ' · Page ' + want;
+  } else if (kind === 'sec') {
+    const sec = String(value).trim();
+    const re = new RegExp('Section\\s+' + sec.replace(/\./g, '\\.') + '(\\b|[:\\s])', 'i');
+    target = findFirstTextMatch(inner, re, sec, true);
+    foot.textContent = (S.rfpFileName || 'Extracted text') + ' · Section ' + sec;
+  } else if (kind === 'req') {
+    const reqId = String(value).toUpperCase().replace(/\s+/g,'-');
+    const re = new RegExp(reqId.replace('-','[-\\s]?'), 'i');
+    target = findFirstTextMatch(inner, re, reqId, true);
+    foot.textContent = (S.rfpFileName || 'Extracted text') + ' · ' + reqId;
+  } else if (kind === 'pri') {
+    // Priority ref — search for "P1"/"P2"/"P3"/"P4" or "Priority N" or "Severity N"
+    const pri = String(value).toUpperCase();
+    // Build a regex that matches the priority anywhere — most useful occurrence
+    // is usually the definition (e.g. "P1 incidents must be < 15 minutes")
+    const re = new RegExp('\\b' + pri + '\\b', 'i');
+    target = findFirstTextMatch(inner, re, pri, true);
+    foot.textContent = (S.rfpFileName || 'Extracted text') + ' · Priority ' + pri;
+  }
+
+  if (target) {
+    setTimeout(() => target.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
+  } else {
+    // Couldn't locate — just show the top with a notice
+    body.scrollTop = 0;
+    toast('Could not locate ' + (kind==='pg'?'page ':kind==='sec'?'Section ':'') + value + ' in extracted text','warning');
+  }
+  footAct.style.display = 'none';
+}
+
+// Helper — find first text match in a container, wrap it in <mark class="src-hl">
+function findFirstTextMatch(container, regex, label, wrap){
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
+  let n;
+  while ((n = walker.nextNode())) {
+    const t = n.textContent;
+    const m = regex.exec(t);
+    if (m) {
+      if (!wrap) return n.parentElement;
+      const before = t.slice(0, m.index);
+      const matched = t.slice(m.index, m.index + m[0].length);
+      const after = t.slice(m.index + m[0].length);
+      const span = document.createElement('span');
+      span.className = 'src-hl';
+      span.textContent = matched;
+      const frag = document.createDocumentFragment();
+      if (before) frag.appendChild(document.createTextNode(before));
+      frag.appendChild(span);
+      if (after)  frag.appendChild(document.createTextNode(after));
+      n.parentNode.replaceChild(frag, n);
+      return span;
+    }
+    // Reset regex lastIndex for next iteration
+    regex.lastIndex = 0;
+  }
+  return null;
+}
+
+function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function closeSrcPanel(){
+  document.getElementById('src-panel').classList.remove('open');
+  document.getElementById('src-panel-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+  // Revoke the blob URL after the close animation completes
+  setTimeout(() => {
+    if (_srcPanelPdfUrl) { try { URL.revokeObjectURL(_srcPanelPdfUrl); } catch(_){} _srcPanelPdfUrl = null; }
+  }, 400);
+}
+
+// Esc key closes the panel
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.getElementById('src-panel') && document.getElementById('src-panel').classList.contains('open')) {
+    closeSrcPanel();
+  }
+});
 
 function updateChatContext(){
   const page = getCurrentPage();
@@ -6854,10 +7431,11 @@ function buildChatContext(){
     }
   } catch(e){ console.warn('reqmap build failed', e); }
 
-  // ── Snippet of raw RFP text with [[PAGE n]] markers preserved (first 4k) ──
+  // ── Snippet of raw RFP text with [[PAGE n]] markers preserved ──
   // Lets the AI ground statements in actual page numbers when [[PAGE n]] tags
   // are present in the extracted text (PDF/DOCX with our pagemap parser).
-  const rfpSnippet = (S.rfpText || '').substring(0, 4000);
+  // 16k chars (≈ 4k tokens) leaves plenty of room for the model's response.
+  const rfpSnippet = (S.rfpText || '').substring(0, 16000);
 
   // Citation directive sent alongside the user's question.
   const citationDirective =
