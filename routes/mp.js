@@ -38,11 +38,32 @@ router.post('/clarifications/ai-suggest', async (req, res, next) => {
     if (!rfpText) return res.status(400).json({ error: 'rfpText required' });
 
     const system = [
-      'You are a senior bid manager. Find ambiguities, missing info, and conflicts in this RFP that the vendor should clarify with the buyer BEFORE submitting.',
-      'Return STRICT JSON: an array of objects with these keys (all required):',
-      '{ "id": "AI-001", "topic": string, "question": string, "rfp_reference": string,',
-      '  "section": string, "page": number,',
-      '  "severity": "high"|"medium"|"low", "impacts": string[] }',
+      'You are a senior bid manager and contracts lawyer reviewing an RFP for issues a bidder must raise BEFORE submitting.',
+      '',
+      'Find FOUR types of items:',
+      '  1. AMBIGUITY     — vague language, undefined terms, missing thresholds (e.g. "reasonable response time", "industry-standard").',
+      '  2. CONTRADICTION — two parts of the RFP that conflict (e.g. NET 60 in §4.3 but NET 30 on the cover page).',
+      '  3. GAP           — information bidders must have to price/scope but the RFP omits (e.g. existing tech stack, data volumes, integration endpoints, ramp-up dates, headcount of in-scope departments).',
+      '  4. RULE          — a rule that needs official confirmation (e.g. confirming whether subcontractors count toward local content, whether cumulative SLA caps reset annually, whether VAT is included).',
+      '',
+      'BE SPECIFIC, NOT GENERIC. Bad: "What is the budget?" Good: "Section 2.3 estimates AED 9–14M but Annex B asks for fixed-fee implementation pricing — please confirm whether this estimate is the cap, the floor, or indicative only."',
+      '',
+      'Each item must:',
+      '  • Cite the EXACT location (Section X.Y or "cover page" + page number).',
+      '  • State WHY it matters (commercial impact, technical scope, compliance risk).',
+      '  • Be specific enough that the issuer can give a one-paragraph answer.',
+      '',
+      'Return STRICT JSON: an array of 6–15 objects with these keys (all required):',
+      '{ "id": "CLR-001",',
+      '  "kind": "AMBIGUITY"|"CONTRADICTION"|"GAP"|"RULE",',
+      '  "topic": string,                  // 3-6 word headline',
+      '  "question": string,               // the actual question to send the issuer',
+      '  "rfp_reference": string,          // verbatim quote from RFP, max 14 words',
+      '  "section": string,                // e.g. "4.2"',
+      '  "page": number,',
+      '  "severity": "high"|"medium"|"low",',
+      '  "impacts": string[]               // 1-3 areas affected: pricing, scope, schedule, compliance, risk',
+      '}',
       'Skip questions that match anything in EXISTING.',
       'Output ONLY the JSON array — no preamble, no markdown fences.',
     ].join('\n');
@@ -51,8 +72,8 @@ router.post('/clarifications/ai-suggest', async (req, res, next) => {
       apiKey: userKey(req),
       system,
       messages: [{ role: 'user', content:
-        `EXISTING CLARIFICATIONS:\n${(existing || []).map(e => '- ' + (e.topic || e.question || '')).join('\n') || '(none)'}\n\nRFP TEXT:\n${rfpText.slice(0, 20000)}` }],
-      maxTokens: 2500,
+        `EXISTING CLARIFICATIONS:\n${(existing || []).map(e => '- ' + (e.topic || e.question || '')).join('\n') || '(none)'}\n\nRFP TEXT (with [[PAGE n]] markers):\n${rfpText.slice(0, 24000)}` }],
+      maxTokens: 5000,
       temperature: 0.3,
     });
     res.json({ success: true, clarifications: Array.isArray(data) ? data : (data.clarifications || []) });
