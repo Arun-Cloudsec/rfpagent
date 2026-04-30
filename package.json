@@ -1,6 +1,6 @@
 {
   "name": "rfp-agent",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "private": true,
   "description": "RFP Agent \u2014 AI-powered RFP analysis & response generation with auth + branded exports. Backend for Railway deployment.",
   "main": "server.js",
