@@ -80,16 +80,46 @@ app.use('/api',          aiLimiter, fill);      // /fill-docx, /fill-pdf, /fill-
 app.use('/api',          integrations);         // /azure/*, /elevenlabs/*
 app.use('/api/mp',       aiLimiter, mp);        // /mp/* multi-agent endpoints
 
-// ── Static frontend (must come after /api so API routes win on collision) ──
+// ── Static assets (JS/CSS/images) — but NOT auto-serve index.html ──────────
+// We need to gate /app behind auth, so we disable the directory index and
+// expose only static files (fonts, etc.) here. The HTML pages are routed
+// explicitly below.
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
-  index: 'index.html',
+  index: false,
 }));
 
-// SPA-style catch-all: any non-/api GET serves index.html
+// ── Page routing ───────────────────────────────────────────────────────────
+const session = require('./lib/auth');
+const users   = require('./lib/users');
+
+function isLoggedIn(req) {
+  const s = session.readSession(req);
+  if (!s) return false;
+  return !!users.findById(s.userId);
+}
+
+// Root: signed in users go straight to the app, others see the auth page
+app.get('/', (req, res) => {
+  if (isLoggedIn(req)) return res.redirect('/app');
+  res.sendFile(path.join(__dirname, 'public', 'auth.html'));
+});
+
+// Explicit /auth → also the auth page (in case anything links to it)
+app.get('/auth', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'auth.html'));
+});
+
+// /app and any sub-path → the SPA, but only if signed in
+app.get(['/app', '/app/*'], (req, res) => {
+  if (!isLoggedIn(req)) return res.redirect('/');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// SPA-style catch-all for anything else (still goes to the auth gate)
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api/')) return next();
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.redirect(isLoggedIn(req) ? '/app' : '/');
 });
 
 // ── Centralised error handler ───────────────────────────────────────────────
