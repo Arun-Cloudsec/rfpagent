@@ -273,6 +273,87 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .bs-go-pill.conditional{background:rgba(251,191,36,0.15);color:#fcd34d;border:1px solid rgba(251,191,36,0.3)}
 .bs-footer-meta{font-size:10px;color:rgba(255,255,255,0.3);font-style:italic}
 
+/* ─── Full-width sections (Decision Rationale, Clarifications, Effort) ─── */
+.bs-fullsection{padding:18px 28px;border-top:1px solid #ECE7F4;background:#fff}
+.bs-fullsection:nth-of-type(odd){background:#FAF6FE}
+.bs-fullsec-head{margin-bottom:12px}
+.bs-fullsec-title{font-size:14px;font-weight:800;color:var(--navy);letter-spacing:-0.2px}
+.bs-fullsec-sub{font-size:11px;font-weight:600;color:var(--text3);margin-top:2px;letter-spacing:0.04em;text-transform:uppercase}
+
+/* Decision Rationale */
+.bs-rationale-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:900px){.bs-rationale-grid{grid-template-columns:1fr}}
+.bs-rat-row{display:flex;gap:10px;padding:10px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;border-left:3px solid #6D69F0;align-items:flex-start}
+.bs-rat-row:has(.bs-rat-verdict.met){border-left-color:#16a34a}
+.bs-rat-row:has(.bs-rat-verdict.gap){border-left-color:#dc2626}
+.bs-rat-row:has(.bs-rat-verdict.partial){border-left-color:#ea580c}
+.bs-rat-row:has(.bs-rat-verdict.unknown){border-left-color:#94a3b8}
+.bs-rat-verdict{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
+.bs-rat-verdict.met{background:#dcfce7;color:#15803d}
+.bs-rat-verdict.partial{background:#ffedd5;color:#c2410c}
+.bs-rat-verdict.gap{background:#fee2e2;color:#b91c1c}
+.bs-rat-verdict.unknown{background:#f1f5f9;color:#475569}
+.bs-rat-body{flex:1;min-width:0}
+.bs-rat-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.bs-rat-criterion{font-size:12.5px;font-weight:700;color:var(--navy);line-height:1.3}
+.bs-rat-weight{font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.bs-rat-weight.w-high{background:#fef3f2;color:#be123c;border:1px solid #fecdd3}
+.bs-rat-weight.w-medium{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.bs-rat-weight.w-low{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
+.bs-rat-rationale{font-size:11.5px;color:var(--text2);line-height:1.5}
+.bs-rat-empty{padding:14px;font-size:12px;color:var(--text3);font-style:italic;text-align:center;background:#fff;border-radius:8px;border:1px dashed #ECE7F4}
+
+/* Clarifications */
+.bs-clar-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:900px){.bs-clar-grid{grid-template-columns:1fr}}
+.bs-clar-row{display:flex;gap:10px;padding:11px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;align-items:flex-start}
+.bs-clar-kind{font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:99px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.bs-clar-kind.ambig{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.bs-clar-kind.contra{background:#fef3f2;color:#be123c;border:1px solid #fecdd3}
+.bs-clar-kind.gap{background:#fffbeb;color:#a16207;border:1px solid #fde68a}
+.bs-clar-kind.rule{background:#f3e8ff;color:#6b21a8;border:1px solid #e9d5ff}
+.bs-clar-body{flex:1;min-width:0}
+.bs-clar-q{font-size:12.5px;color:var(--navy);font-weight:600;line-height:1.5;margin-bottom:6px}
+.bs-clar-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bs-clar-where{font-size:10.5px;color:var(--violet);font-weight:600;background:rgba(109,105,240,0.08);padding:2px 8px;border-radius:99px;border:1px solid rgba(109,105,240,0.18)}
+.bs-clar-impact{font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px;letter-spacing:1px;text-transform:uppercase}
+.bs-clar-impact.i-high{background:#fee2e2;color:#b91c1c}
+.bs-clar-impact.i-medium{background:#fef3c7;color:#92400e}
+.bs-clar-impact.i-low{background:#f1f5f9;color:#475569}
+
+/* Effort & Skills */
+.bs-team-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:14px}
+.bs-team-tile{padding:12px;background:linear-gradient(135deg,#fff,#FAF6FE);border:1px solid rgba(110,105,240,0.18);border-radius:8px;border-top:3px solid #6D69F0;text-align:center}
+.bs-team-tile:nth-child(odd){border-top-color:#F28D64}
+.bs-team-tile:nth-child(3n){border-top-color:#9E9AE8}
+.bs-team-name{font-size:10.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px}
+.bs-team-days{font-size:22px;font-weight:800;color:var(--navy);line-height:1;background:linear-gradient(90deg,#F28D64,#6D69F0);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.bs-team-days-l{font-size:9.5px;color:var(--text3);margin-top:3px;letter-spacing:0.05em}
+.bs-team-fte{font-size:10px;color:var(--violet);margin-top:6px;font-weight:600}
+.bs-crit-skills{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:10px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;margin-bottom:14px}
+.bs-crit-skills-l{font-size:10.5px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-right:4px}
+.bs-skill-pill{display:inline-block;font-size:10.5px;padding:3px 9px;border-radius:99px;background:rgba(110,105,240,0.07);border:1px solid rgba(110,105,240,0.18);color:var(--violet);font-weight:600}
+.bs-skill-pill.crit{background:linear-gradient(90deg,rgba(242,141,100,0.1),rgba(110,105,240,0.1));border-color:rgba(242,141,100,0.35);color:#9a3412}
+.bs-phases{display:flex;flex-direction:column;gap:8px}
+.bs-phase-row{padding:10px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;border-left:3px solid #6D69F0}
+.bs-phase-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.bs-phase-name{font-size:12.5px;font-weight:700;color:var(--navy)}
+.bs-phase-meta{font-size:10.5px;color:var(--violet);font-weight:600;background:rgba(109,105,240,0.08);padding:2px 9px;border-radius:99px}
+.bs-phase-teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.bs-phase-team{padding:8px 10px;background:#FAF6FE;border-radius:6px;border:1px solid #ECE7F4}
+.bs-phase-team-head{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:5px;flex-wrap:wrap}
+.bs-team-chip{font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;letter-spacing:0.05em;text-transform:uppercase}
+.bs-team-chip.team-infrastructure{background:#dbeafe;color:#1e40af}
+.bs-team-chip.team-devops{background:#dcfce7;color:#166534}
+.bs-team-chip.team-application{background:#fef3c7;color:#a16207}
+.bs-team-chip.team-aidata,.bs-team-chip.team-ai{background:#ede9fe;color:#6b21a8}
+.bs-team-chip.team-security{background:#fee2e2;color:#b91c1c}
+.bs-team-chip.team-pmo{background:#f1f5f9;color:#475569}
+.bs-team-chip.team-qa{background:#fce7f3;color:#9d174d}
+.bs-phase-team-meta{font-size:10px;color:var(--text3);font-weight:600}
+.bs-skills{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.bs-skills .bs-skill-pill{font-size:9.5px;padding:2px 7px}
+
 .brief-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .lang-selector{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
 .lang-btn{border:1.5px solid var(--border);background:white;border-radius:7px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);transition:all 0.15s;white-space:nowrap}
@@ -431,6 +512,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
 .chat-cite.req{background:#fef3f2;border-color:#fecdd3;color:#be123c}
 .chat-cite.sec{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
 .chat-cite.pg{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
+.chat-cite.pri{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
 /* ── Source Panel (slide-out drawer for RFP source jumping) ─────────────── */
 .src-panel{position:fixed;top:0;right:-680px;width:660px;max-width:96vw;height:100vh;background:#fff;box-shadow:-6px 0 28px rgba(15,12,46,0.18);z-index:9998;display:flex;flex-direction:column;transition:right .28s cubic-bezier(.4,0,.2,1);font-family:'DM Sans',Arial,sans-serif}
 .src-panel.open{right:0}
@@ -661,6 +743,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
   <nav class="nav">
     <div class="nav-lbl" style="color:var(--orange);font-weight:800">🚀 Start Here</div>
     <button class="nav-btn" id="nav-starthere" onclick="goPage('starthere')" style="background:linear-gradient(135deg,rgba(242,141,100,0.15),rgba(109,105,240,0.1));border-left:3px solid var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg><span style="font-weight:700">Begin RFP Workflow</span></button>
+    <button class="nav-btn" id="nav-intelligence" onclick="goPage('intelligence')" style="background:linear-gradient(135deg,rgba(109,105,240,0.18),rgba(143,112,192,0.1));border-left:3px solid var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span style="font-weight:700">RFP Intelligence</span><span class="nav-badge on" style="font-size:9px">NEW</span></button>
     <button class="nav-btn" id="nav-dashboard" onclick="goPage('dashboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Status Dashboard</button>
     <button class="nav-btn" id="nav-process" onclick="goPage('process')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>How It Works</button>
 
@@ -2634,28 +2717,54 @@ textarea.improve-input::placeholder{color:var(--text3)}
   <div class="topbar">
     <div class="topbar-title">🚀 Begin RFP Workflow</div>
     <div style="flex:1"></div>
+    <button class="btn btn-ghost btn-sm" onclick="goPage('intelligence')">🧠 RFP Intelligence</button>
     <button class="btn btn-ghost btn-sm" onclick="goPage('dashboard')">📊 Dashboard</button>
     <button class="btn btn-ghost btn-sm" onclick="goPage('process')">ℹ️ How it works</button>
   </div>
   <div class="content" style="overflow-y:auto">
-    <!-- Compact hero -->
-    <div style="padding:14px 18px;background:linear-gradient(135deg,#171339 0%,#272160 50%,#4b3fa0 100%);color:white;border-radius:10px;margin-bottom:14px;position:relative;overflow:hidden">
-      <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(242,141,100,0.4),transparent 70%);filter:blur(40px);pointer-events:none"></div>
-      <div style="position:relative;z-index:1">
-        <div style="font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:3px">🚀 Three steps · One proposal-ready draft</div>
-        <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:700;line-height:1.1;letter-spacing:-.02em">Name your project · Upload the RFP · Generate everything</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.75);margin-top:3px">Clarifications, risks, evidence, and pricing all populate automatically with RFP section references.</div>
+
+    <!-- Premium hero -->
+    <div class="wf-hero">
+      <div class="wf-hero-glow"></div>
+      <div class="wf-hero-glow wf-hero-glow-2"></div>
+      <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+        <div>
+          <div class="wf-hero-eyebrow">★ Five steps · Proposal-ready in minutes</div>
+          <div class="wf-hero-title">Your end-to-end RFP workflow</div>
+          <div class="wf-hero-sub">Set up your project, upload the document, and let the AI handle bid scoring, requirements, risks, win themes, pricing &amp; the full response — all with RFP section references.</div>
+        </div>
+        <div class="wf-hero-stats">
+          <div class="wf-hero-stat"><div class="wf-hero-stat-num" id="wf-stat-clarifications">—</div><div class="wf-hero-stat-lbl">Clarifications</div></div>
+          <div class="wf-hero-stat"><div class="wf-hero-stat-num" id="wf-stat-risks">—</div><div class="wf-hero-stat-lbl">Risks</div></div>
+          <div class="wf-hero-stat"><div class="wf-hero-stat-num" id="wf-stat-evidence">—</div><div class="wf-hero-stat-lbl">Evidence</div></div>
+          <div class="wf-hero-stat"><div class="wf-hero-stat-num" id="wf-stat-bid">—</div><div class="wf-hero-stat-lbl">Bid Score</div></div>
+        </div>
       </div>
     </div>
 
-    <!-- 3 step cards -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px">
+    <!-- Progress rail -->
+    <div class="wf-rail">
+      <div class="wf-rail-bar">
+        <div class="wf-rail-fill" id="wf-rail-fill"></div>
+      </div>
+      <div class="wf-rail-steps">
+        <div class="wf-rail-dot wf-rail-dot-active" data-step="1"><span>1</span><label>Setup</label></div>
+        <div class="wf-rail-dot" data-step="2"><span>2</span><label>Upload</label></div>
+        <div class="wf-rail-dot" data-step="3"><span>3</span><label>Analyze</label></div>
+        <div class="wf-rail-dot" data-step="4"><span>4</span><label>Configure</label></div>
+        <div class="wf-rail-dot" data-step="5"><span>5</span><label>Generate</label></div>
+      </div>
+    </div>
+
+    <!-- 5 step cards -->
+    <div class="wf-grid">
 
       <!-- STEP 1 -->
-      <div class="sh-step" id="sh-step-1">
+      <div class="sh-step wf-card" id="sh-step-1">
         <div class="sh-num">1</div>
-        <div class="sh-label">Name</div>
-        <div class="sh-title">Name this project</div>
+        <div class="wf-card-icon">📋</div>
+        <div class="sh-label">Setup</div>
+        <div class="sh-title">Name your project</div>
         <div class="sh-body">
           <input id="sh-proj-name" placeholder="e.g. ADNOC Digital Transformation 2026" onkeydown="if(event.key==='Enter')document.getElementById('sh-proj-client').focus()" class="sh-input">
           <input id="sh-proj-client" placeholder="Client / issuer (optional)" class="sh-input sh-input-sm">
@@ -2665,10 +2774,11 @@ textarea.improve-input::placeholder{color:var(--text3)}
       </div>
 
       <!-- STEP 2 -->
-      <div class="sh-step sh-locked" id="sh-step-2">
+      <div class="sh-step wf-card sh-locked" id="sh-step-2">
         <div class="sh-num">2</div>
+        <div class="wf-card-icon">📤</div>
         <div class="sh-label">Upload</div>
-        <div class="sh-title">Upload the RFP</div>
+        <div class="sh-title">Drop the RFP document</div>
         <div class="sh-body">
           <label for="sh-rfp-file" class="sh-drop">
             <div style="font-size:26px;line-height:1;margin-bottom:4px">📂</div>
@@ -2681,27 +2791,54 @@ textarea.improve-input::placeholder{color:var(--text3)}
       </div>
 
       <!-- STEP 3 -->
-      <div class="sh-step sh-locked" id="sh-step-3">
+      <div class="sh-step wf-card sh-locked" id="sh-step-3">
         <div class="sh-num">3</div>
-        <div class="sh-label">Generate</div>
-        <div class="sh-title">Generate everything</div>
+        <div class="wf-card-icon">🧠</div>
+        <div class="sh-label">Analyze</div>
+        <div class="sh-title">Run AI analysis</div>
         <div class="sh-body">
-          <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">Clarifications · Risk Register · Evidence Checklist · Pricing · Outline coverage — all generated from the RFP with section references.</div>
-          <button class="mp-btn accept sh-btn" onclick="startHereGenerate()" id="sh-gen-btn" disabled>⚡ Run full overview</button>
+          <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">Bid/No-Bid score · Requirements matrix · Risk flags · Win themes · Clarifications · Pricing · Evidence — all with RFP section references.</div>
+          <button class="mp-btn accept sh-btn" onclick="startHereGenerate()" id="sh-gen-btn" disabled>⚡ Run full analysis</button>
           <div id="sh-gen-progress" style="display:none;margin-top:6px;padding:6px 10px;background:var(--surface2);border-radius:6px;font-size:11px;color:var(--text2)"></div>
         </div>
         <div class="sh-state" id="sh-gen-state">Complete steps 1 &amp; 2 first</div>
       </div>
+
+      <!-- STEP 4 -->
+      <div class="sh-step wf-card sh-locked" id="sh-step-4">
+        <div class="sh-num">4</div>
+        <div class="wf-card-icon">⚙️</div>
+        <div class="sh-label">Configure</div>
+        <div class="sh-title">Tune the response</div>
+        <div class="sh-body">
+          <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">Set industry · tone · length · company name · focus areas &amp; compliance standards before drafting the proposal.</div>
+          <button class="mp-btn accept sh-btn" onclick="goPage('generate');setTimeout(function(){if(typeof switchTab==='function')switchTab('config');},150)" id="sh-cfg-btn" disabled>Open Configure tab →</button>
+        </div>
+        <div class="sh-state" id="sh-cfg-state">Run analysis first</div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="sh-step wf-card sh-locked" id="sh-step-5">
+        <div class="sh-num">5</div>
+        <div class="wf-card-icon">✨</div>
+        <div class="sh-label">Generate</div>
+        <div class="sh-title">Draft &amp; download</div>
+        <div class="sh-body">
+          <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">Generate the full response or auto-fill your .docx vendor columns directly. Export to Word, PDF or Excel.</div>
+          <button class="mp-btn accept sh-btn" onclick="goPage('generate')" id="sh-go-gen-btn" disabled>Open Generate page →</button>
+        </div>
+        <div class="sh-state" id="sh-go-gen-state">Configure first</div>
+      </div>
     </div>
 
     <!-- Results strip after generation -->
-    <div id="sh-results" style="display:none;padding:12px 16px;background:linear-gradient(135deg,var(--green-bg),var(--surface));border:1px solid var(--green-bd);border-radius:10px;margin-bottom:14px">
+    <div id="sh-results" style="display:none;padding:14px 18px;background:linear-gradient(135deg,var(--green-bg),var(--surface));border:1px solid var(--green-bd);border-radius:12px;margin-bottom:14px">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-          <span style="font-size:20px">✓</span>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <span style="font-size:24px">✓</span>
           <div>
-            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--navy);line-height:1.1">Baseline ready</div>
-            <div style="font-size:10.5px;color:var(--text3)">Click any tile to explore</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--navy);line-height:1.1">Baseline ready · explore the analysis</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px">Click any tile to dive in — or open the unified <a href="#" onclick="goPage('intelligence');return false" style="color:var(--violet);font-weight:600">RFP Intelligence dashboard</a></div>
           </div>
         </div>
         <div id="sh-results-body" style="flex:1;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"></div>
@@ -2710,19 +2847,19 @@ textarea.improve-input::placeholder{color:var(--text3)}
 
     <!-- Shortcuts grid -->
     <div id="sh-shortcuts" style="display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:var(--navy)">Continue where you left off</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--navy)">Continue where you left off</div>
         <span style="font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em">Quick access</span>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px" id="sh-shortcuts-grid"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px" id="sh-shortcuts-grid"></div>
     </div>
 
     <!-- Empty hint when nothing set up -->
     <div id="sh-emptyhint" style="padding:30px 20px;text-align:center">
-      <div style="max-width:500px;margin:0 auto">
-        <div style="font-size:40px;opacity:.15;line-height:1;margin-bottom:10px">👆</div>
-        <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text2);line-height:1.3">Start with step 1 above</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:4px;line-height:1.5">Each step unlocks the next. Your baseline typically takes 30–60 seconds to generate.</div>
+      <div style="max-width:520px;margin:0 auto">
+        <div style="font-size:42px;opacity:.18;line-height:1;margin-bottom:10px">👆</div>
+        <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text2);line-height:1.3">Start with step 1 above</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px;line-height:1.5">Each step unlocks the next — name your project, upload the RFP, then let the AI run the full analysis. Total time: 30–60 seconds.</div>
       </div>
     </div>
 
@@ -2730,41 +2867,410 @@ textarea.improve-input::placeholder{color:var(--text3)}
 </div>
 
 <style>
-/* Start Here specific — fill remaining main height (below ticker) */
+/* ════════════════════════════════════════════════════════════════════
+   START HERE — 5-STEP WORKFLOW + RFP INTELLIGENCE
+   ════════════════════════════════════════════════════════════════════ */
 #page-starthere.active { flex: 1 1 auto; height: auto; min-height: 0 }
 
-/* Compact no-scroll wizard styles */
-.sh-step { background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:16px 18px 14px; position:relative; display:flex; flex-direction:column; gap:10px; transition:opacity .3s ease, border-color .3s ease, box-shadow .3s ease; min-height:0 }
-.sh-step.sh-locked { opacity:.55; pointer-events:none; filter: grayscale(.3) }
-.sh-step.sh-done { border-color:var(--green); background:linear-gradient(180deg,var(--green-bg) 0%,var(--surface) 30%) }
-.sh-step.sh-active { border-color:var(--violet); box-shadow: 0 2px 14px rgba(109,105,240,0.12) }
-.sh-num { position:absolute; top:-12px; left:16px; width:26px; height:26px; background:var(--violet); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-size:14px; font-weight:700; box-shadow: 0 2px 6px rgba(39,33,96,0.15) }
-.sh-step.sh-done .sh-num { background:var(--green) }
-.sh-head { margin-top:2px }
-.sh-label { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:2px }
-.sh-title { font-family:'Fraunces',serif; font-size:16px; font-weight:700; color:var(--navy); line-height:1.2 }
-.sh-body { display:flex; flex-direction:column; gap:6px; flex:1 }
-.sh-input { width:100%; padding:8px 11px; border:1.5px solid var(--border); border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; background:var(--surface); color:var(--text); box-sizing:border-box }
-.sh-input:focus { outline:none; border-color:var(--violet); box-shadow: 0 0 0 2px rgba(109,105,240,0.15) }
-.sh-input-sm { font-size:12px; padding:7px 11px }
-.sh-btn { width:100%; padding:9px; font-size:12.5px; font-weight:700; margin-top:2px }
-.sh-state { font-size:10.5px; color:var(--text3); text-align:center; padding-top:4px; border-top:1px dashed var(--border); margin-top:auto }
-.sh-step.sh-done .sh-state { color:var(--green); font-weight:600 }
-.sh-drop { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; border:2px dashed var(--border2); border-radius:8px; text-align:center; cursor:pointer; background:linear-gradient(135deg,var(--blue-light),var(--surface2)); transition:all .2s ease; flex:1; min-height:90px }
-.sh-drop:hover { border-color:var(--violet); transform:translateY(-1px) }
+/* ── Premium hero block ── */
+.wf-hero{position:relative;padding:24px 28px;background:linear-gradient(135deg,#171339 0%,#272160 45%,#4b3fa0 90%);color:white;border-radius:14px;margin-bottom:18px;overflow:hidden;box-shadow:0 8px 28px rgba(39,33,96,0.16)}
+.wf-hero-glow{position:absolute;top:-80px;right:-60px;width:340px;height:340px;background:radial-gradient(circle,rgba(242,141,100,0.45),transparent 70%);filter:blur(50px);pointer-events:none}
+.wf-hero-glow-2{top:auto;bottom:-100px;right:auto;left:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(109,105,240,0.4),transparent 70%)}
+.wf-hero-eyebrow{font-size:10.5px;font-family:'JetBrains Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.78);margin-bottom:6px}
+.wf-hero-title{font-family:'Fraunces',serif;font-size:30px;font-weight:800;line-height:1.05;letter-spacing:-.025em;margin-bottom:6px}
+.wf-hero-sub{font-size:13px;color:rgba(255,255,255,0.78);max-width:520px;line-height:1.55}
+.wf-hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;min-width:220px}
+.wf-hero-stat{padding:9px 13px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:9px;backdrop-filter:blur(8px)}
+.wf-hero-stat-num{font-family:'Fraunces',serif;font-size:22px;font-weight:800;line-height:1;color:white}
+.wf-hero-stat-lbl{font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:.08em;margin-top:3px;font-weight:600}
 
-/* Results stat tiles */
-#sh-results-body > .sh-stat { padding:6px 12px; background:var(--surface); border-radius:6px; border-left:3px solid var(--violet); cursor:pointer; display:flex; align-items:center; gap:8px; transition:transform .15s ease, box-shadow .15s ease; min-width:140px }
-#sh-results-body > .sh-stat:hover { transform:translateY(-1px); box-shadow:0 2px 8px rgba(39,33,96,0.08) }
-#sh-results-body > .sh-stat .sh-icon { font-size:18px; line-height:1 }
-#sh-results-body > .sh-stat .sh-num-big { font-family:'Fraunces',serif; font-size:18px; font-weight:700; color:var(--navy); line-height:1 }
-#sh-results-body > .sh-stat .sh-lbl { font-size:10.5px; color:var(--text2); font-weight:600; text-transform:uppercase; letter-spacing:.05em }
+/* ── Progress rail ── */
+.wf-rail{margin-bottom:20px;padding:14px 4px 0;position:relative}
+.wf-rail-bar{height:3px;background:var(--border);border-radius:99px;position:relative;margin:0 30px 0;overflow:hidden}
+.wf-rail-fill{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--violet));border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.wf-rail-steps{display:flex;justify-content:space-between;align-items:flex-start;margin-top:-15px;position:relative;z-index:1}
+.wf-rail-dot{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;text-align:center}
+.wf-rail-dot span{width:28px;height:28px;border-radius:50%;background:white;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:13px;font-weight:700;color:var(--text3);transition:all .3s ease;box-shadow:0 2px 6px rgba(39,33,96,0.06)}
+.wf-rail-dot label{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.wf-rail-dot.wf-rail-dot-active span{background:linear-gradient(135deg,var(--violet),var(--indigo));border-color:var(--violet);color:white;box-shadow:0 4px 12px rgba(109,105,240,0.35);transform:scale(1.06)}
+.wf-rail-dot.wf-rail-dot-active label{color:var(--violet)}
+.wf-rail-dot.wf-rail-dot-done span{background:var(--green);border-color:var(--green);color:white}
+.wf-rail-dot.wf-rail-dot-done span::before{content:'✓';font-size:14px}
+.wf-rail-dot.wf-rail-dot-done span > *{display:none}
+.wf-rail-dot.wf-rail-dot-done label{color:var(--green)}
 
-@media (max-width:900px) {
-  #page-starthere > div > div:nth-child(2) > div:first-child { grid-template-columns:1fr !important }
-  .sh-step { min-height:auto }
-}
+/* ── Step grid ── */
+.wf-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
+@media (max-width:1300px){.wf-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:900px){.wf-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.wf-grid{grid-template-columns:1fr}}
+
+/* ── Step card ── */
+.sh-step{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:18px 16px 14px;position:relative;display:flex;flex-direction:column;gap:9px;transition:all .25s cubic-bezier(.4,0,.2,1);min-height:230px}
+.sh-step.sh-locked{opacity:.5;pointer-events:none;filter:grayscale(.4)}
+.sh-step.sh-done{border-color:var(--green);background:linear-gradient(180deg,var(--green-bg) 0%,var(--surface) 35%)}
+.sh-step.sh-active{border-color:var(--violet);box-shadow:0 6px 22px rgba(109,105,240,0.15);transform:translateY(-2px)}
+.wf-card-icon{position:absolute;top:14px;right:14px;font-size:20px;opacity:.55;transition:opacity .2s ease}
+.sh-step:hover .wf-card-icon{opacity:1}
+.sh-num{position:absolute;top:-12px;left:14px;width:30px;height:30px;background:linear-gradient(135deg,var(--violet),var(--indigo));color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:14px;font-weight:800;box-shadow:0 3px 10px rgba(39,33,96,0.25);border:2.5px solid var(--surface)}
+.sh-step.sh-done .sh-num{background:linear-gradient(135deg,var(--green),#0d6e3a)}
+.sh-step.sh-active .sh-num{box-shadow:0 0 0 4px rgba(109,105,240,0.18),0 3px 10px rgba(39,33,96,0.25)}
+.sh-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);font-weight:700;margin-top:8px}
+.sh-step.sh-done .sh-label{color:var(--green)}
+.sh-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--navy);line-height:1.18;letter-spacing:-.005em}
+.sh-body{display:flex;flex-direction:column;gap:7px;flex:1}
+.sh-input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);box-sizing:border-box;transition:all .18s ease}
+.sh-input:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(109,105,240,0.12)}
+.sh-input-sm{font-size:12px;padding:7px 11px}
+.sh-btn{width:100%;padding:10px;font-size:12.5px;font-weight:700;margin-top:2px;border-radius:7px}
+.sh-state{font-size:10.5px;color:var(--text3);text-align:center;padding-top:7px;border-top:1px dashed var(--border);margin-top:auto;line-height:1.45}
+.sh-step.sh-done .sh-state{color:var(--green);font-weight:600}
+.sh-step.sh-active .sh-state{color:var(--violet)}
+.sh-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 10px;border:2px dashed var(--border2);border-radius:9px;text-align:center;cursor:pointer;background:linear-gradient(135deg,var(--blue-light),var(--surface2));transition:all .25s ease;flex:1;min-height:88px}
+.sh-drop:hover{border-color:var(--violet);transform:translateY(-1px);box-shadow:0 2px 12px rgba(109,105,240,0.1)}
+
+/* ── Stat tiles in results strip ── */
+#sh-results-body > .sh-stat{padding:7px 13px;background:var(--surface);border-radius:7px;border-left:3px solid var(--violet);cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .18s ease;min-width:142px;box-shadow:0 1px 4px rgba(39,33,96,0.04)}
+#sh-results-body > .sh-stat:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(39,33,96,0.1);border-left-color:var(--orange)}
+#sh-results-body > .sh-stat .sh-icon{font-size:19px;line-height:1}
+#sh-results-body > .sh-stat .sh-num-big{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--navy);line-height:1}
+#sh-results-body > .sh-stat .sh-lbl{font-size:10.5px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+
+/* ════════════════════════════════════════════════════════════════════
+   RFP INTELLIGENCE PAGE
+   ════════════════════════════════════════════════════════════════════ */
+#page-intelligence.active{flex:1 1 auto;height:auto;min-height:0}
+.intel-hero{position:relative;padding:22px 26px;background:linear-gradient(135deg,#0F172A 0%,#272160 50%,#3d3895 100%);color:white;border-radius:14px;margin-bottom:16px;overflow:hidden;box-shadow:0 8px 28px rgba(39,33,96,0.18)}
+.intel-hero-glow{position:absolute;top:-100px;right:-60px;width:380px;height:380px;background:radial-gradient(circle,rgba(109,105,240,0.45),transparent 70%);filter:blur(60px);pointer-events:none}
+.intel-eyebrow{font-size:10.5px;font-family:'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:5px}
+.intel-title{font-family:'Fraunces',serif;font-size:26px;font-weight:800;line-height:1.1;letter-spacing:-.025em;margin-bottom:5px}
+.intel-sub{font-size:13px;color:rgba(255,255,255,0.7);max-width:600px;line-height:1.55}
+
+.intel-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:14px;box-shadow:0 1px 4px rgba(39,33,96,0.04)}
+.intel-card-hdr{display:flex;align-items:center;gap:11px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.intel-card-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,rgba(109,105,240,0.1),rgba(242,141,100,0.08));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.intel-card-title{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--navy);line-height:1.1}
+.intel-card-sub{font-size:11.5px;color:var(--text3);margin-top:2px}
+
+/* Upload zone */
+.intel-up{border:2px dashed var(--border2);border-radius:11px;padding:30px 20px;text-align:center;cursor:pointer;transition:all .25s ease;background:linear-gradient(135deg,var(--blue-light),var(--surface2));position:relative}
+.intel-up:hover,.intel-up.dragover{border-color:var(--violet);background:linear-gradient(135deg,rgba(109,105,240,0.06),rgba(242,141,100,0.04));transform:translateY(-1px)}
+.intel-up input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
+.intel-up-icon{font-size:34px;margin-bottom:8px;display:block}
+.intel-up-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.intel-up-sub{font-size:11.5px;color:var(--text3)}
+.intel-ftypes{display:flex;gap:6px;justify-content:center;margin-top:11px;flex-wrap:wrap}
+.intel-ftype{font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:7px;border:1px solid;letter-spacing:.04em;text-transform:uppercase}
+.intel-ft-pdf{background:#fff5f0;color:#d96d3f;border-color:#fdd8c4}
+.intel-ft-word{background:#eef0fc;color:#5955e8;border-color:#d4d3f5}
+.intel-ft-xlsx{background:#eefcf3;color:#1a8c4e;border-color:#bee5cd}
+.intel-ft-txt{background:#f4f1fb;color:#7e6cb0;border-color:#dcd3ee}
+
+/* File chip */
+.intel-chip{display:inline-flex;align-items:center;gap:9px;background:var(--surface2);border:1px solid var(--border2);border-radius:9px;padding:9px 14px;margin-top:11px}
+.intel-chip-icon{font-size:18px}
+.intel-chip-name{font-size:13px;font-weight:600;color:var(--navy)}
+.intel-chip-size{font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.intel-chip-rm{font-size:14px;color:var(--text3);cursor:pointer;margin-left:6px;line-height:1;padding:0 4px;border-radius:4px;transition:all .15s ease}
+.intel-chip-rm:hover{color:var(--red);background:rgba(192,57,43,0.08)}
+
+.intel-or{display:flex;align-items:center;gap:11px;margin:14px 0;color:var(--text3);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.intel-or::before,.intel-or::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.intel-textarea{width:100%;min-height:130px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:13px 15px;resize:vertical;outline:none;line-height:1.6;transition:all .18s ease}
+.intel-textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(109,105,240,0.1)}
+.intel-textarea::placeholder{color:var(--text3)}
+
+.intel-samples{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;align-items:center}
+.intel-samples-lbl{font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em}
+.intel-sample-pill{font-size:11px;padding:5px 12px;border-radius:7px;cursor:pointer;background:var(--surface2);color:var(--text2);border:1.5px solid var(--border);transition:all .15s ease;font-weight:600}
+.intel-sample-pill:hover{color:var(--violet);border-color:var(--violet);background:white;transform:translateY(-1px)}
+
+.intel-input-row{display:flex;align-items:center;gap:11px;margin-top:14px;flex-wrap:wrap}
+.intel-cap-input{flex:1;min-width:220px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;padding:10px 14px;outline:none;transition:all .18s ease;font-family:'DM Sans',sans-serif}
+.intel-cap-input:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(109,105,240,0.1)}
+
+/* Progress steps */
+.intel-progress{display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:14px}
+.intel-progress.show{display:block}
+.intel-prog-hdr{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.intel-prog-spin{width:30px;height:30px;border:3px solid rgba(109,105,240,0.18);border-top-color:var(--violet);border-radius:50%;animation:spin 0.7s linear infinite}
+.intel-prog-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--navy)}
+.intel-prog-sub{font-size:11.5px;color:var(--text3);margin-top:2px}
+.intel-prog-steps{display:flex;flex-direction:column;gap:8px}
+.intel-prog-step{display:flex;align-items:center;gap:11px;font-size:13px;color:var(--text3);transition:all .3s ease}
+.intel-prog-step.active{color:var(--violet);font-weight:600}
+.intel-prog-step.done{color:var(--green);font-weight:600}
+.intel-step-icon{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;background:white;font-weight:600;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.intel-prog-step.active .intel-step-icon{border-color:var(--violet);color:var(--violet);background:rgba(109,105,240,0.05)}
+.intel-prog-step.done .intel-step-icon{border-color:var(--green);color:white;background:var(--green)}
+
+/* Results sections */
+.intel-results{display:none;flex-direction:column;gap:14px}
+.intel-results.show{display:flex}
+
+.intel-sum-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:0}
+.intel-sum-chip{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;flex:1 0 140px;min-width:140px}
+.intel-sum-val{font-family:'Fraunces',serif;font-size:22px;font-weight:800;line-height:1}
+.intel-sum-lbl{font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-top:3px}
+
+/* Bid verdict */
+.intel-verdict{border-radius:12px;padding:24px 26px;text-align:center;border:2px solid;position:relative;overflow:hidden}
+.intel-verdict.bid{background:linear-gradient(135deg,#f0fdf4,#fff);border-color:#15803d}
+.intel-verdict.nobid{background:linear-gradient(135deg,#fff0f2,#fff);border-color:#c0392b}
+.intel-verdict.review{background:linear-gradient(135deg,#fffbeb,#fff);border-color:#b45309}
+.intel-verdict-d{font-family:'Fraunces',serif;font-size:32px;font-weight:900;letter-spacing:-.02em;line-height:1;margin-bottom:8px}
+.intel-verdict-score{font-family:'Fraunces',serif;font-size:46px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;margin:8px 0 12px}
+.intel-verdict-score-suf{font-size:18px;opacity:.55;margin-left:2px}
+.intel-verdict-rat{font-size:13px;color:var(--text2);max-width:560px;margin:0 auto;line-height:1.6}
+.intel-verdict-grid{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left}
+@media (max-width:700px){.intel-verdict-grid{grid-template-columns:1fr}}
+
+.intel-item-row{display:flex;align-items:flex-start;gap:11px;background:white;border:1px solid var(--border);border-radius:9px;padding:11px 13px}
+.intel-item-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.intel-item-lbl{font-size:10px;font-weight:700;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.07em}
+.intel-item-text{font-size:12.5px;color:var(--text2);line-height:1.55}
+
+/* Requirements table */
+.intel-req-table{width:100%;border-collapse:collapse;font-size:12px}
+.intel-req-table th{padding:9px 11px;text-align:left;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;border-bottom:1.5px solid var(--border);background:var(--surface2)}
+.intel-req-table td{padding:10px 11px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.55}
+.intel-req-table tr:last-child td{border-bottom:none}
+.intel-req-table tr:hover td{background:var(--surface2)}
+
+.intel-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:7px;border:1px solid;white-space:nowrap;letter-spacing:.02em}
+.ib-high{background:#fff0eb;color:#d96d3f;border-color:#fdd8c4}
+.ib-medium{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.ib-low{background:#f0fdf4;color:#15803d;border-color:#bbf7d0}
+.ib-match{background:#f0fdf4;color:#15803d;border-color:#bbf7d0}
+.ib-partial{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.ib-gap{background:#fff0f2;color:#c0392b;border-color:#f7bfc8}
+.ib-func{background:#eef0fc;color:#5955e8;border-color:#d4d3f5}
+.ib-nonf{background:#f4f1fb;color:#7e6cb0;border-color:#dcd3ee}
+.ib-comp{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.ib-comm{background:#fdf0fc;color:#a73a8e;border-color:#f3d6ed}
+
+/* Win themes */
+.intel-theme-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+@media (max-width:700px){.intel-theme-grid{grid-template-columns:1fr}}
+.intel-theme-card{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:9px;padding:14px 16px;border-left:3px solid var(--violet);transition:all .2s ease}
+.intel-theme-card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(109,105,240,0.1)}
+.intel-theme-title{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:5px;letter-spacing:-.01em}
+.intel-theme-body{font-size:12px;color:var(--text2);line-height:1.55}
+
+/* Clarifications */
+.intel-clar-list{display:flex;flex-direction:column;gap:8px}
+.intel-clar-item{display:flex;align-items:flex-start;gap:13px;background:white;border:1px solid var(--border);border-radius:9px;padding:11px 14px;transition:all .15s ease}
+.intel-clar-item:hover{border-color:var(--violet);background:var(--surface2)}
+.intel-clar-num{font-family:'Fraunces',serif;font-size:13px;font-weight:800;color:var(--violet);min-width:30px;flex-shrink:0;margin-top:1px}
+.intel-clar-text{font-size:12.5px;color:var(--text2);line-height:1.55;flex:1}
+
+/* Export bar */
+.intel-export{background:linear-gradient(135deg,var(--blue-light),var(--surface));border:1px solid var(--border);border-radius:11px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:11px}
+.intel-export-lbl{font-size:13px;color:var(--text2);font-weight:600;display:flex;align-items:center;gap:8px}
+.intel-export-btns{display:flex;gap:8px;flex-wrap:wrap}
+
+.intel-empty{text-align:center;padding:32px 20px;color:var(--text3);font-size:13px}
+
+/* Two-column layout */
+.intel-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:1100px){.intel-two-col{grid-template-columns:1fr}}
+
+/* Loading dots */
+@keyframes intel-blink{0%,100%{opacity:.25}50%{opacity:1}}
+.intel-d1{animation:intel-blink 1.2s 0s infinite}
+.intel-d2{animation:intel-blink 1.2s .2s infinite}
+.intel-d3{animation:intel-blink 1.2s .4s infinite}
 </style>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     RFP INTELLIGENCE PAGE — comprehensive single-screen analysis
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-intelligence" style="flex-direction:column;overflow:hidden">
+  <div class="topbar">
+    <div class="topbar-title">🧠 RFP Intelligence</div>
+    <div style="flex:1"></div>
+    <button class="btn btn-ghost btn-sm" onclick="intelLoadSample('ai')">🤖 AI Platform Sample</button>
+    <button class="btn btn-ghost btn-sm" onclick="intelLoadSample('cyber')">🔒 Cybersecurity Sample</button>
+    <button class="btn btn-ghost btn-sm" onclick="intelLoadSample('cloud')">☁️ Cloud Sample</button>
+    <button class="btn btn-ghost btn-sm" onclick="intelClearAll()">+ New Analysis</button>
+  </div>
+
+  <div class="content" style="overflow-y:auto">
+
+    <!-- HERO -->
+    <div class="intel-hero">
+      <div class="intel-hero-glow"></div>
+      <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
+        <div>
+          <div class="intel-eyebrow">★ ONE-PAGE PRE-SALES ANALYSIS</div>
+          <div class="intel-title">RFP / RFI Intelligence Agent</div>
+          <div class="intel-sub">Drop any RFP and the AI returns a full pre-sales briefing — Bid/No-Bid score, requirements matrix, risk register, capability gaps, win themes &amp; clarification questions — in under 60 seconds.</div>
+        </div>
+        <div id="intel-status-pill" style="font-size:11px;font-weight:700;padding:7px 16px;border-radius:99px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);letter-spacing:.05em">● Idle</div>
+      </div>
+    </div>
+
+    <!-- INPUT CARD -->
+    <div class="intel-card">
+      <div class="intel-card-hdr">
+        <div class="intel-card-icon">📁</div>
+        <div>
+          <div class="intel-card-title">Upload RFP / RFI Document</div>
+          <div class="intel-card-sub">Drag &amp; drop, browse, or paste text below</div>
+        </div>
+      </div>
+
+      <!-- Upload zone -->
+      <div class="intel-up" id="intel-drop">
+        <input type="file" id="intel-file" accept=".pdf,.doc,.docx,.xlsx,.xls,.txt" onchange="intelHandleFile(event)">
+        <div class="intel-up-icon">📂</div>
+        <div class="intel-up-title">Click to browse or drop file here</div>
+        <div class="intel-up-sub">We'll extract the text and run a multi-step analysis.</div>
+        <div class="intel-ftypes">
+          <span class="intel-ftype intel-ft-pdf">PDF</span>
+          <span class="intel-ftype intel-ft-word">Word (.docx)</span>
+          <span class="intel-ftype intel-ft-xlsx">Excel (.xlsx)</span>
+          <span class="intel-ftype intel-ft-txt">Plain Text</span>
+        </div>
+      </div>
+      <div id="intel-chip-wrap"></div>
+
+      <div class="intel-or">OR paste text directly</div>
+
+      <textarea class="intel-textarea" id="intel-text" placeholder="Paste your RFP or RFI content here..."></textarea>
+
+      <div class="intel-samples">
+        <span class="intel-samples-lbl">Try a sample:</span>
+        <span class="intel-sample-pill" onclick="intelLoadSample('ai')">🤖 AI Platform RFP</span>
+        <span class="intel-sample-pill" onclick="intelLoadSample('cyber')">🔒 Cybersecurity RFI</span>
+        <span class="intel-sample-pill" onclick="intelLoadSample('cloud')">☁️ Cloud Migration RFP</span>
+      </div>
+
+      <div class="intel-input-row">
+        <input class="intel-cap-input" id="intel-capabilities" placeholder="Your capabilities (optional): Azure AI, DevSecOps, ISO 27001, Arabic NLP, ...">
+        <button class="btn btn-ghost btn-sm" onclick="intelClearAll()">Clear</button>
+        <button class="btn btn-primary btn-sm" id="intel-run-btn" onclick="intelRunAnalysis()" style="min-width:160px;font-weight:700">
+          🔍 Analyse RFP
+        </button>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="intel-progress" id="intel-progress">
+      <div class="intel-prog-hdr">
+        <div class="intel-prog-spin"></div>
+        <div>
+          <div class="intel-prog-title">Agent running<span class="intel-d1">.</span><span class="intel-d2">.</span><span class="intel-d3">.</span></div>
+          <div class="intel-prog-sub" id="intel-prog-detail">Initialising analysis pipeline</div>
+        </div>
+      </div>
+      <div class="intel-prog-steps">
+        <div class="intel-prog-step" id="intel-step-1"><div class="intel-step-icon">1</div><span>Parsing document &amp; extracting text</span></div>
+        <div class="intel-prog-step" id="intel-step-2"><div class="intel-step-icon">2</div><span>Identifying all requirements</span></div>
+        <div class="intel-prog-step" id="intel-step-3"><div class="intel-step-icon">3</div><span>Scoring complexity &amp; priority</span></div>
+        <div class="intel-prog-step" id="intel-step-4"><div class="intel-step-icon">4</div><span>Matching against your capabilities</span></div>
+        <div class="intel-prog-step" id="intel-step-5"><div class="intel-step-icon">5</div><span>Flagging risks &amp; ambiguities</span></div>
+        <div class="intel-prog-step" id="intel-step-6"><div class="intel-step-icon">6</div><span>Building win themes &amp; clarifications</span></div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="intel-results" id="intel-results">
+
+      <!-- Summary chips -->
+      <div id="intel-sum-chips" class="intel-sum-row"></div>
+
+      <!-- Bid/No-Bid -->
+      <div class="intel-card">
+        <div class="intel-card-hdr">
+          <div class="intel-card-icon" style="background:linear-gradient(135deg,#f0fdf4,#fffbeb)">🏆</div>
+          <div>
+            <div class="intel-card-title">Bid / No-Bid Recommendation</div>
+            <div class="intel-card-sub">AI-driven pursue/pass decision with score and rationale</div>
+          </div>
+        </div>
+        <div id="intel-body-bid"></div>
+      </div>
+
+      <!-- Two column: Requirements + Risks -->
+      <div class="intel-two-col">
+        <!-- Requirements -->
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#eef0fc,#fdf4f0)">📋</div>
+            <div>
+              <div class="intel-card-title">Requirement Matrix</div>
+              <div class="intel-card-sub">All extracted requirements with type, complexity &amp; capability match</div>
+            </div>
+          </div>
+          <div id="intel-body-req"></div>
+        </div>
+
+        <!-- Risks -->
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#fff0f2,#fffbeb)">⚠️</div>
+            <div>
+              <div class="intel-card-title">Risk Flags &amp; Ambiguities</div>
+              <div class="intel-card-sub">Severity-ranked risks with proposed mitigations</div>
+            </div>
+          </div>
+          <div id="intel-body-risk"></div>
+        </div>
+      </div>
+
+      <!-- Two column: Gaps + Win Themes -->
+      <div class="intel-two-col">
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#fffbeb,#fdf4f0)">🔍</div>
+            <div>
+              <div class="intel-card-title">Capability Gap Analysis</div>
+              <div class="intel-card-sub">Where we're short and how to address it</div>
+            </div>
+          </div>
+          <div id="intel-body-gap"></div>
+        </div>
+
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#f4f1fb,#eef0fc)">🎯</div>
+            <div>
+              <div class="intel-card-title">Win Themes</div>
+              <div class="intel-card-sub">Differentiators tailored to the client's pain points</div>
+            </div>
+          </div>
+          <div id="intel-body-win"></div>
+        </div>
+      </div>
+
+      <!-- Clarifications -->
+      <div class="intel-card">
+        <div class="intel-card-hdr">
+          <div class="intel-card-icon" style="background:linear-gradient(135deg,#eef0fc,#f4f1fb)">❓</div>
+          <div>
+            <div class="intel-card-title">Clarification Questions</div>
+            <div class="intel-card-sub">Send these to the issuer before finalising your proposal</div>
+          </div>
+        </div>
+        <div id="intel-body-clar"></div>
+      </div>
+
+      <!-- Export Bar -->
+      <div class="intel-export">
+        <div class="intel-export-lbl">📦 Analysis complete — download or open the response builder</div>
+        <div class="intel-export-btns">
+          <button class="btn btn-primary btn-sm" onclick="intelExportExcel()">📊 Excel</button>
+          <button class="btn btn-primary btn-sm" onclick="intelExportPDF()" style="background:linear-gradient(135deg,#D04A02,#F28D64);border-color:#D04A02">📄 PDF</button>
+          <button class="btn btn-primary btn-sm" onclick="intelExportWord()" style="background:linear-gradient(135deg,#2B579A,#5BA3E8);border-color:#2B579A">📝 Word</button>
+          <button class="btn btn-ghost btn-sm" onclick="goPage('generate')">→ Build Response</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- Loading overlay -->
 <div class="overlay" id="overlay">
@@ -2856,11 +3362,11 @@ async function init(){
 
 // ── Navigation ────────────────────────────────────────────────────────────────
 function goPage(p){
-  ['generate','briefing','library','effort','estimations','billing','settings','guide','evidence','risk','pricing','clarify','outline','polish','solution','proposals','rules','ingest','events','history','downloads','projects','validator','projrfp','answer-review','dashboard','process','starthere'].forEach(x=>{
-    document.getElementById('page-'+x).classList.remove('active');
+  ['generate','briefing','library','effort','estimations','billing','settings','guide','evidence','risk','pricing','clarify','outline','polish','solution','proposals','rules','ingest','events','history','downloads','projects','validator','projrfp','answer-review','dashboard','process','starthere','intelligence'].forEach(x=>{
+    const el=document.getElementById('page-'+x);if(el)el.classList.remove('active');
     const n=document.getElementById('nav-'+x);if(n)n.classList.remove('active');
   });
-  document.getElementById('page-'+p).classList.add('active');
+  const targetPage=document.getElementById('page-'+p);if(targetPage)targetPage.classList.add('active');
   const nb=document.getElementById('nav-'+p);if(nb)nb.classList.add('active');
   if(p==='library')renderLibrary();
   if(p==='estimations')renderEstimationsList();
@@ -2967,7 +3473,7 @@ async function handleHistFiles(input){
 }
 
 // ── Lazy library loader ───────────────────────────────────────────────────────
-const LIB_FALLBACKS={'/libs/mammoth.min.js':'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js','/libs/xlsx.min.js':'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js','/libs/pdf.min.js':'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','/libs/pdf.worker.min.js':'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'};
+const LIB_FALLBACKS={'/libs/mammoth.min.js':'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js','/libs/xlsx.min.js':'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js','/libs/pdf.min.js':'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','/libs/pdf.worker.min.js':'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js','/libs/pptxgen.bundle.min.js':'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js'};
 function loadScript(src){
   return new Promise((res,rej)=>{
     if(document.querySelector('script[src="'+src+'"]')){res();return;}
@@ -3897,6 +4403,94 @@ function renderBriefSlide(b) {
   const sentences   = summaryFull.split(/(?<=[.!?])\s+/);
   const summaryShort = sentences.slice(0,2).join(' ');
 
+  // ── Decision Rationale (NEW) — GO/NO-GO criteria with verdicts & citations
+  const goCriteria = Array.isArray(b.go_nogo_criteria) ? b.go_nogo_criteria : [];
+  const verdictMeta = {
+    MET:     { cls:'met',     icon:'✓', label:'MET' },
+    PARTIAL: { cls:'partial', icon:'◐', label:'PARTIAL' },
+    GAP:     { cls:'gap',     icon:'✗', label:'GAP' },
+    UNKNOWN: { cls:'unknown', icon:'?', label:'UNKNOWN' },
+  };
+  const rationaleHtml = goCriteria.length ? goCriteria.map(c => {
+    const v  = (c.verdict||'UNKNOWN').toUpperCase();
+    const vm = verdictMeta[v] || verdictMeta.UNKNOWN;
+    const wt = (c.weight||'MEDIUM').toUpperCase();
+    return `<div class="bs-rat-row">
+      <span class="bs-rat-verdict ${vm.cls}" title="${vm.label}">${vm.icon}</span>
+      <div class="bs-rat-body">
+        <div class="bs-rat-head">
+          <span class="bs-rat-criterion">${esc(c.criterion||'')}</span>
+          <span class="bs-rat-weight w-${wt.toLowerCase()}">${esc(wt)} IMPACT</span>
+        </div>
+        <div class="bs-rat-rationale">${esc(c.rationale||'—')}</div>
+      </div>
+    </div>`;
+  }).join('') : `<div class="bs-rat-empty">${esc(b.go_nogo_reason || 'No detailed criteria captured. Re-run the analysis to populate the decision rationale.')}</div>`;
+
+  // ── Clarifications (NEW) — ambiguities / contradictions / gaps
+  const clars = Array.isArray(b.clarifications) ? b.clarifications : [];
+  const kindMeta = {
+    AMBIGUITY:     { cls:'ambig', icon:'❓', label:'Ambiguity' },
+    CONTRADICTION: { cls:'contra', icon:'⚠️', label:'Contradiction' },
+    GAP:           { cls:'gap',   icon:'🔍', label:'Information Gap' },
+    RULE:          { cls:'rule',  icon:'📜', label:'Rule Confirmation' },
+  };
+  const clarHtml = clars.length ? clars.map(c => {
+    const k  = (c.kind||'AMBIGUITY').toUpperCase();
+    const km = kindMeta[k] || kindMeta.AMBIGUITY;
+    const im = (c.impact||'MEDIUM').toUpperCase();
+    return `<div class="bs-clar-row">
+      <span class="bs-clar-kind ${km.cls}">${km.icon} ${km.label}</span>
+      <div class="bs-clar-body">
+        <div class="bs-clar-q">${esc(c.question||'—')}</div>
+        <div class="bs-clar-foot">
+          ${c.where ? `<span class="bs-clar-where">${esc(c.where)}</span>` : ''}
+          <span class="bs-clar-impact i-${im.toLowerCase()}">${esc(im)} IMPACT</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('') : '<div class="bs-rat-empty">No clarification items extracted.</div>';
+
+  // ── Effort & Skills (NEW) — phases × teams matrix
+  const eb = b.effort_breakdown || {};
+  const phases = Array.isArray(eb.phases) ? eb.phases : [];
+  const teamSummary = Array.isArray(eb.team_summary) ? eb.team_summary : [];
+  const critSkills = Array.isArray(eb.critical_skills) ? eb.critical_skills : [];
+  const totalDays = eb.total_person_days || phases.reduce((s,p)=>s+(p.teams||[]).reduce((t,x)=>t+(x.person_days||0),0),0);
+
+  // Team summary tiles
+  const teamTilesHtml = teamSummary.length ? teamSummary.map(t =>
+    `<div class="bs-team-tile">
+      <div class="bs-team-name">${esc(t.team||'')}</div>
+      <div class="bs-team-days">${esc(String(t.total_person_days||'—'))}</div>
+      <div class="bs-team-days-l">person-days</div>
+      ${t.fte_peak ? `<div class="bs-team-fte">peak FTE: ${esc(String(t.fte_peak))}</div>` : ''}
+    </div>`
+  ).join('') : '<div class="bs-rat-empty" style="grid-column:1/-1">No team summary extracted.</div>';
+
+  // Phases — compact stacked bars
+  const phaseRowsHtml = phases.length ? phases.map(ph => {
+    const teams = Array.isArray(ph.teams) ? ph.teams : [];
+    const phasePD = teams.reduce((s,t)=>s+(t.person_days||0), 0);
+    const teamsHtml = teams.map(t => {
+      const skills = Array.isArray(t.skills) ? t.skills.slice(0,5) : [];
+      return `<div class="bs-phase-team">
+        <div class="bs-phase-team-head">
+          <span class="bs-team-chip team-${(t.team||'').toLowerCase().replace(/[^a-z]/g,'')}">${esc(t.team||'')}</span>
+          <span class="bs-phase-team-meta">${esc(String(t.fte_count||'—'))} FTE · ${esc(String(t.person_days||'—'))} pd</span>
+        </div>
+        ${skills.length ? `<div class="bs-skills">${skills.map(s=>`<span class="bs-skill-pill">${esc(s)}</span>`).join('')}</div>` : ''}
+      </div>`;
+    }).join('') || '<div class="bs-rat-empty">No team breakdown</div>';
+    return `<div class="bs-phase-row">
+      <div class="bs-phase-head">
+        <span class="bs-phase-name">${esc(ph.phase||'')}</span>
+        <span class="bs-phase-meta">${esc(String(ph.duration_weeks||'—'))} wks · ${phasePD} pd</span>
+      </div>
+      <div class="bs-phase-teams">${teamsHtml}</div>
+    </div>`;
+  }).join('') : '<div class="bs-rat-empty">No phase breakdown extracted.</div>';
+
   document.getElementById('brief-slide').innerHTML = `
   <div class="bs-header" ${isRTL ? 'dir="rtl" style="text-align:right"' : ''}>
     <div class="bs-header-top">
@@ -3951,6 +4545,39 @@ function renderBriefSlide(b) {
       </div>
     </div>
   </div>
+
+  <!-- Decision Rationale (full width) — why GO / NO-GO with citations -->
+  <div class="bs-fullsection">
+    <div class="bs-fullsec-head">
+      <div class="bs-fullsec-title">⚖️ Decision Rationale</div>
+      <div class="bs-fullsec-sub">Criteria evaluated · ${goCriteria.length || 0} factors · ${esc(b.go_nogo||'GO')}</div>
+    </div>
+    <div class="bs-rationale-grid">${rationaleHtml}</div>
+  </div>
+
+  <!-- Clarifications & Open Questions -->
+  <div class="bs-fullsection">
+    <div class="bs-fullsec-head">
+      <div class="bs-fullsec-title">❓ Clarifications &amp; Open Questions</div>
+      <div class="bs-fullsec-sub">Ambiguities, contradictions, and gaps to raise with the issuer · ${clars.length} item${clars.length===1?'':'s'}</div>
+    </div>
+    <div class="bs-clar-grid">${clarHtml}</div>
+  </div>
+
+  <!-- Effort & Skills Breakdown -->
+  <div class="bs-fullsection">
+    <div class="bs-fullsec-head">
+      <div class="bs-fullsec-title">📊 Effort &amp; Skills — End-to-End Delivery</div>
+      <div class="bs-fullsec-sub">Total estimate: <strong>${totalDays || '—'} person-days</strong>${critSkills.length ? ' · '+critSkills.length+' critical skills' : ''}</div>
+    </div>
+    <div class="bs-team-tiles">${teamTilesHtml}</div>
+    ${critSkills.length ? `<div class="bs-crit-skills">
+      <span class="bs-crit-skills-l">Critical skills:</span>
+      ${critSkills.slice(0,12).map(s=>`<span class="bs-skill-pill crit">${esc(s)}</span>`).join('')}
+    </div>` : ''}
+    <div class="bs-phases">${phaseRowsHtml}</div>
+  </div>
+
   <div class="bs-footer">
     <div class="bs-win-bar">
       <span class="bs-win-label">Win Probability</span>
@@ -3979,23 +4606,24 @@ function renderBriefSlide(b) {
 // ────────────────────────────────────────────────────────────────────────────
 async function ensurePptxGen(){
   if (typeof window.PptxGenJS !== 'undefined') return window.PptxGenJS;
+  // Local first (bundled in /public/libs), fallback to CDNs
   const sources = [
+    '/libs/pptxgen.bundle.min.js',
     'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js',
     'https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.min.js',
   ];
+  let lastErr = null;
   for (const src of sources) {
     try {
-      await new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = src; s.async = true;
-        s.onload  = resolve;
-        s.onerror = () => reject(new Error('Failed to load ' + src));
-        document.head.appendChild(s);
-      });
+      await loadScript(src);
       if (typeof window.PptxGenJS !== 'undefined') return window.PptxGenJS;
-    } catch (_) { /* try next */ }
+      lastErr = new Error('Loaded ' + src + ' but PptxGenJS global is still undefined');
+    } catch (e) {
+      console.warn('[ensurePptxGen] failed', src, e);
+      lastErr = e;
+    }
   }
-  throw new Error('Could not load PptxGenJS from any CDN. Check your network and try again.');
+  throw new Error('Could not load PptxGenJS. ' + (lastErr && lastErr.message ? lastErr.message : 'All sources failed.') + ' Check browser console + network tab.');
 }
 
 // Copy the executive brief as styled HTML to the clipboard
@@ -4250,7 +4878,10 @@ body{padding:0;margin:0}
 }
 
 .brief-body{
-  flex:1;padding:0 14mm 8mm;display:flex;flex-direction:column;min-height:0;
+  padding:0 14mm 8mm;
+  /* Block flow — sections stack naturally and the footer always sits AFTER
+     the content. Previously this was flex with flex:1 cols, but inline-block
+     children overflowed the flex height and drew over the dark footer. */
 }
 
 .brief-title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:14mm;margin-bottom:4mm}
@@ -4290,7 +4921,7 @@ body{padding:0;margin:0}
 .kpi.accent .kpi-v{background:linear-gradient(90deg,#F28D64,#6D69F0);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 
 /* 3-column body — inline-block for cross-engine print support */
-.cols{font-size:0;letter-spacing:0;flex:1;min-height:0}
+.cols{font-size:0;letter-spacing:0;margin-bottom:3mm}
 .col{
   display:inline-block;width:32.4%;margin-right:1.2%;vertical-align:top;
   background:#fff;border:1px solid #ECE7F4;border-radius:7px;
@@ -6847,6 +7478,12 @@ function injectChatCitations(bubble){
     {re:/\bSection\s+(\d+(?:\.\d+)*[A-Za-z]?)\b/g,  cls:'sec', icon:'§'},
     {re:/\bPage\s+(\d+)\b/g,                       cls:'pg',  icon:'📄'},
     {re:/\bp\.\s*(\d+)\b/g,                        cls:'pg',  icon:'📄'},
+    // Priority levels — P1 / P2 / P3 / P4 followed by a context word like
+    // "incident", "priority", "severity", "level". Click → search the source
+    // for the term so the user can see the full definition in context.
+    {re:/\b(P[1-4])\s+(?=incident|priority|severity|level|ticket|case|issue|alert)/gi, cls:'pri', icon:'🔥'},
+    {re:/\bpriority\s+(P[1-4])\b/gi,                                                    cls:'pri', icon:'🔥'},
+    {re:/\bseverity\s+(\d)\b/gi,                                                        cls:'pri', icon:'🔥'},
   ];
   targets.forEach(node=>{
     let text = node.textContent;
@@ -6875,7 +7512,7 @@ function injectChatCitations(bubble){
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'chat-cite ' + m.cls;
-      btn.textContent = m.icon + ' ' + (m.cls==='req' ? m.val.toUpperCase() : (m.cls==='sec' ? '§ '+m.val : 'p.'+m.val));
+      btn.textContent = m.icon + ' ' + (m.cls==='req' ? m.val.toUpperCase() : (m.cls==='sec' ? '§ '+m.val : m.cls==='pg' ? 'p.'+m.val : m.val.toUpperCase()));
       btn.title = 'Open source · ' + m.raw;
       btn.dataset.citeKind  = m.cls;
       btn.dataset.citeValue = m.val;
@@ -6912,7 +7549,9 @@ let _srcPanelMode = 'text';        // 'pdf' | 'text'
 function openCitation(kind, value){
   // [REQ-XXX] → jump to the requirement card on Briefing
   if (kind === 'req') return jumpToRequirement(value);
-  // Open the slide-out panel for Section / Page citations
+  // P1/P2/P3 priority reference → reuse the section-search code path
+  // but with the priority value as the search term.
+  // Open the slide-out panel for Section / Page / Priority citations
   openSrcPanel(kind, value);
 }
 
@@ -6969,6 +7608,7 @@ function openSrcPanel(kind, value){
   if (kind === 'pg')  { head_ic.textContent = '📄'; head_l.textContent = 'PAGE REFERENCE'; head_v.textContent = 'Page ' + value; }
   if (kind === 'sec') { head_ic.textContent = '§';  head_l.textContent = 'SECTION REFERENCE'; head_v.textContent = 'Section ' + value; }
   if (kind === 'req') { head_ic.textContent = '📌'; head_l.textContent = 'REQUIREMENT'; head_v.textContent = String(value).toUpperCase(); }
+  if (kind === 'pri') { head_ic.textContent = '🔥'; head_l.textContent = 'PRIORITY LEVEL'; head_v.textContent = String(value).toUpperCase(); }
 
   // Footer
   foot.textContent = (S.rfpFileName || 'RFP source');
@@ -7074,6 +7714,14 @@ function renderSrcPanelBody(kind, value){
     const re = new RegExp(reqId.replace('-','[-\\s]?'), 'i');
     target = findFirstTextMatch(inner, re, reqId, true);
     foot.textContent = (S.rfpFileName || 'Extracted text') + ' · ' + reqId;
+  } else if (kind === 'pri') {
+    // Priority ref — search for "P1"/"P2"/"P3"/"P4" or "Priority N" or "Severity N"
+    const pri = String(value).toUpperCase();
+    // Build a regex that matches the priority anywhere — most useful occurrence
+    // is usually the definition (e.g. "P1 incidents must be < 15 minutes")
+    const re = new RegExp('\\b' + pri + '\\b', 'i');
+    target = findFirstTextMatch(inner, re, pri, true);
+    foot.textContent = (S.rfpFileName || 'Extracted text') + ' · Priority ' + pri;
   }
 
   if (target) {
@@ -12944,6 +13592,769 @@ mpSwitchProject = async function(pid){
 };
 
 setTimeout(refreshStartHere, 1600);
+
+// ═══════════════════════════════════════════════════════════════════
+// 5-STEP WORKFLOW PROGRESS — keeps the rail/dots in sync with state
+// ═══════════════════════════════════════════════════════════════════
+const _origRefreshSH = (typeof refreshStartHere === 'function') ? refreshStartHere : null;
+if(_origRefreshSH){
+  refreshStartHere = function(){
+    _origRefreshSH();
+    try{ wfUpdateRail(); }catch(e){}
+  };
+}
+
+function wfUpdateRail(){
+  const fill = document.getElementById('wf-rail-fill');
+  const dots = document.querySelectorAll('.wf-rail-dot');
+  if(!fill || !dots.length) return;
+
+  const idx = (typeof mpProjectsIndex === 'function') ? mpProjectsIndex() : {list:[],current:null};
+  const currentProj = idx.list.find(p => p.id === idx.current);
+  const hasProject = !!currentProj;
+  const hasRfp = !!(S && S.rfpFileName && S.rfpText && S.rfpText.length > 50 && !/^\[(DOCX|XLSX|PDF)\]$/.test(S.rfpText));
+  const hasGenerated = !!(S && S.generatedClarifications && S.generatedClarifications.length > 0);
+  const cfg = (V('cfg-company') || V('cfg-industry') || '').length > 0;
+  const hasResp = !!(S && S.currentResp && S.currentResp.length > 100);
+
+  // Determine step
+  let active = 1;
+  if(hasResp) active = 5;
+  else if(hasGenerated) active = cfg ? 5 : 4;
+  else if(hasRfp) active = 3;
+  else if(hasProject) active = 2;
+  else active = 1;
+
+  // Dot states
+  dots.forEach(dot => {
+    const n = +dot.dataset.step;
+    dot.classList.remove('wf-rail-dot-active','wf-rail-dot-done');
+    if(n < active) dot.classList.add('wf-rail-dot-done');
+    else if(n === active) dot.classList.add('wf-rail-dot-active');
+  });
+
+  // Fill width — 0% at step 1, 25% at 2, 50% at 3, 75% at 4, 100% at 5
+  const pct = ((active - 1) / 4) * 100;
+  fill.style.width = pct + '%';
+
+  // Step 4 unlock state
+  const step4 = document.getElementById('sh-step-4');
+  const step5 = document.getElementById('sh-step-5');
+  const cfgBtn = document.getElementById('sh-cfg-btn');
+  const cfgState = document.getElementById('sh-cfg-state');
+  const goGenBtn = document.getElementById('sh-go-gen-btn');
+  const goGenState = document.getElementById('sh-go-gen-state');
+
+  if(step4){
+    step4.classList.remove('sh-active','sh-done','sh-locked');
+    if(active < 4) step4.classList.add('sh-locked');
+    else if(active === 4) step4.classList.add('sh-active');
+    else step4.classList.add('sh-done');
+    if(cfgBtn) cfgBtn.disabled = active < 4;
+    if(cfgState){
+      if(active < 4) cfgState.textContent = 'Run analysis first';
+      else if(active === 4) cfgState.textContent = 'Open the configure tab';
+      else cfgState.textContent = '✓ Configured';
+    }
+  }
+  if(step5){
+    step5.classList.remove('sh-active','sh-done','sh-locked');
+    if(active < 5) step5.classList.add('sh-locked');
+    else step5.classList.add('sh-active');
+    if(goGenBtn) goGenBtn.disabled = active < 5;
+    if(goGenState){
+      if(active < 5) goGenState.textContent = active === 4 ? 'Configure first' : 'Earlier steps required';
+      else goGenState.textContent = hasResp ? '✓ Response generated' : 'Ready to generate';
+    }
+  }
+
+  // Hero stats
+  setText('wf-stat-clarifications', (S?.generatedClarifications||[]).length || '—');
+  setText('wf-stat-risks', (S?.initialRisks||[]).length || '—');
+  setText('wf-stat-evidence', (S?.initialEvidence||[]).length || '—');
+  const bidScore = (S?.intelResult?.bid?.score) ?? (S?.scores?.win_probability);
+  setText('wf-stat-bid', bidScore != null ? bidScore : '—');
+}
+
+function setText(id, v){ const el=document.getElementById(id); if(el) el.textContent = v; }
+function V(id){ const el=document.getElementById(id); return el ? (el.value||'') : ''; }
+
+// ═══════════════════════════════════════════════════════════════════
+// RFP INTELLIGENCE — full-featured single-page analyser
+// (calls /api/analyze-rfp on the server, renders comprehensive view)
+// ═══════════════════════════════════════════════════════════════════
+
+let _intelFile = null;
+let _intelText = '';
+let _intelResult = null;
+
+const INTEL_SAMPLES = {
+  ai: `REQUEST FOR PROPOSAL — AI-Powered Citizen Services Platform
+Ministry of Digital Economy | Deadline: 30 days from issue
+
+1. EXECUTIVE OVERVIEW
+The Ministry of Digital Economy invites qualified vendors to submit proposals for the design, development, and deployment of an AI-powered citizen services platform. The platform must serve 5 million registered citizens and handle 500,000 concurrent users during peak periods.
+
+2. TECHNICAL REQUIREMENTS
+2.1 Platform deployed on sovereign cloud infrastructure within UAE borders (data residency mandatory).
+2.2 All AI models must be explainable and auditable by a government regulator.
+2.3 Full Arabic and English bilingual interfaces with RTL layout support.
+2.4 Integration with existing SAP S/4HANA ERP is mandatory. APIs must be RESTful and comply with OpenAPI 3.0.
+2.5 The system must achieve 99.99% uptime SLA with RPO of 1 hour and RTO of 4 hours.
+2.6 Mobile application (iOS and Android) must be delivered as part of the solution.
+
+3. SECURITY & COMPLIANCE
+3.1 Vendor must hold ISO 27001 and ISO 27701 certifications.
+3.2 Penetration testing conducted quarterly by an approved third party.
+3.3 Compliance with UAE Federal Decree-Law No. 45 of 2021 on Personal Data Protection.
+3.4 24/7 managed Security Operations Centre (SOC) service must be included.
+
+4. EVALUATION CRITERIA
+Technical approach: 40% | Team qualifications: 25% | Commercial: 25% | Emiratisation: 10%
+
+5. COMMERCIAL
+Budget range: AED 15–25 million. 5-year contract with optional 2-year extension.`,
+  cyber: `REQUEST FOR INFORMATION — Managed Cybersecurity Services
+Central Bank | Confidential
+
+AREAS OF INTEREST:
+1. Managed Detection and Response (MDR) with 15-minute SLA for critical alerts
+2. Zero Trust Network Architecture implementation and management
+3. Cloud Security Posture Management (CSPM) across multi-cloud (Azure, AWS)
+4. Regulatory compliance: PCI-DSS, SOC 2, local banking regulations
+5. Threat intelligence platform with Splunk integration
+6. Red team / blue team exercises — minimum 2 per year
+7. Security awareness training for 2,000 staff
+
+VENDOR REQUIREMENTS:
+- Minimum 10 years in financial sector cybersecurity
+- Local presence required — 50% onshore delivery team
+- References from 3 financial institutions of similar size
+- CREST-accredited penetration testing team`,
+  cloud: `RFP — Enterprise Cloud Migration Programme
+National Health Authority
+
+BACKGROUND: 47 hospitals and 200 primary care clinics. Migrate on-premises infrastructure (1,200 servers, 850TB data) to hybrid cloud within 18 months.
+
+KEY REQUIREMENTS:
+1. Assessment and migration strategy for all clinical, administrative, and archival workloads
+2. Zero patient data loss — full audit trail maintained throughout
+3. HIPAA, GDPR, and local health data regulations compliance
+4. Integration with HL7 FHIR and DICOM systems
+5. Disaster recovery: 2-hour RTO, 30-minute RPO
+6. Training programme for 500 IT staff
+7. 3-year managed services post-migration
+8. AI/ML capabilities for predictive maintenance
+
+CONSTRAINTS: 18-month hard deadline. Budget: $8–12M. Critical systems max 4 hours downtime during migration.`
+};
+
+function intelLoadSample(t){
+  intelRemoveFile();
+  const ta = document.getElementById('intel-text');
+  if(ta) ta.value = INTEL_SAMPLES[t] || '';
+  const cap = document.getElementById('intel-capabilities');
+  if(cap){
+    cap.value = t==='ai' ? 'Azure AI Foundry, Arabic NLP, SAP integration, ISO 27001, UAE data residency, Mobile development'
+             : t==='cyber' ? 'MDR, Zero Trust, CSPM, Splunk, CREST team, PCI-DSS'
+             : 'Azure hybrid cloud, HL7 FHIR, DICOM, disaster recovery, managed services';
+  }
+}
+
+(function intelInitDrop(){
+  // Defer until DOM ready
+  setTimeout(function(){
+    const dz = document.getElementById('intel-drop');
+    if(!dz) return;
+    dz.addEventListener('dragover', function(e){ e.preventDefault(); dz.classList.add('dragover'); });
+    dz.addEventListener('dragleave', function(){ dz.classList.remove('dragover'); });
+    dz.addEventListener('drop', function(e){
+      e.preventDefault(); dz.classList.remove('dragover');
+      const f = e.dataTransfer.files[0];
+      if(f) intelProcessFile(f);
+    });
+  }, 1000);
+})();
+
+function intelHandleFile(e){
+  const f = e.target.files[0];
+  if(f) intelProcessFile(f);
+}
+
+async function intelProcessFile(file){
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  const allowed = ['pdf','doc','docx','xlsx','xls','txt','csv'];
+  if(!allowed.includes(ext)){ toast('Unsupported file type. PDF, Word, Excel or TXT only.','error'); return; }
+
+  _intelFile = file;
+  intelShowChip(file);
+  const ta = document.getElementById('intel-text');
+  if(ta){
+    ta.value = `[ ${file.name} loaded — ${(file.size/1024).toFixed(0)} KB. Click "Analyse RFP" to extract & analyse. ]`;
+    ta.disabled = true;
+  }
+  _intelText = '';
+}
+
+function intelShowChip(file){
+  const icons = {pdf:'📕', doc:'📘', docx:'📘', xlsx:'📗', xls:'📗', txt:'📄', csv:'📄'};
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  const sz = file.size > 1048576 ? (file.size/1048576).toFixed(1)+' MB' : (file.size/1024).toFixed(0)+' KB';
+  const wrap = document.getElementById('intel-chip-wrap');
+  if(!wrap) return;
+  wrap.innerHTML = `
+    <div class="intel-chip">
+      <span class="intel-chip-icon">${icons[ext]||'📄'}</span>
+      <span class="intel-chip-name">${esc(file.name)}</span>
+      <span class="intel-chip-size">${sz}</span>
+      <span class="intel-chip-rm" onclick="intelRemoveFile()" title="Remove">✕</span>
+    </div>`;
+}
+
+function intelRemoveFile(){
+  _intelFile = null;
+  _intelText = '';
+  const wrap = document.getElementById('intel-chip-wrap');
+  if(wrap) wrap.innerHTML = '';
+  const fi = document.getElementById('intel-file');
+  if(fi) fi.value = '';
+  const ta = document.getElementById('intel-text');
+  if(ta){ ta.value = ''; ta.disabled = false; }
+}
+
+function intelClearAll(){
+  intelRemoveFile();
+  const cap = document.getElementById('intel-capabilities');
+  if(cap) cap.value = '';
+  const r = document.getElementById('intel-results');
+  if(r) r.classList.remove('show');
+  const p = document.getElementById('intel-progress');
+  if(p) p.classList.remove('show');
+  intelSetStatus('idle');
+  _intelResult = null;
+  if(S) S.intelResult = null;
+  [1,2,3,4,5,6].forEach(n => intelSetStep(n,''));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function intelSetStatus(s){
+  const p = document.getElementById('intel-status-pill');
+  if(!p) return;
+  if(s==='idle'){ p.textContent = '● Idle'; p.style.background='rgba(255,255,255,0.1)'; }
+  else if(s==='running'){ p.textContent = '◉ Running'; p.style.background='rgba(109,105,240,0.3)'; }
+  else { p.textContent = '✓ Complete'; p.style.background='rgba(21,128,61,0.3)'; }
+}
+
+function intelSetStep(n, state){
+  const el = document.getElementById('intel-step-'+n);
+  if(!el) return;
+  el.className = 'intel-prog-step ' + state;
+  const ic = el.querySelector('.intel-step-icon');
+  if(!ic) return;
+  if(state==='active') ic.innerHTML = '<span style="animation:spin .7s linear infinite;display:inline-block">⟳</span>';
+  else if(state==='done') ic.textContent = '✓';
+  else ic.textContent = n;
+}
+
+function intelSetDetail(t){
+  const el = document.getElementById('intel-prog-detail');
+  if(el) el.textContent = t || 'Processing...';
+}
+
+const _intelSleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function intelRunAnalysis(){
+  let rfpText = '';
+  let useFile = false;
+  if(_intelFile){
+    useFile = true;
+  } else {
+    rfpText = (document.getElementById('intel-text')?.value || '').trim();
+    if(!rfpText){ toast('Please upload a document or paste RFP text first','error'); return; }
+  }
+
+  const capabilities = (document.getElementById('intel-capabilities')?.value || '').trim();
+  const btn = document.getElementById('intel-run-btn');
+  if(btn) btn.disabled = true;
+
+  intelSetStatus('running');
+  const prog = document.getElementById('intel-progress');
+  if(prog) prog.classList.add('show');
+  const res = document.getElementById('intel-results');
+  if(res) res.classList.remove('show');
+  [1,2,3,4,5,6].forEach(n => intelSetStep(n,''));
+
+  intelSetStep(1,'active'); intelSetDetail('Parsing and ingesting document...');
+
+  try {
+    let result;
+
+    if(useFile){
+      // Use existing /api/analyze-rfp endpoint (handles multipart upload + extraction)
+      const fd = new FormData();
+      fd.append('rfpDoc', _intelFile);
+      fd.append('language','English');
+      fd.append('source_language','auto');
+      fd.append('source_language_name','Auto-Detect');
+
+      await _intelSleep(400); intelSetStep(1,'done'); intelSetStep(2,'active'); intelSetDetail('Extracting requirements...');
+
+      const ctrl = new AbortController();
+      const tid = setTimeout(()=>ctrl.abort(), 5*60*1000);
+      let resp;
+      try {
+        resp = await fetch('/api/analyze-rfp',{method:'POST',body:fd,credentials:'same-origin',signal:ctrl.signal});
+      } catch(fe) {
+        clearTimeout(tid);
+        throw new Error(fe.name==='AbortError'?'Request timed out':'Network error');
+      }
+      clearTimeout(tid);
+
+      intelSetStep(2,'done'); intelSetStep(3,'active'); intelSetDetail('Scoring complexity & priority...');
+
+      if(!resp.ok){ const e=await resp.json().catch(()=>({error:'Server error'})); throw new Error(e.error||'Server error'); }
+      const data = await resp.json();
+      if(!data.success) throw new Error(data.error || 'Analysis failed');
+
+      // The backend returns a brief; map it into the rich intel structure
+      result = intelMapBriefToResult(data.brief, capabilities);
+
+    } else {
+      // Use the AI chat endpoint with the existing prompt
+      await _intelSleep(400); intelSetStep(1,'done'); intelSetStep(2,'active'); intelSetDetail('Extracting requirements...');
+
+      const PROMPT = `You are a senior pre-sales AI agent specialising in analysing RFPs and RFIs.
+Analyse the following document thoroughly.${capabilities ? `\nCompany capabilities: ${capabilities}` : ''}
+
+Return ONLY a valid JSON object with NO markdown fences, NO explanation — raw JSON only:
+
+{
+  "summary": {
+    "client": "organisation name",
+    "projectTitle": "project title",
+    "totalRequirements": 0,
+    "highComplexity": 0,
+    "mediumComplexity": 0,
+    "lowComplexity": 0,
+    "matchedCapabilities": 0,
+    "gaps": 0,
+    "riskCount": 0
+  },
+  "bid": {
+    "decision": "BID",
+    "score": 75,
+    "rationale": "explanation",
+    "keyStrengths": ["s1","s2","s3"],
+    "keyRisks": ["r1","r2"]
+  },
+  "requirements": [
+    {"id":"R01","description":"...","type":"Functional","complexity":"High","priority":"Must Have","match":"Full Match","notes":"..."}
+  ],
+  "risks": [
+    {"severity":"High","category":"Technical","description":"...","mitigation":"..."}
+  ],
+  "gaps": [
+    {"requirement":"R01","gap":"what is missing","suggestion":"how to address"}
+  ],
+  "winThemes": [
+    {"theme":"Theme title","description":"how it maps to client pain and your strength"}
+  ],
+  "clarifications": ["question 1","question 2"]
+}
+
+decision must be exactly "BID", "NO-BID", or "REVIEW".
+type must be exactly "Functional", "Non-Functional", "Compliance", or "Commercial".
+complexity must be exactly "High", "Medium", or "Low".
+match must be exactly "Full Match", "Partial Match", or "Gap".
+
+DOCUMENT:
+---
+${rfpText.substring(0, 12000)}
+---`;
+
+      const r = await api('POST','/api/chat',{message:PROMPT,history:[]});
+      intelSetStep(2,'done'); intelSetStep(3,'active'); intelSetDetail('Scoring complexity & priority...');
+      let raw = (r.reply || r.response || r.message || '').replace(/```json|```/g,'').trim();
+      try { result = JSON.parse(raw); }
+      catch(e){
+        // Try to extract JSON from a longer response
+        const m = raw.match(/\{[\s\S]*\}/);
+        if(m){ try{ result = JSON.parse(m[0]); }catch(e2){ throw new Error('Could not parse AI response'); } }
+        else throw new Error('Could not parse AI response');
+      }
+    }
+
+    await _intelSleep(300); intelSetStep(3,'done'); intelSetStep(4,'active'); intelSetDetail('Matching capabilities...');
+    await _intelSleep(300); intelSetStep(4,'done'); intelSetStep(5,'active'); intelSetDetail('Flagging risks & gaps...');
+    await _intelSleep(300); intelSetStep(5,'done'); intelSetStep(6,'active'); intelSetDetail('Building output report...');
+    await _intelSleep(300); intelSetStep(6,'done');
+
+    _intelResult = result;
+    if(S) S.intelResult = result;
+
+    await _intelSleep(300);
+    if(prog) prog.classList.remove('show');
+    intelRender(result);
+    intelSetStatus('done');
+    try{ wfUpdateRail(); }catch(e){}
+    toast('Analysis complete!','success');
+
+  } catch(err){
+    console.error('[intel]', err);
+    if(prog) prog.classList.remove('show');
+    intelSetStatus('idle');
+    [1,2,3,4,5,6].forEach(n => intelSetStep(n,''));
+    toast('Error: ' + (err.message || 'Analysis failed'),'error');
+  } finally {
+    if(btn) btn.disabled = false;
+  }
+}
+
+// Map the existing executive brief response into the rich intel format
+function intelMapBriefToResult(b, capabilities){
+  if(!b) b = {};
+  const reqs = (b.key_requirements || []).map((r,i) => ({
+    id: r.id || r.req_id || ('R' + String(i+1).padStart(2,'0')),
+    description: r.description || r.title || '',
+    type: r.type || 'Functional',
+    complexity: r.complexity || (r.priority||'').toUpperCase().includes('MAND') ? 'High' : 'Medium',
+    priority: r.priority || 'Must Have',
+    match: capabilities ? 'Partial Match' : 'Full Match',
+    notes: r.section ? ('§ '+r.section) : ''
+  }));
+  const risks = (b.risk_flags || []).map(r => ({
+    severity: 'Medium',
+    category: 'Operational',
+    description: typeof r === 'string' ? r : (r.description || ''),
+    mitigation: 'Address in proposal section'
+  }));
+  const decision = (b.go_nogo || '').toUpperCase().includes('NO') ? 'NO-BID'
+                 : (b.go_nogo || '').toUpperCase().includes('COND') ? 'REVIEW' : 'BID';
+  return {
+    summary: {
+      client: b.issuer || '',
+      projectTitle: b.title || b.industry || '',
+      totalRequirements: reqs.length,
+      highComplexity: reqs.filter(r => r.complexity==='High').length,
+      mediumComplexity: reqs.filter(r => r.complexity==='Medium').length,
+      lowComplexity: reqs.filter(r => r.complexity==='Low').length,
+      matchedCapabilities: capabilities ? Math.floor(reqs.length*0.7) : 0,
+      gaps: capabilities ? Math.floor(reqs.length*0.2) : 0,
+      riskCount: risks.length
+    },
+    bid: {
+      decision: decision,
+      score: b.win_probability || 70,
+      rationale: (b.win_factors||[]).slice(0,2).join(' ') || 'See requirement details for full assessment',
+      keyStrengths: b.win_factors || [],
+      keyRisks: b.risk_flags || []
+    },
+    requirements: reqs,
+    risks: risks,
+    gaps: [],
+    winThemes: (b.win_factors || []).map((w,i) => ({
+      theme: 'Win Factor ' + (i+1),
+      description: w
+    })),
+    clarifications: b.recommended_actions || []
+  };
+}
+
+function intelRender(r){
+  const res = document.getElementById('intel-results');
+  if(!res) return;
+  res.classList.add('show');
+
+  // Summary chips
+  const s = r.summary || {};
+  const bid = r.bid || {};
+  const sumChips = document.getElementById('intel-sum-chips');
+  if(sumChips){
+    sumChips.innerHTML = [
+      {val: s.totalRequirements ?? '—', lbl:'Requirements', c:'var(--violet)'},
+      {val: s.highComplexity ?? '—', lbl:'High complexity', c:'#d96d3f'},
+      {val: s.gaps ?? '—', lbl:'Capability gaps', c:'var(--amber)'},
+      {val: s.riskCount ?? '—', lbl:'Risk flags', c:'var(--red)'},
+      {val: s.matchedCapabilities ?? '—', lbl:'Matched', c:'var(--green)'},
+      {val: (bid.score ?? '—') + '/100', lbl:'Bid score', c:'var(--violet)'},
+    ].map(c => `<div class="intel-sum-chip"><div class="intel-sum-val" style="color:${c.c}">${c.val}</div><div class="intel-sum-lbl">${c.lbl}</div></div>`).join('');
+  }
+
+  // Bid recommendation
+  const vc = bid.decision==='BID' ? 'bid' : bid.decision==='NO-BID' ? 'nobid' : 'review';
+  const col = bid.decision==='BID' ? 'var(--green)' : bid.decision==='NO-BID' ? 'var(--red)' : 'var(--amber)';
+  const bidEl = document.getElementById('intel-body-bid');
+  if(bidEl){
+    bidEl.innerHTML = `
+      <div class="intel-verdict ${vc}">
+        <div class="intel-verdict-d" style="color:${col}">${bid.decision || '—'}</div>
+        <div class="intel-verdict-score" style="color:${col}">${bid.score ?? '—'}<span class="intel-verdict-score-suf">/100</span></div>
+        <div class="intel-verdict-rat">${esc(bid.rationale || '')}</div>
+      </div>
+      ${(bid.keyStrengths?.length || bid.keyRisks?.length) ? `<div class="intel-verdict-grid">
+        ${(bid.keyStrengths || []).map(t => `<div class="intel-item-row"><div class="intel-item-dot" style="background:var(--green)"></div><div><div class="intel-item-lbl">Strength</div><div class="intel-item-text">${esc(t)}</div></div></div>`).join('')}
+        ${(bid.keyRisks || []).map(t => `<div class="intel-item-row"><div class="intel-item-dot" style="background:var(--red)"></div><div><div class="intel-item-lbl">Key risk</div><div class="intel-item-text">${esc(t)}</div></div></div>`).join('')}
+      </div>` : ''}`;
+  }
+
+  // Requirements
+  const reqs = r.requirements || [];
+  const typeMap = {Functional:'ib-func','Non-Functional':'ib-nonf',Compliance:'ib-comp',Commercial:'ib-comm'};
+  const cmpMap = {High:'ib-high',Medium:'ib-medium',Low:'ib-low'};
+  const mchMap = {'Full Match':'ib-match','Partial Match':'ib-partial','Gap':'ib-gap'};
+  const reqEl = document.getElementById('intel-body-req');
+  if(reqEl){
+    reqEl.innerHTML = reqs.length ? `<div style="overflow-x:auto;max-height:480px;overflow-y:auto">
+      <table class="intel-req-table"><thead><tr><th>ID</th><th>Requirement</th><th>Type</th><th>Complexity</th><th>Match</th></tr></thead><tbody>
+      ${reqs.map(q => `<tr>
+        <td style="font-family:'JetBrains Mono',monospace;color:var(--text3);font-size:11px;font-weight:600">${esc(q.id||'')}</td>
+        <td style="max-width:320px"><div style="font-weight:500;color:var(--navy)">${esc(q.description||'')}</div>${q.notes?`<div style="font-size:10.5px;color:var(--text3);margin-top:3px">${esc(q.notes)}</div>`:''}</td>
+        <td><span class="intel-badge ${typeMap[q.type]||'ib-func'}">${esc(q.type||'—')}</span></td>
+        <td><span class="intel-badge ${cmpMap[q.complexity]||'ib-low'}">${esc(q.complexity||'—')}</span></td>
+        <td><span class="intel-badge ${mchMap[q.match]||'ib-gap'}">${esc(q.match||'—')}</span></td>
+      </tr>`).join('')}
+      </tbody></table></div>` : '<div class="intel-empty">No requirements extracted.</div>';
+  }
+
+  // Risks
+  const risks = r.risks || [];
+  const riskEl = document.getElementById('intel-body-risk');
+  if(riskEl){
+    riskEl.innerHTML = risks.length ? `<div style="display:flex;flex-direction:column;gap:8px;max-height:480px;overflow-y:auto">
+      ${risks.map(k => `<div class="intel-item-row">
+        <div class="intel-item-dot" style="background:${k.severity==='High'?'var(--red)':k.severity==='Medium'?'var(--amber)':'var(--green)'}"></div>
+        <div style="flex:1">
+          <div style="display:flex;gap:6px;margin-bottom:5px;flex-wrap:wrap;align-items:center">
+            <span class="intel-badge ${k.severity==='High'?'ib-gap':k.severity==='Medium'?'ib-medium':'ib-low'}">${esc(k.severity||'—')}</span>
+            <span style="font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em">${esc(k.category||'')}</span>
+          </div>
+          <div class="intel-item-text">${esc(k.description||'')}</div>
+          ${k.mitigation?`<div style="font-size:11.5px;color:var(--green);margin-top:6px;line-height:1.5">💡 ${esc(k.mitigation)}</div>`:''}
+        </div>
+      </div>`).join('')}
+    </div>` : '<div class="intel-empty">✓ No significant risks identified.</div>';
+  }
+
+  // Gaps
+  const gaps = r.gaps || [];
+  const gapEl = document.getElementById('intel-body-gap');
+  if(gapEl){
+    gapEl.innerHTML = gaps.length ? `<div style="display:flex;flex-direction:column;gap:8px">
+      ${gaps.map(g => `<div class="intel-item-row">
+        <div class="intel-item-dot" style="background:var(--amber)"></div>
+        <div>
+          <div class="intel-item-lbl">${esc(g.requirement||'')}</div>
+          <div class="intel-item-text">${esc(g.gap||'')}</div>
+          ${g.suggestion?`<div style="font-size:11.5px;color:var(--green);margin-top:5px;line-height:1.5">→ ${esc(g.suggestion)}</div>`:''}
+        </div>
+      </div>`).join('')}
+    </div>` : '<div class="intel-empty" style="color:var(--green)">✓ No capability gaps — strong match!</div>';
+  }
+
+  // Win themes
+  const themes = r.winThemes || [];
+  const winEl = document.getElementById('intel-body-win');
+  if(winEl){
+    winEl.innerHTML = themes.length ? `<div class="intel-theme-grid">
+      ${themes.map(t => `<div class="intel-theme-card"><div class="intel-theme-title">🎯 ${esc(t.theme||'')}</div><div class="intel-theme-body">${esc(t.description||'')}</div></div>`).join('')}
+    </div>` : '<div class="intel-empty">No win themes generated.</div>';
+  }
+
+  // Clarifications
+  const clars = r.clarifications || [];
+  const clarEl = document.getElementById('intel-body-clar');
+  if(clarEl){
+    clarEl.innerHTML = clars.length ? `<div class="intel-clar-list">
+      ${clars.map((q,i) => `<div class="intel-clar-item"><span class="intel-clar-num">Q${String(i+1).padStart(2,'0')}</span><span class="intel-clar-text">${esc(q)}</span></div>`).join('')}
+    </div>` : '<div class="intel-empty">No clarification questions generated.</div>';
+  }
+
+  // Scroll to results
+  setTimeout(() => res.scrollIntoView({behavior:'smooth',block:'start'}), 200);
+}
+
+// ── EXPORTS ─────────────────────────────────────────────────────────
+function intelExportExcel(){
+  if(!_intelResult){ toast('Run an analysis first','info'); return; }
+  if(typeof XLSX === 'undefined'){
+    // Lazy load XLSX
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = ()=> intelExportExcel();
+    document.head.appendChild(s);
+    return;
+  }
+  const r = _intelResult, s = r.summary||{}, b = r.bid||{};
+  const wb = XLSX.utils.book_new();
+
+  const sumData = [
+    ['RFP / RFI Intelligence Analysis Report'],[''],
+    ['Client', s.client||''],
+    ['Project', s.projectTitle||''],
+    ['Total Requirements', s.totalRequirements||0],
+    ['High Complexity', s.highComplexity||0],
+    ['Medium Complexity', s.mediumComplexity||0],
+    ['Low Complexity', s.lowComplexity||0],
+    ['Matched Capabilities', s.matchedCapabilities||0],
+    ['Capability Gaps', s.gaps||0],
+    ['Risk Count', s.riskCount||0],
+    [''],
+    ['BID RECOMMENDATION', b.decision||''],
+    ['Bid Score', (b.score||0)+'/100'],
+    ['Rationale', b.rationale||''],
+    [''],
+    ['Key Strengths', (b.keyStrengths||[]).join('; ')],
+    ['Key Risks', (b.keyRisks||[]).join('; ')],
+    [''],
+    ['Generated', new Date().toLocaleString()],
+  ];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(sumData), 'Summary');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['ID','Description','Type','Complexity','Priority','Match','Notes'],
+    ...(r.requirements||[]).map(q=>[q.id,q.description,q.type,q.complexity,q.priority,q.match,q.notes])
+  ]), 'Requirements');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['Severity','Category','Description','Mitigation'],
+    ...(r.risks||[]).map(k=>[k.severity,k.category,k.description,k.mitigation])
+  ]), 'Risks');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['Requirement','Gap','Suggested Action'],
+    ...(r.gaps||[]).map(g=>[g.requirement,g.gap,g.suggestion])
+  ]), 'Gap Analysis');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['Theme','Description'],
+    ...(r.winThemes||[]).map(t=>[t.theme,t.description])
+  ]), 'Win Themes');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['#','Clarification Question'],
+    ...(r.clarifications||[]).map((q,i)=>[i+1,q])
+  ]), 'Clarifications');
+
+  XLSX.writeFile(wb, `RFP_Intelligence_${(s.client||'Report').replace(/\s+/g,'_')}.xlsx`);
+  toast('Excel report downloaded','success');
+}
+
+function intelExportWord(){
+  if(!_intelResult){ toast('Run an analysis first','info'); return; }
+  const r = _intelResult, s = r.summary||{}, b = r.bid||{};
+  const bidColor = b.decision==='BID'?'#15803d':b.decision==='NO-BID'?'#c0392b':'#b45309';
+  const client = s.client || 'Client';
+
+  const reqRows = (r.requirements||[]).map(q=>`
+    <tr>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-family:Courier New;font-size:11px;color:#555">${esc(q.id||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:12px">${esc(q.description||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px">${esc(q.type||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px">${esc(q.complexity||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px">${esc(q.match||'')}</td>
+    </tr>`).join('');
+  const riskRows = (r.risks||[]).map(k=>`
+    <tr>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px;font-weight:bold;color:${k.severity==='High'?'#c0392b':k.severity==='Medium'?'#b45309':'#15803d'}">${esc(k.severity||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px">${esc(k.category||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:12px">${esc(k.description||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:12px;color:#555">${esc(k.mitigation||'')}</td>
+    </tr>`).join('');
+
+  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+<head><meta charset='utf-8'><title>RFP Intelligence — ${esc(client)}</title>
+<style>
+  body{font-family:Calibri,sans-serif;font-size:13px;color:#272160;margin:2cm}
+  h1{font-size:22px;color:#171339;border-bottom:3px solid #6D69F0;padding-bottom:8px;margin-bottom:6px}
+  h2{font-size:15px;color:#272160;margin-top:24px;margin-bottom:8px;border-left:4px solid #F28D64;padding-left:10px}
+  table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px}
+  th{background:#272160;color:#fff;padding:8px 10px;text-align:left;font-size:11px;border:1px solid #171339}
+  .meta{color:#6c757d;font-size:12px;margin-bottom:18px}
+  .verdict{border-radius:6px;padding:16px 20px;margin-bottom:14px;background:#f8f9fa;border-left:5px solid ${bidColor}}
+  .verdict-d{font-size:22px;font-weight:700;color:${bidColor}}
+  .verdict-s{font-size:18px;font-weight:600;color:${bidColor}}
+  .theme{padding:10px 14px;background:#f8f9fa;border-radius:4px;margin-bottom:8px;border-left:3px solid #6D69F0}
+  .theme-t{font-weight:600;color:#272160;margin-bottom:3px;font-size:12px}
+  .q{margin-bottom:6px;padding:6px 12px;background:#f8f9fa;border-left:3px solid #6D69F0;font-size:12px}
+  .str{margin-bottom:4px;font-size:12px;color:#15803d} .str::before{content:'✓  '}
+  .rsk{margin-bottom:4px;font-size:12px;color:#c0392b} .rsk::before{content:'⚠  '}
+</style></head>
+<body>
+<h1>RFP / RFI Intelligence Report</h1>
+<div class="meta"><strong>${esc(s.projectTitle||'—')}</strong> &middot; ${esc(client)} &middot; Generated ${new Date().toLocaleString()}</div>
+<h2>Bid / No-Bid Recommendation</h2>
+<div class="verdict">
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div class="verdict-d">${esc(b.decision||'—')}</div>
+    <div class="verdict-s">${b.score ?? '—'} / 100</div>
+  </div>
+  <p style="margin-top:8px;font-size:12px;color:#555">${esc(b.rationale||'')}</p>
+  <div style="margin-top:10px">
+    ${(b.keyStrengths||[]).map(t=>`<div class="str">${esc(t)}</div>`).join('')}
+    ${(b.keyRisks||[]).map(t=>`<div class="rsk">${esc(t)}</div>`).join('')}
+  </div>
+</div>
+<h2>Requirement Matrix</h2>
+<table><thead><tr><th>ID</th><th>Description</th><th>Type</th><th>Complexity</th><th>Match</th></tr></thead>
+<tbody>${reqRows||'<tr><td colspan="5" style="padding:10px;color:#999">No requirements</td></tr>'}</tbody></table>
+<h2>Risk Flags</h2>
+<table><thead><tr><th>Severity</th><th>Category</th><th>Description</th><th>Mitigation</th></tr></thead>
+<tbody>${riskRows||'<tr><td colspan="4" style="padding:10px;color:#999">No risks</td></tr>'}</tbody></table>
+<h2>Win Themes</h2>
+${(r.winThemes||[]).map(t=>`<div class="theme"><div class="theme-t">🎯 ${esc(t.theme||'')}</div><div style="font-size:12px">${esc(t.description||'')}</div></div>`).join('')||'<p style="color:#999">No win themes generated</p>'}
+<h2>Clarification Questions</h2>
+${(r.clarifications||[]).map((q,i)=>`<div class="q"><strong>Q${String(i+1).padStart(2,'0')}</strong> &nbsp;${esc(q)}</div>`).join('')||'<p style="color:#999">None</p>'}
+<div style="margin-top:30px;padding-top:12px;border-top:1px solid #dee2e6;color:#adb5bd;font-size:10px">Generated by RFP Agent &middot; Confidential &middot; ${new Date().toLocaleString()}</div>
+</body></html>`;
+
+  const blob = new Blob([html], {type:'application/msword'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `RFP_Intelligence_${client.replace(/\s+/g,'_')}.doc`;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  toast('Word report downloaded','success');
+}
+
+function intelExportPDF(){
+  if(!_intelResult){ toast('Run an analysis first','info'); return; }
+  // Use the browser's print-to-PDF on a styled HTML — simpler than jsPDF embed
+  const r = _intelResult, s = r.summary||{}, b = r.bid||{};
+  const bidColor = b.decision==='BID'?'#15803d':b.decision==='NO-BID'?'#c0392b':'#b45309';
+  const w = window.open('', '_blank');
+  if(!w){ toast('Pop-ups blocked — allow them to download PDF','error'); return; }
+  w.document.write(`<html><head><title>RFP Intelligence — ${esc(s.client||'Report')}</title><style>
+    @page{margin:1.6cm} body{font-family:'DM Sans',Calibri,sans-serif;font-size:12px;color:#272160}
+    h1{font-size:24px;color:#171339;border-bottom:3px solid #6D69F0;padding-bottom:8px;letter-spacing:-.5px}
+    h2{font-size:14px;color:#272160;margin-top:22px;border-left:4px solid #F28D64;padding-left:10px}
+    .meta{color:#6c757d;font-size:11px;margin-bottom:16px}
+    .verdict{border-radius:6px;padding:14px 18px;margin-bottom:14px;background:#f8f9fa;border-left:5px solid ${bidColor}}
+    .verdict-d{font-size:22px;font-weight:700;color:${bidColor}}
+    .verdict-s{font-size:18px;font-weight:600;color:${bidColor}}
+    table{width:100%;border-collapse:collapse;font-size:11px;margin:8px 0 12px}
+    th{background:#272160;color:#fff;padding:6px 8px;text-align:left;font-size:10px}
+    td{padding:6px 8px;border:1px solid #ddd}
+    .theme{padding:8px 12px;background:#f8f9fa;margin-bottom:6px;border-left:3px solid #6D69F0;font-size:11px}
+    .q{padding:6px 10px;background:#f8f9fa;margin-bottom:5px;border-left:3px solid #6D69F0;font-size:11px}
+  </style></head><body>
+  <h1>RFP / RFI Intelligence Report</h1>
+  <div class="meta"><strong>${esc(s.projectTitle||'—')}</strong> &middot; ${esc(s.client||'Client')} &middot; ${new Date().toLocaleDateString()}</div>
+  <div class="verdict">
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><div class="verdict-d">${esc(b.decision||'—')}</div><div class="verdict-s">${b.score ?? '—'} / 100</div></div>
+    <p style="margin-top:8px;font-size:11px;color:#555">${esc(b.rationale||'')}</p>
+  </div>
+  <h2>Requirement Matrix</h2>
+  <table><thead><tr><th>ID</th><th>Description</th><th>Type</th><th>Complexity</th><th>Match</th></tr></thead><tbody>
+  ${(r.requirements||[]).map(q=>`<tr><td>${esc(q.id||'')}</td><td>${esc(q.description||'')}</td><td>${esc(q.type||'')}</td><td>${esc(q.complexity||'')}</td><td>${esc(q.match||'')}</td></tr>`).join('')||'<tr><td colspan="5" style="color:#999">No requirements</td></tr>'}
+  </tbody></table>
+  <h2>Risk Flags</h2>
+  <table><thead><tr><th>Severity</th><th>Category</th><th>Description</th><th>Mitigation</th></tr></thead><tbody>
+  ${(r.risks||[]).map(k=>`<tr><td><strong style="color:${k.severity==='High'?'#c0392b':k.severity==='Medium'?'#b45309':'#15803d'}">${esc(k.severity||'')}</strong></td><td>${esc(k.category||'')}</td><td>${esc(k.description||'')}</td><td>${esc(k.mitigation||'')}</td></tr>`).join('')||'<tr><td colspan="4" style="color:#999">No risks</td></tr>'}
+  </tbody></table>
+  <h2>Win Themes</h2>
+  ${(r.winThemes||[]).map(t=>`<div class="theme"><strong>🎯 ${esc(t.theme||'')}</strong><br>${esc(t.description||'')}</div>`).join('')||'<p style="color:#999">None</p>'}
+  <h2>Clarification Questions</h2>
+  ${(r.clarifications||[]).map((q,i)=>`<div class="q"><strong>Q${String(i+1).padStart(2,'0')}</strong> ${esc(q)}</div>`).join('')||'<p style="color:#999">None</p>'}
+  <script>setTimeout(function(){window.print();},500);</scr` + `ipt>
+  </body></html>`);
+  w.document.close();
+  toast('Print dialog opened — save as PDF','info');
+}
 
 // ─── Restore original app initialization ───
 init();
