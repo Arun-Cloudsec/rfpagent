@@ -3656,6 +3656,15 @@ textarea.improve-input::placeholder{color:var(--text3)}
 }
 .home-btn-injected svg{flex-shrink:0;display:block;width:14px;height:14px}
 
+/* Floating variant — used on pages WITHOUT a .topbar (Projects, Project RFP, Rule Library, etc.) */
+.home-btn-floating{
+  position:absolute !important;
+  top:14px !important;
+  right:18px !important;
+  z-index:50 !important;
+  box-shadow:0 4px 14px rgba(109,105,240,0.4),0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
 /* Hide the marketing ticker — pages are now absolutely positioned and the ticker just adds visual noise */
 .ticker-wrap{display:none !important}
 
@@ -12984,33 +12993,45 @@ window.addEventListener('popstate', function(e){
   if(typeof goPage === 'function') goPage(p, true);
 });
 
-// Inject a "Home" button into every topbar (except the landing page's topbar)
+// Inject a "Home" button into every page (topbar OR no-topbar pages)
 function injectHomeButtonsIntoTopbars(){
+  // 1) For pages that have a .topbar — inject the button INTO the topbar
   document.querySelectorAll('.topbar').forEach(function(tb){
-    // Skip the landing page topbar — we don't need a Home button when we're already on Home
-    if(tb.closest('#page-landing')) return;
-    // Skip if already injected
-    if(tb.querySelector('.home-btn-injected')) return;
+    if(tb.closest('#page-landing')) return;          // skip landing
+    if(tb.querySelector('.home-btn-injected')) return;  // already injected
 
-    var btn = document.createElement('button');
-    btn.className = 'home-btn-injected';
-    btn.title = 'Go to Home';
-    btn.setAttribute('aria-label','Go to Home');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span>';
-    btn.onclick = function(){ goPage('landing'); };
-
-    // Place at the very start of the topbar (left edge, just after the title)
-    // Find the .topbar-title and insert right after it
+    var btn = _makeHomeBtn();
     var title = tb.querySelector('.topbar-title');
     if(title && title.nextSibling){
       tb.insertBefore(btn, title.nextSibling);
     } else if(title){
       title.parentNode.appendChild(btn);
     } else {
-      // No title — just put it at the start
       tb.insertBefore(btn, tb.firstChild);
     }
   });
+
+  // 2) For pages that DON'T have a .topbar — add the button as a fixed-positioned overlay
+  //    scoped to that page (so it only shows when the page is active)
+  document.querySelectorAll('.page').forEach(function(page){
+    if(page.id === 'page-landing') return;            // skip landing
+    if(page.querySelector('.topbar')) return;         // pages with topbars handled above
+    if(page.querySelector('.home-btn-floating')) return;  // already injected
+
+    var btn = _makeHomeBtn();
+    btn.classList.add('home-btn-floating');
+    page.insertBefore(btn, page.firstChild);
+  });
+}
+
+function _makeHomeBtn(){
+  var btn = document.createElement('button');
+  btn.className = 'home-btn-injected';
+  btn.title = 'Go to Home';
+  btn.setAttribute('aria-label','Go to Home');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span>';
+  btn.onclick = function(e){ e.stopPropagation(); goPage('landing'); };
+  return btn;
 }
 
 // Run on DOM ready and again after dynamic page renders
