@@ -22,11 +22,12 @@
   --red:#c0392b; --red-bg:#fff0f2; --red-bd:#f7bfc8;
   --radius:8px; --radius-lg:12px;
 }
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
-.app{display:flex;height:100vh;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;margin:0}
+html,body{height:100%}
+.app{display:flex !important;flex-direction:row !important;height:100vh !important;width:100% !important;overflow:hidden}
 
 /* ── Sidebar ── */
-.sidebar{width:255px;min-width:255px;background:linear-gradient(175deg,var(--darkui) 0%,var(--indigo) 50%,#3d3895 100%);display:flex;flex-direction:column;box-shadow:2px 0 16px rgba(39,33,96,0.18)}
+.sidebar{width:255px !important;min-width:255px !important;flex-shrink:0 !important;background:linear-gradient(175deg,var(--darkui) 0%,var(--indigo) 50%,#3d3895 100%);display:flex !important;flex-direction:column;box-shadow:2px 0 16px rgba(39,33,96,0.18);height:100vh;overflow:hidden}
 .sb-top{padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .logo{display:flex;align-items:center;gap:10px}
 .logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--orange),var(--violet));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(242,141,100,0.35)}
@@ -58,7 +59,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .logout-btn svg{width:14px;height:14px}
 
 /* ── Main ── */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.main{flex:1 1 auto !important;display:flex !important;flex-direction:column !important;overflow:hidden;min-width:0;height:100vh}
 .topbar{height:52px;background:white;border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:14px;flex-shrink:0;box-shadow:0 1px 6px rgba(39,33,96,0.06)}
 .topbar-title{font-family:'Fraunces',serif;font-size:16px;font-weight:800;color:var(--navy);flex:1;letter-spacing:-0.3px}
 .tab-bar{display:flex;background:white;border-bottom:1px solid var(--border);padding:0 24px;flex-shrink:0}
@@ -67,7 +68,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .tab.active{color:var(--violet);border-bottom-color:var(--orange);font-weight:600}
 .content{flex:1;overflow-y:auto;padding:22px;background:var(--bg)}
 .page{display:none}
-.page.active{display:flex;flex-direction:column;height:100%}
+.page.active{display:flex;flex-direction:column;background:var(--bg);position:absolute;top:0;left:0;right:0;bottom:0}
+main.main{position:relative !important;flex:1 1 auto !important}
 
 /* ── Cards ── */
 .card{background:white;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:14px;overflow:hidden;box-shadow:0 1px 6px rgba(39,33,96,0.05)}
@@ -742,13 +744,16 @@ textarea.improve-input::placeholder{color:var(--text3)}
   </div>
   <nav class="nav">
     <div class="nav-lbl" style="color:var(--orange);font-weight:800">🚀 Start Here</div>
+    <button class="nav-btn" id="nav-landing" onclick="goPage('landing')" style="background:linear-gradient(135deg,rgba(109,105,240,0.22),rgba(242,141,100,0.18));border-left:3px solid var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span style="font-weight:700">Home</span></button>
     <button class="nav-btn" id="nav-starthere" onclick="goPage('starthere')" style="background:linear-gradient(135deg,rgba(242,141,100,0.15),rgba(109,105,240,0.1));border-left:3px solid var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg><span style="font-weight:700">Begin RFP Workflow</span></button>
+    <button class="nav-btn" id="nav-intelligence" onclick="goPage('intelligence')" style="background:linear-gradient(135deg,rgba(109,105,240,0.18),rgba(143,112,192,0.1));border-left:3px solid var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span style="font-weight:700">RFP Intelligence</span><span class="nav-badge on" style="font-size:9px">NEW</span></button>
     <button class="nav-btn" id="nav-dashboard" onclick="goPage('dashboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Status Dashboard</button>
     <button class="nav-btn" id="nav-process" onclick="goPage('process')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>How It Works</button>
 
     <div class="nav-lbl" style="margin-top:10px">📁 1. Setup</div>
     <button class="nav-btn" id="nav-projects" onclick="goPage('projects')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 012-2h5l2 2h7a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>Projects<span class="nav-badge" id="proj-count">0</span></button>
     <button class="nav-btn" id="nav-projrfp" onclick="goPage('projrfp')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>Project RFP</button>
+    <button class="nav-btn" id="nav-capabilities" onclick="goPage('capabilities')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Capability Inventory<span class="nav-badge" id="cap-count">0</span></button>
     <button class="nav-btn" id="nav-rules" onclick="goPage('rules')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Rule Library<span class="nav-badge" id="rules-count">0</span></button>
 
     <div class="nav-lbl" style="margin-top:10px">🔍 2. Analyze</div>
@@ -760,7 +765,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
     <button class="nav-btn" id="nav-effort" onclick="goPage('effort')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Effort Estimation</button>
 
     <div class="nav-lbl" style="margin-top:10px">✍️ 3. Draft &amp; Review</div>
-    <button class="nav-btn active" id="nav-generate" onclick="goPage('generate')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Generate Response</button>
+    <button class="nav-btn" id="nav-generate" onclick="goPage('generate')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Generate Response</button>
     <button class="nav-btn" id="nav-solution" onclick="goPage('solution')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Solution Document</button>
     <button class="nav-btn" id="nav-proposals" onclick="goPage('proposals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Proposal Inbox<span class="nav-badge" id="prop-count">0</span></button>
     <button class="nav-btn" id="nav-answer-review" onclick="goPage('answer-review')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c2.12 0 4.07.73 5.62 1.96"/></svg>Answer Review<span class="nav-badge" id="ar-count">0</span></button>
@@ -796,7 +801,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
   <div class="ticker-wrap"><div class="ticker-inner"><span class="ticker-item"><b>⚡</b>Generate RFP &amp; RFI Responses in seconds</span><span class="ticker-sep">·</span><span class="ticker-item"><b>📋</b>Executive Brief with GO/NO-GO for leadership</span><span class="ticker-sep">·</span><span class="ticker-item"><b>🌐</b>7 Languages: EN · AR · FR · ES · IT · KO · AF</span><span class="ticker-sep">·</span><span class="ticker-item"><b>🎙️</b>AI Voice Narration &amp; Audio Download</span><span class="ticker-sep">·</span><span class="ticker-item"><b>📊</b>Effort Estimation with staffing &amp; costs</span><span class="ticker-sep">·</span><span class="ticker-item"><b>💬</b>AI Chat — ask anything about any document</span><span class="ticker-sep">·</span><span class="ticker-item"><b>⚡</b>Generate RFP &amp; RFI Responses in seconds</span><span class="ticker-sep">·</span><span class="ticker-item"><b>📋</b>Executive Brief with GO/NO-GO for leadership</span><span class="ticker-sep">·</span><span class="ticker-item"><b>🌐</b>7 Languages: EN · AR · FR · ES · IT · KO · AF</span><span class="ticker-sep">·</span><span class="ticker-item"><b>🎙️</b>AI Voice Narration &amp; Audio Download</span><span class="ticker-sep">·</span><span class="ticker-item"><b>📊</b>Effort Estimation with staffing &amp; costs</span><span class="ticker-sep">·</span><span class="ticker-item"><b>💬</b>AI Chat — ask anything about any document</span><span class="ticker-sep">·</span></div></div>
 
   <!-- GENERATE PAGE -->
-  <div class="page active" id="page-generate" style="flex-direction:column;overflow:hidden">
+  <div class="page" id="page-generate" style="flex-direction:column;overflow:hidden">
     <div class="topbar">
       <div class="topbar-title">Generate Response</div>
       <button class="btn btn-ghost btn-sm" onclick="loadSample()">📄 English RFP</button>
@@ -1404,12 +1409,12 @@ textarea.improve-input::placeholder{color:var(--text3)}
         <span style="font-size:18px;line-height:1">🔒</span>
         <div>
           <div style="font-weight:700;font-size:13px;color:var(--navy);margin-bottom:3px">View-only mode</div>
-          <div style="font-size:12px;color:var(--text2);line-height:1.6">The API key, rate card, and Azure settings are managed by the platform administrator (<strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="95f1f0f8fad5f0f8f4fcf9bbf6faf8">[email&#160;protected]</a></strong>). You can view these settings but cannot modify them. Contact your administrator to request changes.</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">The rate card and Azure settings are managed by the platform administrator (<strong><a href="mailto:demo@email.com">demo@email.com</a></strong>). You can view these settings but cannot modify them. Contact your administrator to request changes.</div>
         </div>
       </div>
 
       <div class="card" id="card-api-key">
-        <div class="card-hdr"><span class="card-icon">🔑</span><span class="card-title">Anthropic API Key</span><span id="api-key-admin-badge" style="display:none;margin-left:auto;font-size:10px;font-weight:700;padding:2px 8px;background:var(--indigo);color:white;border-radius:4px;letter-spacing:0.05em">ADMIN ONLY</span></div>
+        <div class="card-hdr"><span class="card-icon">🔑</span><span class="card-title">Anthropic API Key</span></div>
         <div class="card-body">
           <div class="fg" style="max-width:480px;margin-bottom:12px"><label class="fl">API Key</label>
             <input class="fi" id="api-key-input" type="password" placeholder="sk-ant-api03-..." style="font-family:monospace">
@@ -1703,9 +1708,6 @@ textarea.improve-input::placeholder{color:var(--text3)}
       </div>
     </div>
   </div>
-</div>
-
-</main>
 </div>
 
 
@@ -2303,6 +2305,376 @@ textarea.improve-input::placeholder{color:var(--text3)}
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════
+     PAGE: Landing — comprehensive home with all workflow stages
+═══════════════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-landing">
+  <div class="topbar">
+    <div class="topbar-title">🏠 Home</div>
+    <div style="flex:1"></div>
+    <span id="lp-projstatus" style="font-size:12px;color:var(--text2);font-weight:600">📄 No project RFP loaded</span>
+    <button class="btn btn-primary btn-sm" onclick="goPage('projrfp')" style="font-weight:700">Manage RFP →</button>
+  </div>
+  <div class="content" style="overflow-y:auto">
+
+    <!-- Welcome banner -->
+    <div class="card" style="background:linear-gradient(135deg,#0F0C2E 0%,#272160 50%,#6D69F0 100%);border:none;color:#fff">
+      <div class="card-body" style="padding:18px 22px">
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.16em;color:#FFC9A8;text-transform:uppercase;margin-bottom:4px">★ RFP RESPONSE PLATFORM</div>
+        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:20px;letter-spacing:-0.3px;line-height:1.2">Welcome back<span id="lp-username"></span> — pick where to start.</div>
+      </div>
+    </div>
+
+    <!-- ════ PRIMARY WORKFLOW (4 main steps) ════ -->
+    <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;margin:6px 0 10px">⭐ Main Workflow</div>
+    <div id="lp-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px">
+
+      <div class="card" style="cursor:pointer;border-top:4px solid #38BDF8;margin-bottom:0" onclick="goPage('briefing')">
+        <div class="card-body" style="padding:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#dbeafe,#bae6fd);display:flex;align-items:center;justify-content:center;font-size:22px">📊</div>
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;background:var(--surface2);padding:2px 7px;border-radius:99px">Step 1</div>
+          </div>
+          <div style="font-family:'Fraunces',serif;font-weight:700;font-size:14.5px;color:var(--navy);line-height:1.25;margin-bottom:6px">Summary of RFP Requirements</div>
+          <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-bottom:8px">Concise executive briefing — scope, objectives, evaluation criteria, timelines.</div>
+          <div style="font-size:11px;font-weight:700;color:#0284C7">Open Executive Brief →</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:4px solid #A855F7;margin-bottom:0" onclick="goPage('intelligence')">
+        <div class="card-body" style="padding:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;font-size:22px">🧠</div>
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;background:var(--surface2);padding:2px 7px;border-radius:99px">Step 2</div>
+          </div>
+          <div style="font-family:'Fraunces',serif;font-weight:700;font-size:14.5px;color:var(--navy);line-height:1.25;margin-bottom:6px">Clarifications · Risks · Evidence</div>
+          <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-bottom:8px">AI extracts requirements, flags risks, identifies gaps, drafts clarifications.</div>
+          <div style="font-size:11px;font-weight:700;color:#7C3AED">Open RFP Intelligence →</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:4px solid #F59E0B;margin-bottom:0" onclick="goPage('generate')">
+        <div class="card-body" style="padding:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#fed7aa,#fcd34d);display:flex;align-items:center;justify-content:center;font-size:22px">✍️</div>
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;background:var(--surface2);padding:2px 7px;border-radius:99px">Step 3</div>
+          </div>
+          <div style="font-family:'Fraunces',serif;font-weight:700;font-size:14.5px;color:var(--navy);line-height:1.25;margin-bottom:6px">Populate the Response</div>
+          <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-bottom:8px">Generate the structured response, pull from past proposals, assemble the document.</div>
+          <div style="font-size:11px;font-weight:700;color:#EA580C">Open Generate Response →</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:4px solid #22C55E;margin-bottom:0" onclick="goPage('answer-review')">
+        <div class="card-body" style="padding:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#bbf7d0,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:22px">✅</div>
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;background:var(--surface2);padding:2px 7px;border-radius:99px">Step 4</div>
+          </div>
+          <div style="font-family:'Fraunces',serif;font-weight:700;font-size:14.5px;color:var(--navy);line-height:1.25;margin-bottom:6px">Customer Replies</div>
+          <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-bottom:8px">Review customer answers, accept or follow up, let updates flow into the response.</div>
+          <div style="font-size:11px;font-weight:700;color:#059669">Open Answer Review →</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ════ SETUP & DATA ════ -->
+    <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;margin:14px 0 10px">📁 Setup & Data</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px" class="lp-grid-row">
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #6366F1;margin-bottom:0" onclick="goPage('projects')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#e0e7ff,#c7d2fe);display:flex;align-items:center;justify-content:center;font-size:16px">📁</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Projects</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Create or switch active RFP projects.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #8B5CF6;margin-bottom:0" onclick="goPage('projrfp')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;font-size:16px">📄</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Project RFP</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Upload the RFP once · used everywhere.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #EC4899;margin-bottom:0" onclick="goPage('capabilities')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;align-items:center;justify-content:center;font-size:16px">📚</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Capability Inventory</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Capabilities, certs, references, presence.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #14B8A6;margin-bottom:0" onclick="goPage('rules')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#ccfbf1,#99f6e4);display:flex;align-items:center;justify-content:center;font-size:16px">⚙️</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Rule Library</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Reusable rules and rationale.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ════ DEEP ANALYSIS ════ -->
+    <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;margin:14px 0 10px">🔬 Deep Analysis</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px" class="lp-grid-row">
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #DC2626;margin-bottom:0" onclick="goPage('risk')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#fee2e2,#fecaca);display:flex;align-items:center;justify-content:center;font-size:16px">⚠️</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Risk & Obligations</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Legal, technical & commercial risks.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #0891B2;margin-bottom:0" onclick="goPage('clarify')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#cffafe,#a5f3fc);display:flex;align-items:center;justify-content:center;font-size:16px">❓</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Clarifications</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Questions to send to customer/vendor.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #16A34A;margin-bottom:0" onclick="goPage('evidence')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#dcfce7,#bbf7d0);display:flex;align-items:center;justify-content:center;font-size:16px">📎</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Evidence Checklist</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Required attachments & supporting docs.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #CA8A04;margin-bottom:0" onclick="goPage('pricing')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#fef9c3,#fef08a);display:flex;align-items:center;justify-content:center;font-size:16px">💰</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Pricing</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Cost breakdown & commercial structure.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #7C3AED;margin-bottom:0" onclick="goPage('effort')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;font-size:16px">⏱️</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Effort Estimation</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Resource sizing & timeline forecast.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #0EA5E9;margin-bottom:0" onclick="goPage('dashboard')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#dbeafe,#bae6fd);display:flex;align-items:center;justify-content:center;font-size:16px">📊</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Status Dashboard</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Project progress & metrics.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #F97316;margin-bottom:0" onclick="goPage('outline')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#fed7aa,#fdba74);display:flex;align-items:center;justify-content:center;font-size:16px">📑</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Response Outline</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Structured proposal outline.</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;border-top:3px solid #BE185D;margin-bottom:0" onclick="goPage('polish')">
+        <div class="card-body" style="padding:13px 14px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+            <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#fce7f3,#f9a8d4);display:flex;align-items:center;justify-content:center;font-size:16px">✨</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;color:var(--navy);line-height:1.25">Style & Polish</div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.45">Final language refinement.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ════ UTILITIES ════ -->
+    <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;margin:14px 0 10px">🛠️ Utilities</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px" class="lp-grid-utils">
+
+      <div class="card" style="cursor:pointer;margin-bottom:0" onclick="goPage('proposals')">
+        <div class="card-body" style="padding:11px 12px">
+          <div style="font-size:18px;margin-bottom:4px">📥</div>
+          <div style="font-weight:700;font-size:12px;color:var(--navy);line-height:1.3">Past Responses</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;margin-bottom:0" onclick="goPage('solution')">
+        <div class="card-body" style="padding:11px 12px">
+          <div style="font-size:18px;margin-bottom:4px">📐</div>
+          <div style="font-weight:700;font-size:12px;color:var(--navy);line-height:1.3">Solution Doc</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;margin-bottom:0" onclick="goPage('downloads')">
+        <div class="card-body" style="padding:11px 12px">
+          <div style="font-size:18px;margin-bottom:4px">⬇️</div>
+          <div style="font-weight:700;font-size:12px;color:var(--navy);line-height:1.3">Downloads</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;margin-bottom:0" onclick="goPage('history')">
+        <div class="card-body" style="padding:11px 12px">
+          <div style="font-size:18px;margin-bottom:4px">🕒</div>
+          <div style="font-weight:700;font-size:12px;color:var(--navy);line-height:1.3">Change History</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;margin-bottom:0" onclick="goPage('events')">
+        <div class="card-body" style="padding:11px 12px">
+          <div style="font-size:18px;margin-bottom:4px">📋</div>
+          <div style="font-weight:700;font-size:12px;color:var(--navy);line-height:1.3">Event Log</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:pointer;margin-bottom:0" onclick="goPage('settings')">
+        <div class="card-body" style="padding:11px 12px">
+          <div style="font-size:18px;margin-bottom:4px">⚙️</div>
+          <div style="font-weight:700;font-size:12px;color:var(--navy);line-height:1.3">Settings</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     NEW PAGE: Capability Inventory — drives match calls in RFP Intelligence
+═══════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-capabilities" style="flex-direction:column;overflow:hidden">
+  <div class="topbar">
+    <div class="topbar-title">📚 Capability Inventory</div>
+    <div style="flex:1"></div>
+    <button class="btn btn-ghost btn-sm" onclick="capExportInventory()">💾 Export JSON</button>
+    <button class="btn btn-ghost btn-sm" onclick="document.getElementById('cap-import-file').click()">📥 Import JSON</button>
+    <input type="file" id="cap-import-file" accept=".json" onchange="capImportInventory(this)" style="display:none">
+    <button class="btn btn-primary btn-sm" onclick="capSaveInventory()" style="font-weight:700">💾 Save</button>
+  </div>
+
+  <div class="content" style="overflow-y:auto;padding:20px">
+
+    <div class="mp-card">
+      <div class="mp-card-title">What this is for</div>
+      <div class="mp-card-sub">RFP Intelligence reads this inventory to make defensible match calls. Without it, every requirement gets flagged "Not Assessed". Add capabilities you can prove with a certification, project, or named resource — anything you can't prove doesn't belong here.</div>
+    </div>
+
+    <!-- Tab strip -->
+    <div class="clar-tabs" style="margin-top:14px">
+      <button class="clar-tab active" onclick="capSwitchTab(this,'capabilities')">🛠 Capabilities <span class="clar-tab-count" id="cap-tab-count-cap">0</span></button>
+      <button class="clar-tab" onclick="capSwitchTab(this,'certifications')">🏅 Certifications <span class="clar-tab-count" id="cap-tab-count-cert">0</span></button>
+      <button class="clar-tab" onclick="capSwitchTab(this,'references')">📜 References <span class="clar-tab-count" id="cap-tab-count-ref">0</span></button>
+      <button class="clar-tab" onclick="capSwitchTab(this,'presence')">🌍 Presence <span class="clar-tab-count" id="cap-tab-count-pres">0</span></button>
+    </div>
+
+    <!-- ─── CAPABILITIES TAB ─── -->
+    <div id="cap-pane-capabilities" class="cap-pane">
+      <div class="mp-card">
+        <div class="mp-card-title">Add capability</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px">
+          <input id="cap-new-name" class="fi" placeholder="Name (e.g. Azure Cloud Migration)">
+          <select id="cap-new-cat" class="fi">
+            <option>Technical</option><option>Compliance</option><option>Industry</option><option>Commercial</option><option>Geographic</option>
+          </select>
+          <select id="cap-new-prof" class="fi">
+            <option>Expert</option><option>Proficient</option><option>Familiar</option><option>Gap</option>
+          </select>
+          <input id="cap-new-years" class="fi" type="number" min="0" placeholder="Years exp" style="max-width:100px">
+          <input id="cap-new-resources" class="fi" type="number" min="0" placeholder="Resources" style="max-width:100px">
+          <input id="cap-new-last" class="fi" type="month" placeholder="Last delivered">
+        </div>
+        <textarea id="cap-new-evidence" class="fi" placeholder="Evidence (cert IDs, project names, references)" style="margin-top:8px;min-height:50px"></textarea>
+        <div style="margin-top:8px"><button class="btn btn-primary btn-sm" onclick="capAddCapability()">+ Add capability</button></div>
+      </div>
+      <div class="mp-card">
+        <div class="mp-card-title">Current capabilities</div>
+        <div id="cap-list" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <!-- ─── CERTIFICATIONS TAB ─── -->
+    <div id="cap-pane-certifications" class="cap-pane" style="display:none">
+      <div class="mp-card">
+        <div class="mp-card-title">Add certification</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px">
+          <input id="cert-new-name" class="fi" placeholder="Name (e.g. ISO 27001)">
+          <input id="cert-new-issuer" class="fi" placeholder="Issuing body">
+          <input id="cert-new-id" class="fi" placeholder="Cert ID / number">
+          <input id="cert-new-from" class="fi" type="date" placeholder="Valid from">
+          <input id="cert-new-to" class="fi" type="date" placeholder="Valid to">
+        </div>
+        <div style="margin-top:8px"><button class="btn btn-primary btn-sm" onclick="capAddCert()">+ Add certification</button></div>
+      </div>
+      <div class="mp-card">
+        <div class="mp-card-title">Current certifications</div>
+        <div id="cert-list" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <!-- ─── REFERENCES TAB ─── -->
+    <div id="cap-pane-references" class="cap-pane" style="display:none">
+      <div class="mp-card">
+        <div class="mp-card-title">Add reference client</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px">
+          <input id="ref-new-client" class="fi" placeholder="Client name">
+          <input id="ref-new-industry" class="fi" placeholder="Industry">
+          <input id="ref-new-year" class="fi" type="number" min="2000" max="2030" placeholder="Year delivered">
+          <input id="ref-new-value" class="fi" placeholder="Contract value (e.g. AED 12M)">
+        </div>
+        <textarea id="ref-new-delivered" class="fi" placeholder="What we delivered (1-2 lines)" style="margin-top:8px;min-height:50px"></textarea>
+        <input id="ref-new-caps" class="fi" placeholder="Capabilities used (comma-separated, must match Capabilities tab names)" style="margin-top:8px">
+        <div style="margin-top:8px"><button class="btn btn-primary btn-sm" onclick="capAddRef()">+ Add reference</button></div>
+      </div>
+      <div class="mp-card">
+        <div class="mp-card-title">Current references</div>
+        <div id="ref-list" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <!-- ─── PRESENCE TAB ─── -->
+    <div id="cap-pane-presence" class="cap-pane" style="display:none">
+      <div class="mp-card">
+        <div class="mp-card-title">Add geographic presence</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px">
+          <input id="pres-new-country" class="fi" placeholder="Country">
+          <input id="pres-new-city" class="fi" placeholder="City / region">
+          <input id="pres-new-headcount" class="fi" type="number" min="0" placeholder="Headcount">
+          <input id="pres-new-local-pct" class="fi" type="number" min="0" max="100" placeholder="% local nationals">
+        </div>
+        <input id="pres-new-notes" class="fi" placeholder="Notes (e.g. 'on-prem support hub', 'NOC')" style="margin-top:8px">
+        <div style="margin-top:8px"><button class="btn btn-primary btn-sm" onclick="capAddPresence()">+ Add location</button></div>
+      </div>
+      <div class="mp-card">
+        <div class="mp-card-title">Current locations</div>
+        <div id="pres-list" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
      NEW PAGE: Answer Review — per-answer review loop
 ═══════════════════════════════════════════════════════════════════ -->
 <div class="page" id="page-answer-review" style="flex-direction:column;overflow:hidden">
@@ -2716,28 +3088,54 @@ textarea.improve-input::placeholder{color:var(--text3)}
   <div class="topbar">
     <div class="topbar-title">🚀 Begin RFP Workflow</div>
     <div style="flex:1"></div>
+    <button class="btn btn-ghost btn-sm" onclick="goPage('intelligence')">🧠 RFP Intelligence</button>
     <button class="btn btn-ghost btn-sm" onclick="goPage('dashboard')">📊 Dashboard</button>
     <button class="btn btn-ghost btn-sm" onclick="goPage('process')">ℹ️ How it works</button>
   </div>
   <div class="content" style="overflow-y:auto">
-    <!-- Compact hero -->
-    <div style="padding:14px 18px;background:linear-gradient(135deg,#171339 0%,#272160 50%,#4b3fa0 100%);color:white;border-radius:10px;margin-bottom:14px;position:relative;overflow:hidden">
-      <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(242,141,100,0.4),transparent 70%);filter:blur(40px);pointer-events:none"></div>
-      <div style="position:relative;z-index:1">
-        <div style="font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:3px">🚀 Three steps · One proposal-ready draft</div>
-        <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:700;line-height:1.1;letter-spacing:-.02em">Name your project · Upload the RFP · Generate everything</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.75);margin-top:3px">Clarifications, risks, evidence, and pricing all populate automatically with RFP section references.</div>
+
+    <!-- Premium hero -->
+    <div class="wf-hero">
+      <div class="wf-hero-glow"></div>
+      <div class="wf-hero-glow wf-hero-glow-2"></div>
+      <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+        <div>
+          <div class="wf-hero-eyebrow">★ Five steps · Proposal-ready in minutes</div>
+          <div class="wf-hero-title">Your end-to-end RFP workflow</div>
+          <div class="wf-hero-sub">Set up your project, upload the document, and let the AI handle bid scoring, requirements, risks, win themes, pricing &amp; the full response — all with RFP section references.</div>
+        </div>
+        <div class="wf-hero-stats">
+          <div class="wf-hero-stat"><div class="wf-hero-stat-num" id="wf-stat-clarifications">—</div><div class="wf-hero-stat-lbl">Clarifications</div></div>
+          <div class="wf-hero-stat"><div class="wf-hero-stat-num" id="wf-stat-risks">—</div><div class="wf-hero-stat-lbl">Risks</div></div>
+          <div class="wf-hero-stat"><div class="wf-hero-stat-num" id="wf-stat-evidence">—</div><div class="wf-hero-stat-lbl">Evidence</div></div>
+          <div class="wf-hero-stat"><div class="wf-hero-stat-num" id="wf-stat-bid">—</div><div class="wf-hero-stat-lbl">Bid Score</div></div>
+        </div>
       </div>
     </div>
 
-    <!-- 3 step cards -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px">
+    <!-- Progress rail -->
+    <div class="wf-rail">
+      <div class="wf-rail-bar">
+        <div class="wf-rail-fill" id="wf-rail-fill"></div>
+      </div>
+      <div class="wf-rail-steps">
+        <div class="wf-rail-dot wf-rail-dot-active" data-step="1"><span>1</span><label>Setup</label></div>
+        <div class="wf-rail-dot" data-step="2"><span>2</span><label>Upload</label></div>
+        <div class="wf-rail-dot" data-step="3"><span>3</span><label>Analyze</label></div>
+        <div class="wf-rail-dot" data-step="4"><span>4</span><label>Configure</label></div>
+        <div class="wf-rail-dot" data-step="5"><span>5</span><label>Generate</label></div>
+      </div>
+    </div>
+
+    <!-- 5 step cards -->
+    <div class="wf-grid">
 
       <!-- STEP 1 -->
-      <div class="sh-step" id="sh-step-1">
+      <div class="sh-step wf-card" id="sh-step-1">
         <div class="sh-num">1</div>
-        <div class="sh-label">Name</div>
-        <div class="sh-title">Name this project</div>
+        <div class="wf-card-icon">📋</div>
+        <div class="sh-label">Setup</div>
+        <div class="sh-title">Name your project</div>
         <div class="sh-body">
           <input id="sh-proj-name" placeholder="e.g. ADNOC Digital Transformation 2026" onkeydown="if(event.key==='Enter')document.getElementById('sh-proj-client').focus()" class="sh-input">
           <input id="sh-proj-client" placeholder="Client / issuer (optional)" class="sh-input sh-input-sm">
@@ -2747,10 +3145,11 @@ textarea.improve-input::placeholder{color:var(--text3)}
       </div>
 
       <!-- STEP 2 -->
-      <div class="sh-step sh-locked" id="sh-step-2">
+      <div class="sh-step wf-card sh-locked" id="sh-step-2">
         <div class="sh-num">2</div>
+        <div class="wf-card-icon">📤</div>
         <div class="sh-label">Upload</div>
-        <div class="sh-title">Upload the RFP</div>
+        <div class="sh-title">Drop the RFP document</div>
         <div class="sh-body">
           <label for="sh-rfp-file" class="sh-drop">
             <div style="font-size:26px;line-height:1;margin-bottom:4px">📂</div>
@@ -2763,27 +3162,54 @@ textarea.improve-input::placeholder{color:var(--text3)}
       </div>
 
       <!-- STEP 3 -->
-      <div class="sh-step sh-locked" id="sh-step-3">
+      <div class="sh-step wf-card sh-locked" id="sh-step-3">
         <div class="sh-num">3</div>
-        <div class="sh-label">Generate</div>
-        <div class="sh-title">Generate everything</div>
+        <div class="wf-card-icon">🧠</div>
+        <div class="sh-label">Analyze</div>
+        <div class="sh-title">Run AI analysis</div>
         <div class="sh-body">
-          <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">Clarifications · Risk Register · Evidence Checklist · Pricing · Outline coverage — all generated from the RFP with section references.</div>
-          <button class="mp-btn accept sh-btn" onclick="startHereGenerate()" id="sh-gen-btn" disabled>⚡ Run full overview</button>
+          <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">Bid/No-Bid score · Requirements matrix · Risk flags · Win themes · Clarifications · Pricing · Evidence — all with RFP section references.</div>
+          <button class="mp-btn accept sh-btn" onclick="startHereGenerate()" id="sh-gen-btn" disabled>⚡ Run full analysis</button>
           <div id="sh-gen-progress" style="display:none;margin-top:6px;padding:6px 10px;background:var(--surface2);border-radius:6px;font-size:11px;color:var(--text2)"></div>
         </div>
         <div class="sh-state" id="sh-gen-state">Complete steps 1 &amp; 2 first</div>
       </div>
+
+      <!-- STEP 4 -->
+      <div class="sh-step wf-card sh-locked" id="sh-step-4">
+        <div class="sh-num">4</div>
+        <div class="wf-card-icon">⚙️</div>
+        <div class="sh-label">Configure</div>
+        <div class="sh-title">Tune the response</div>
+        <div class="sh-body">
+          <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">Set industry · tone · length · company name · focus areas &amp; compliance standards before drafting the proposal.</div>
+          <button class="mp-btn accept sh-btn" onclick="goPage('generate');setTimeout(function(){if(typeof switchTab==='function')switchTab('config');},150)" id="sh-cfg-btn" disabled>Open Configure tab →</button>
+        </div>
+        <div class="sh-state" id="sh-cfg-state">Run analysis first</div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="sh-step wf-card sh-locked" id="sh-step-5">
+        <div class="sh-num">5</div>
+        <div class="wf-card-icon">✨</div>
+        <div class="sh-label">Generate</div>
+        <div class="sh-title">Draft &amp; download</div>
+        <div class="sh-body">
+          <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px">Generate the full response or auto-fill your .docx vendor columns directly. Export to Word, PDF or Excel.</div>
+          <button class="mp-btn accept sh-btn" onclick="goPage('generate')" id="sh-go-gen-btn" disabled>Open Generate page →</button>
+        </div>
+        <div class="sh-state" id="sh-go-gen-state">Configure first</div>
+      </div>
     </div>
 
     <!-- Results strip after generation -->
-    <div id="sh-results" style="display:none;padding:12px 16px;background:linear-gradient(135deg,var(--green-bg),var(--surface));border:1px solid var(--green-bd);border-radius:10px;margin-bottom:14px">
+    <div id="sh-results" style="display:none;padding:14px 18px;background:linear-gradient(135deg,var(--green-bg),var(--surface));border:1px solid var(--green-bd);border-radius:12px;margin-bottom:14px">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-          <span style="font-size:20px">✓</span>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <span style="font-size:24px">✓</span>
           <div>
-            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--navy);line-height:1.1">Baseline ready</div>
-            <div style="font-size:10.5px;color:var(--text3)">Click any tile to explore</div>
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--navy);line-height:1.1">Baseline ready · explore the analysis</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px">Click any tile to dive in — or open the unified <a href="#" onclick="goPage('intelligence');return false" style="color:var(--violet);font-weight:600">RFP Intelligence dashboard</a></div>
           </div>
         </div>
         <div id="sh-results-body" style="flex:1;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"></div>
@@ -2792,19 +3218,19 @@ textarea.improve-input::placeholder{color:var(--text3)}
 
     <!-- Shortcuts grid -->
     <div id="sh-shortcuts" style="display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:var(--navy)">Continue where you left off</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--navy)">Continue where you left off</div>
         <span style="font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em">Quick access</span>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px" id="sh-shortcuts-grid"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px" id="sh-shortcuts-grid"></div>
     </div>
 
     <!-- Empty hint when nothing set up -->
     <div id="sh-emptyhint" style="padding:30px 20px;text-align:center">
-      <div style="max-width:500px;margin:0 auto">
-        <div style="font-size:40px;opacity:.15;line-height:1;margin-bottom:10px">👆</div>
-        <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text2);line-height:1.3">Start with step 1 above</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:4px;line-height:1.5">Each step unlocks the next. Your baseline typically takes 30–60 seconds to generate.</div>
+      <div style="max-width:520px;margin:0 auto">
+        <div style="font-size:42px;opacity:.18;line-height:1;margin-bottom:10px">👆</div>
+        <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text2);line-height:1.3">Start with step 1 above</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px;line-height:1.5">Each step unlocks the next — name your project, upload the RFP, then let the AI run the full analysis. Total time: 30–60 seconds.</div>
       </div>
     </div>
 
@@ -2812,41 +3238,678 @@ textarea.improve-input::placeholder{color:var(--text3)}
 </div>
 
 <style>
-/* Start Here specific — fill remaining main height (below ticker) */
-#page-starthere.active { flex: 1 1 auto; height: auto; min-height: 0 }
+/* ════════════════════════════════════════════════════════════════════
+   START HERE — 5-STEP WORKFLOW + RFP INTELLIGENCE
+   ════════════════════════════════════════════════════════════════════ */
+/* (page-starthere.active override removed — global .page.active rule now handles all pages uniformly) */
 
-/* Compact no-scroll wizard styles */
-.sh-step { background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:16px 18px 14px; position:relative; display:flex; flex-direction:column; gap:10px; transition:opacity .3s ease, border-color .3s ease, box-shadow .3s ease; min-height:0 }
-.sh-step.sh-locked { opacity:.55; pointer-events:none; filter: grayscale(.3) }
-.sh-step.sh-done { border-color:var(--green); background:linear-gradient(180deg,var(--green-bg) 0%,var(--surface) 30%) }
-.sh-step.sh-active { border-color:var(--violet); box-shadow: 0 2px 14px rgba(109,105,240,0.12) }
-.sh-num { position:absolute; top:-12px; left:16px; width:26px; height:26px; background:var(--violet); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-size:14px; font-weight:700; box-shadow: 0 2px 6px rgba(39,33,96,0.15) }
-.sh-step.sh-done .sh-num { background:var(--green) }
-.sh-head { margin-top:2px }
-.sh-label { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:2px }
-.sh-title { font-family:'Fraunces',serif; font-size:16px; font-weight:700; color:var(--navy); line-height:1.2 }
-.sh-body { display:flex; flex-direction:column; gap:6px; flex:1 }
-.sh-input { width:100%; padding:8px 11px; border:1.5px solid var(--border); border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; background:var(--surface); color:var(--text); box-sizing:border-box }
-.sh-input:focus { outline:none; border-color:var(--violet); box-shadow: 0 0 0 2px rgba(109,105,240,0.15) }
-.sh-input-sm { font-size:12px; padding:7px 11px }
-.sh-btn { width:100%; padding:9px; font-size:12.5px; font-weight:700; margin-top:2px }
-.sh-state { font-size:10.5px; color:var(--text3); text-align:center; padding-top:4px; border-top:1px dashed var(--border); margin-top:auto }
-.sh-step.sh-done .sh-state { color:var(--green); font-weight:600 }
-.sh-drop { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; border:2px dashed var(--border2); border-radius:8px; text-align:center; cursor:pointer; background:linear-gradient(135deg,var(--blue-light),var(--surface2)); transition:all .2s ease; flex:1; min-height:90px }
-.sh-drop:hover { border-color:var(--violet); transform:translateY(-1px) }
+/* ── Premium hero block ── */
+.wf-hero{position:relative;padding:24px 28px;background:linear-gradient(135deg,#171339 0%,#272160 45%,#4b3fa0 90%);color:white;border-radius:14px;margin-bottom:18px;overflow:hidden;box-shadow:0 8px 28px rgba(39,33,96,0.16)}
+.wf-hero-glow{position:absolute;top:-80px;right:-60px;width:340px;height:340px;background:radial-gradient(circle,rgba(242,141,100,0.45),transparent 70%);filter:blur(50px);pointer-events:none}
+.wf-hero-glow-2{top:auto;bottom:-100px;right:auto;left:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(109,105,240,0.4),transparent 70%)}
+.wf-hero-eyebrow{font-size:10.5px;font-family:'JetBrains Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.78);margin-bottom:6px}
+.wf-hero-title{font-family:'Fraunces',serif;font-size:30px;font-weight:800;line-height:1.05;letter-spacing:-.025em;margin-bottom:6px}
+.wf-hero-sub{font-size:13px;color:rgba(255,255,255,0.78);max-width:520px;line-height:1.55}
+.wf-hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;min-width:220px}
+.wf-hero-stat{padding:9px 13px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:9px;backdrop-filter:blur(8px)}
+.wf-hero-stat-num{font-family:'Fraunces',serif;font-size:22px;font-weight:800;line-height:1;color:white}
+.wf-hero-stat-lbl{font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:.08em;margin-top:3px;font-weight:600}
 
-/* Results stat tiles */
-#sh-results-body > .sh-stat { padding:6px 12px; background:var(--surface); border-radius:6px; border-left:3px solid var(--violet); cursor:pointer; display:flex; align-items:center; gap:8px; transition:transform .15s ease, box-shadow .15s ease; min-width:140px }
-#sh-results-body > .sh-stat:hover { transform:translateY(-1px); box-shadow:0 2px 8px rgba(39,33,96,0.08) }
-#sh-results-body > .sh-stat .sh-icon { font-size:18px; line-height:1 }
-#sh-results-body > .sh-stat .sh-num-big { font-family:'Fraunces',serif; font-size:18px; font-weight:700; color:var(--navy); line-height:1 }
-#sh-results-body > .sh-stat .sh-lbl { font-size:10.5px; color:var(--text2); font-weight:600; text-transform:uppercase; letter-spacing:.05em }
+/* ── Progress rail ── */
+.wf-rail{margin-bottom:20px;padding:14px 4px 0;position:relative}
+.wf-rail-bar{height:3px;background:var(--border);border-radius:99px;position:relative;margin:0 30px 0;overflow:hidden}
+.wf-rail-fill{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--violet));border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.wf-rail-steps{display:flex;justify-content:space-between;align-items:flex-start;margin-top:-15px;position:relative;z-index:1}
+.wf-rail-dot{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;text-align:center}
+.wf-rail-dot span{width:28px;height:28px;border-radius:50%;background:white;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:13px;font-weight:700;color:var(--text3);transition:all .3s ease;box-shadow:0 2px 6px rgba(39,33,96,0.06)}
+.wf-rail-dot label{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.wf-rail-dot.wf-rail-dot-active span{background:linear-gradient(135deg,var(--violet),var(--indigo));border-color:var(--violet);color:white;box-shadow:0 4px 12px rgba(109,105,240,0.35);transform:scale(1.06)}
+.wf-rail-dot.wf-rail-dot-active label{color:var(--violet)}
+.wf-rail-dot.wf-rail-dot-done span{background:var(--green);border-color:var(--green);color:white}
+.wf-rail-dot.wf-rail-dot-done span::before{content:'✓';font-size:14px}
+.wf-rail-dot.wf-rail-dot-done span > *{display:none}
+.wf-rail-dot.wf-rail-dot-done label{color:var(--green)}
 
-@media (max-width:900px) {
-  #page-starthere > div > div:nth-child(2) > div:first-child { grid-template-columns:1fr !important }
-  .sh-step { min-height:auto }
-}
+/* ── Step grid ── */
+.wf-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
+@media (max-width:1300px){.wf-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:900px){.wf-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.wf-grid{grid-template-columns:1fr}}
+
+/* ── Step card ── */
+.sh-step{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:18px 16px 14px;position:relative;display:flex;flex-direction:column;gap:9px;transition:all .25s cubic-bezier(.4,0,.2,1);min-height:230px}
+.sh-step.sh-locked{opacity:.5;pointer-events:none;filter:grayscale(.4)}
+.sh-step.sh-done{border-color:var(--green);background:linear-gradient(180deg,var(--green-bg) 0%,var(--surface) 35%)}
+.sh-step.sh-active{border-color:var(--violet);box-shadow:0 6px 22px rgba(109,105,240,0.15);transform:translateY(-2px)}
+.wf-card-icon{position:absolute;top:14px;right:14px;font-size:20px;opacity:.55;transition:opacity .2s ease}
+.sh-step:hover .wf-card-icon{opacity:1}
+.sh-num{position:absolute;top:-12px;left:14px;width:30px;height:30px;background:linear-gradient(135deg,var(--violet),var(--indigo));color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:14px;font-weight:800;box-shadow:0 3px 10px rgba(39,33,96,0.25);border:2.5px solid var(--surface)}
+.sh-step.sh-done .sh-num{background:linear-gradient(135deg,var(--green),#0d6e3a)}
+.sh-step.sh-active .sh-num{box-shadow:0 0 0 4px rgba(109,105,240,0.18),0 3px 10px rgba(39,33,96,0.25)}
+.sh-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);font-weight:700;margin-top:8px}
+.sh-step.sh-done .sh-label{color:var(--green)}
+.sh-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--navy);line-height:1.18;letter-spacing:-.005em}
+.sh-body{display:flex;flex-direction:column;gap:7px;flex:1}
+.sh-input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);box-sizing:border-box;transition:all .18s ease}
+.sh-input:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(109,105,240,0.12)}
+.sh-input-sm{font-size:12px;padding:7px 11px}
+.sh-btn{width:100%;padding:10px;font-size:12.5px;font-weight:700;margin-top:2px;border-radius:7px}
+.sh-state{font-size:10.5px;color:var(--text3);text-align:center;padding-top:7px;border-top:1px dashed var(--border);margin-top:auto;line-height:1.45}
+.sh-step.sh-done .sh-state{color:var(--green);font-weight:600}
+.sh-step.sh-active .sh-state{color:var(--violet)}
+.sh-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 10px;border:2px dashed var(--border2);border-radius:9px;text-align:center;cursor:pointer;background:linear-gradient(135deg,var(--blue-light),var(--surface2));transition:all .25s ease;flex:1;min-height:88px}
+.sh-drop:hover{border-color:var(--violet);transform:translateY(-1px);box-shadow:0 2px 12px rgba(109,105,240,0.1)}
+
+/* ── Stat tiles in results strip ── */
+#sh-results-body > .sh-stat{padding:7px 13px;background:var(--surface);border-radius:7px;border-left:3px solid var(--violet);cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .18s ease;min-width:142px;box-shadow:0 1px 4px rgba(39,33,96,0.04)}
+#sh-results-body > .sh-stat:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(39,33,96,0.1);border-left-color:var(--orange)}
+#sh-results-body > .sh-stat .sh-icon{font-size:19px;line-height:1}
+#sh-results-body > .sh-stat .sh-num-big{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--navy);line-height:1}
+#sh-results-body > .sh-stat .sh-lbl{font-size:10.5px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+
+/* ════════════════════════════════════════════════════════════════════
+   RFP INTELLIGENCE PAGE
+   ════════════════════════════════════════════════════════════════════ */
+#page-intelligence.active{}
+.intel-hero{position:relative;padding:22px 26px;background:linear-gradient(135deg,#0F172A 0%,#272160 50%,#3d3895 100%);color:white;border-radius:14px;margin-bottom:16px;overflow:hidden;box-shadow:0 8px 28px rgba(39,33,96,0.18)}
+.intel-hero-glow{position:absolute;top:-100px;right:-60px;width:380px;height:380px;background:radial-gradient(circle,rgba(109,105,240,0.45),transparent 70%);filter:blur(60px);pointer-events:none}
+.intel-eyebrow{font-size:10.5px;font-family:'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:5px}
+.intel-title{font-family:'Fraunces',serif;font-size:26px;font-weight:800;line-height:1.1;letter-spacing:-.025em;margin-bottom:5px}
+.intel-sub{font-size:13px;color:rgba(255,255,255,0.7);max-width:600px;line-height:1.55}
+
+.intel-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:14px;box-shadow:0 1px 4px rgba(39,33,96,0.04)}
+.intel-card-hdr{display:flex;align-items:center;gap:11px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.intel-card-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,rgba(109,105,240,0.1),rgba(242,141,100,0.08));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.intel-card-title{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--navy);line-height:1.1}
+.intel-card-sub{font-size:11.5px;color:var(--text3);margin-top:2px}
+
+/* Upload zone */
+.intel-up{border:2px dashed var(--border2);border-radius:11px;padding:30px 20px;text-align:center;cursor:pointer;transition:all .25s ease;background:linear-gradient(135deg,var(--blue-light),var(--surface2));position:relative}
+.intel-up:hover,.intel-up.dragover{border-color:var(--violet);background:linear-gradient(135deg,rgba(109,105,240,0.06),rgba(242,141,100,0.04));transform:translateY(-1px)}
+.intel-up input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
+.intel-up-icon{font-size:34px;margin-bottom:8px;display:block}
+.intel-up-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.intel-up-sub{font-size:11.5px;color:var(--text3)}
+.intel-ftypes{display:flex;gap:6px;justify-content:center;margin-top:11px;flex-wrap:wrap}
+.intel-ftype{font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:7px;border:1px solid;letter-spacing:.04em;text-transform:uppercase}
+.intel-ft-pdf{background:#fff5f0;color:#d96d3f;border-color:#fdd8c4}
+.intel-ft-word{background:#eef0fc;color:#5955e8;border-color:#d4d3f5}
+.intel-ft-xlsx{background:#eefcf3;color:#1a8c4e;border-color:#bee5cd}
+.intel-ft-txt{background:#f4f1fb;color:#7e6cb0;border-color:#dcd3ee}
+
+/* File chip */
+.intel-chip{display:inline-flex;align-items:center;gap:9px;background:var(--surface2);border:1px solid var(--border2);border-radius:9px;padding:9px 14px;margin-top:11px}
+.intel-chip-icon{font-size:18px}
+.intel-chip-name{font-size:13px;font-weight:600;color:var(--navy)}
+.intel-chip-size{font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.intel-chip-rm{font-size:14px;color:var(--text3);cursor:pointer;margin-left:6px;line-height:1;padding:0 4px;border-radius:4px;transition:all .15s ease}
+.intel-chip-rm:hover{color:var(--red);background:rgba(192,57,43,0.08)}
+
+.intel-or{display:flex;align-items:center;gap:11px;margin:14px 0;color:var(--text3);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.intel-or::before,.intel-or::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.intel-textarea{width:100%;min-height:130px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:13px 15px;resize:vertical;outline:none;line-height:1.6;transition:all .18s ease}
+.intel-textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(109,105,240,0.1)}
+.intel-textarea::placeholder{color:var(--text3)}
+
+.intel-samples{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;align-items:center}
+.intel-samples-lbl{font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em}
+.intel-sample-pill{font-size:11px;padding:5px 12px;border-radius:7px;cursor:pointer;background:var(--surface2);color:var(--text2);border:1.5px solid var(--border);transition:all .15s ease;font-weight:600}
+.intel-sample-pill:hover{color:var(--violet);border-color:var(--violet);background:white;transform:translateY(-1px)}
+
+.intel-input-row{display:flex;align-items:center;gap:11px;margin-top:14px;flex-wrap:wrap}
+.intel-cap-input{flex:1;min-width:220px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;padding:10px 14px;outline:none;transition:all .18s ease;font-family:'DM Sans',sans-serif}
+.intel-cap-input:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(109,105,240,0.1)}
+
+/* Progress steps */
+.intel-progress{display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:14px}
+.intel-progress.show{display:block}
+.intel-prog-hdr{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.intel-prog-spin{width:30px;height:30px;border:3px solid rgba(109,105,240,0.18);border-top-color:var(--violet);border-radius:50%;animation:spin 0.7s linear infinite}
+.intel-prog-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--navy)}
+.intel-prog-sub{font-size:11.5px;color:var(--text3);margin-top:2px}
+.intel-prog-steps{display:flex;flex-direction:column;gap:8px}
+.intel-prog-step{display:flex;align-items:center;gap:11px;font-size:13px;color:var(--text3);transition:all .3s ease}
+.intel-prog-step.active{color:var(--violet);font-weight:600}
+.intel-prog-step.done{color:var(--green);font-weight:600}
+.intel-step-icon{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;background:white;font-weight:600;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.intel-prog-step.active .intel-step-icon{border-color:var(--violet);color:var(--violet);background:rgba(109,105,240,0.05)}
+.intel-prog-step.done .intel-step-icon{border-color:var(--green);color:white;background:var(--green)}
+
+/* Results sections */
+.intel-results{display:none;flex-direction:column;gap:14px}
+.intel-results.show{display:flex}
+
+.intel-sum-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:0}
+.intel-sum-chip{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;flex:1 0 140px;min-width:140px}
+.intel-sum-val{font-family:'Fraunces',serif;font-size:22px;font-weight:800;line-height:1}
+.intel-sum-lbl{font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-top:3px}
+
+/* Bid verdict */
+.intel-verdict{border-radius:12px;padding:24px 26px;text-align:center;border:2px solid;position:relative;overflow:hidden}
+.intel-verdict.bid{background:linear-gradient(135deg,#f0fdf4,#fff);border-color:#15803d}
+.intel-verdict.nobid{background:linear-gradient(135deg,#fff0f2,#fff);border-color:#c0392b}
+.intel-verdict.review{background:linear-gradient(135deg,#fffbeb,#fff);border-color:#b45309}
+.intel-verdict-d{font-family:'Fraunces',serif;font-size:32px;font-weight:900;letter-spacing:-.02em;line-height:1;margin-bottom:8px}
+.intel-verdict-score{font-family:'Fraunces',serif;font-size:46px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;margin:8px 0 12px}
+.intel-verdict-score-suf{font-size:18px;opacity:.55;margin-left:2px}
+.intel-verdict-rat{font-size:13px;color:var(--text2);max-width:560px;margin:0 auto;line-height:1.6}
+.intel-verdict-grid{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left}
+@media (max-width:700px){.intel-verdict-grid{grid-template-columns:1fr}}
+
+.intel-item-row{display:flex;align-items:flex-start;gap:11px;background:white;border:1px solid var(--border);border-radius:9px;padding:11px 13px}
+.intel-item-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.intel-item-lbl{font-size:10px;font-weight:700;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.07em}
+.intel-item-text{font-size:12.5px;color:var(--text2);line-height:1.55}
+
+/* Requirements table */
+.intel-req-table{width:100%;border-collapse:collapse;font-size:12px}
+.intel-req-table th{padding:9px 11px;text-align:left;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;border-bottom:1.5px solid var(--border);background:var(--surface2)}
+.intel-req-table td{padding:10px 11px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.55}
+.intel-req-table tr:last-child td{border-bottom:none}
+.intel-req-table tr:hover td{background:var(--surface2)}
+
+.intel-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:7px;border:1px solid;white-space:nowrap;letter-spacing:.02em}
+.ib-high{background:#fff0eb;color:#d96d3f;border-color:#fdd8c4}
+.ib-medium{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.ib-low{background:#f0fdf4;color:#15803d;border-color:#bbf7d0}
+.ib-match{background:#f0fdf4;color:#15803d;border-color:#bbf7d0}
+.ib-partial{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.ib-gap{background:#fff0f2;color:#c0392b;border-color:#f7bfc8}
+.ib-func{background:#eef0fc;color:#5955e8;border-color:#d4d3f5}
+.ib-nonf{background:#f4f1fb;color:#7e6cb0;border-color:#dcd3ee}
+.ib-comp{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.ib-comm{background:#fdf0fc;color:#a73a8e;border-color:#f3d6ed}
+
+/* Win themes */
+.intel-theme-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+@media (max-width:700px){.intel-theme-grid{grid-template-columns:1fr}}
+.intel-theme-card{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:9px;padding:14px 16px;border-left:3px solid var(--violet);transition:all .2s ease}
+.intel-theme-card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(109,105,240,0.1)}
+.intel-theme-title{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:5px;letter-spacing:-.01em}
+.intel-theme-body{font-size:12px;color:var(--text2);line-height:1.55}
+
+/* Clarifications */
+.intel-clar-list{display:flex;flex-direction:column;gap:8px}
+.intel-clar-item{display:flex;align-items:flex-start;gap:13px;background:white;border:1px solid var(--border);border-radius:9px;padding:11px 14px;transition:all .15s ease}
+.intel-clar-item:hover{border-color:var(--violet);background:var(--surface2)}
+.intel-clar-num{font-family:'Fraunces',serif;font-size:13px;font-weight:800;color:var(--violet);min-width:30px;flex-shrink:0;margin-top:1px}
+.intel-clar-text{font-size:12.5px;color:var(--text2);line-height:1.55;flex:1}
+
+/* Export bar */
+.intel-export{background:linear-gradient(135deg,var(--blue-light),var(--surface));border:1px solid var(--border);border-radius:11px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:11px}
+.intel-export-lbl{font-size:13px;color:var(--text2);font-weight:600;display:flex;align-items:center;gap:8px}
+.intel-export-btns{display:flex;gap:8px;flex-wrap:wrap}
+
+.intel-empty{text-align:center;padding:32px 20px;color:var(--text3);font-size:13px}
+
+/* === RFP Intelligence v2: source-ref pills, score breakdown, audience badges === */
+.src-ref{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 6px;background:rgba(109,105,240,.1);color:var(--violet);border:1px solid rgba(109,105,240,.25);border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;letter-spacing:.02em;transition:all .12s;text-decoration:none;line-height:1.4;white-space:nowrap}
+.src-ref:hover{background:var(--violet);color:#fff;transform:translateY(-1px)}
+.src-ref-icon{font-size:9px;opacity:.7}
+.src-ref-quote{display:block;font-size:11px;color:var(--text3);font-style:italic;margin-top:4px;padding:6px 10px;background:rgba(109,105,240,.04);border-left:2px solid rgba(109,105,240,.3);border-radius:0 4px 4px 0;line-height:1.55}
+
+.basis-line{font-size:11.5px;color:var(--text2);margin-top:4px;line-height:1.55;display:flex;gap:5px;align-items:flex-start}
+.basis-line::before{content:'⊢';color:var(--text3);font-weight:700;flex-shrink:0;margin-top:-1px}
+
+.score-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px;padding:14px;background:var(--surface2);border-radius:8px}
+.score-bd-item{background:#fff;padding:10px 12px;border-radius:6px;border:1px solid var(--border)}
+.score-bd-lbl{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.score-bd-val{font-size:18px;font-weight:800;color:var(--navy);font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.score-bd-val .max{font-size:11px;color:var(--text3);font-weight:600}
+.score-bd-bar{height:5px;background:var(--surface);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.score-bd-fill{height:100%;background:linear-gradient(90deg,#6D69F0,#8F70C0);border-radius:99px;transition:width .6s ease-out}
+.score-bd-basis{font-size:10.5px;color:var(--text2);line-height:1.5}
+
+.stakeholder-summary{padding:12px 14px;background:linear-gradient(135deg,rgba(109,105,240,.08),rgba(143,112,192,.04));border-left:3px solid var(--violet);border-radius:0 6px 6px 0;margin-top:12px;font-size:13px;color:var(--navy);line-height:1.55;font-style:italic}
+.stakeholder-summary::before{content:'For stakeholders: ';font-style:normal;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--violet);display:block;margin-bottom:4px}
+
+.evidence-line{font-size:11.5px;color:var(--green);margin-top:5px;line-height:1.5;display:flex;gap:5px;align-items:flex-start}
+.evidence-line::before{content:'✓';font-weight:700;flex-shrink:0}
+
+.match-not-assessed{background:#f3f4f6 !important;color:#6b7280 !important;border:1px dashed #d1d5db !important}
+
+/* Likelihood × impact chip */
+.li-chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);background:var(--surface2);padding:2px 6px;border-radius:4px;font-weight:600}
+
+/* Clarifications: 4-tab UI */
+.clar-tabs{display:flex;gap:6px;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:0}
+.clar-tab{padding:8px 14px;background:none;border:none;border-bottom:2.5px solid transparent;font-size:12.5px;font-weight:600;color:var(--text3);cursor:pointer;font-family:inherit;transition:all .12s;display:flex;align-items:center;gap:6px}
+.clar-tab.active{color:var(--violet);border-bottom-color:var(--violet)}
+.clar-tab:hover:not(.active){color:var(--navy)}
+.clar-tab-count{font-size:10px;background:var(--surface2);color:var(--text3);padding:1px 6px;border-radius:99px;font-weight:700}
+.clar-tab.active .clar-tab-count{background:var(--violet);color:#fff}
+
+.clar-card{padding:12px 14px;background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;display:flex;gap:12px}
+.clar-card-meta{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:64px}
+.clar-card-id{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--text3)}
+.clar-card-body{flex:1;min-width:0}
+.clar-card-q{font-size:13px;font-weight:600;color:var(--navy);line-height:1.5;margin-bottom:6px}
+.clar-card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;align-items:center}
+
+.crit-blocker{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.crit-high{background:#fed7aa;color:#9a3412;border:1px solid #fdba74}
+.crit-medium{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.crit-low{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0}
+
+.aud-internal{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.aud-customer{background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4}
+.aud-vendor{background:#e9d5ff;color:#6b21a8;border:1px solid #d8b4fe}
+.aud-partner{background:#ccfbf1;color:#115e59;border:1px solid #5eead4}
+
+.clar-pill{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.04em;text-transform:uppercase}
+.dep-pill{font-size:10px;background:var(--surface2);color:var(--text3);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-weight:600}
+
+/* Win theme card upgraded */
+.theme-row{display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px;font-size:11.5px;line-height:1.55}
+.theme-row-lbl{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.theme-row-val{color:var(--text2)}
+.theme-pain{color:#9a3412}
+.theme-diff{color:var(--violet)}
+.theme-proof{color:var(--green)}
+.theme-proof-required{color:var(--amber);font-style:italic}
+
+/* === End v2 styles === */
+
+/* === RFP Intelligence v3: tabbed dashboard, polish, sticky summary === */
+
+/* Sticky compact summary bar */
+.intel-stick{position:sticky;top:0;z-index:5;background:linear-gradient(135deg,#fff 0%,#FAF6FE 100%);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin-bottom:12px;box-shadow:0 4px 16px rgba(39,33,96,0.06);backdrop-filter:blur(8px)}
+.intel-stick-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.intel-stick-verdict{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:10px;font-weight:800;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+.intel-stick-verdict.bid{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#15803d;border:1.5px solid #86efac}
+.intel-stick-verdict.nobid{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#b91c1c;border:1.5px solid #fca5a5}
+.intel-stick-verdict.review{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#a16207;border:1.5px solid #fcd34d}
+.intel-stick-score{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:24px;line-height:1;background:linear-gradient(135deg,#272160,#6D69F0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.intel-stick-score-suf{font-size:13px;color:var(--text3);font-weight:600;-webkit-text-fill-color:var(--text3)}
+.intel-stick-mini{display:flex;flex-direction:column;align-items:center;padding:6px 12px;background:#fff;border:1px solid var(--border);border-radius:8px;min-width:64px}
+.intel-stick-mini-v{font-size:16px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1.1}
+.intel-stick-mini-l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;font-weight:700}
+
+/* Results tab strip */
+.intel-rtabs{display:flex;gap:0;border-bottom:1.5px solid var(--border);margin-bottom:14px;overflow-x:auto;background:#fff;border-radius:12px 12px 0 0;padding:0 4px}
+.intel-rtab{padding:12px 18px;background:none;border:none;border-bottom:3px solid transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:all .15s;position:relative}
+.intel-rtab:hover:not(.active){color:var(--navy);background:linear-gradient(180deg,transparent,rgba(109,105,240,.04))}
+.intel-rtab.active{color:var(--violet);border-bottom-color:var(--violet);font-weight:700}
+.intel-rtab.active::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),#8F70C0);border-radius:0 0 4px 4px}
+.intel-rtab-icon{font-size:15px}
+.intel-rtab-count{font-size:10px;background:var(--surface2);color:var(--text3);padding:2px 7px;border-radius:99px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.intel-rtab.active .intel-rtab-count{background:linear-gradient(135deg,var(--violet),#8F70C0);color:#fff}
+
+/* Pane container — taller so content uses available real-estate */
+.intel-pane{display:none;background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;padding:18px 22px;min-height:420px;box-shadow:0 4px 16px rgba(39,33,96,0.04)}
+.intel-pane.active{display:block;animation:intelFadeIn .25s ease-out}
+@keyframes intelFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Slim input bar (shown after analysis runs) */
+.intel-slimbar{display:none;align-items:center;gap:12px;padding:10px 16px;background:linear-gradient(135deg,#FAF6FE,#fff);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;font-size:13px}
+.intel-slimbar.show{display:flex}
+.intel-slimbar-icon{font-size:18px}
+.intel-slimbar-text{flex:1;color:var(--text2)}
+.intel-slimbar-text strong{color:var(--navy)}
+
+/* Polished hero */
+.intel-hero{position:relative;padding:24px 28px;background:linear-gradient(135deg,#0F0C2E 0%,#272160 40%,#3d3895 75%,#6D69F0 100%);color:white;border-radius:16px;margin-bottom:14px;overflow:hidden;box-shadow:0 12px 36px rgba(39,33,96,0.28)}
+
+/* More vivid bid verdict colors */
+.intel-verdict.bid    {background:linear-gradient(135deg,#dcfce7,#bbf7d0,#86efac);border:2px solid #22c55e}
+.intel-verdict.nobid  {background:linear-gradient(135deg,#fee2e2,#fecaca,#fca5a5);border:2px solid #ef4444}
+.intel-verdict.review {background:linear-gradient(135deg,#fef3c7,#fde68a,#fcd34d);border:2px solid #f59e0b}
+
+/* Card hover lift */
+.intel-card{transition:box-shadow .18s ease,transform .18s ease}
+.intel-card:hover{box-shadow:0 8px 24px rgba(39,33,96,0.10)}
+
+/* Polished pane cards (no card-in-card visual noise inside panes) */
+.intel-pane > .intel-card{border:none;box-shadow:none;padding:0;margin:0;background:transparent}
+.intel-pane > .intel-card:hover{box-shadow:none}
+.intel-pane > .intel-card > .intel-card-hdr{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+
+/* Source-ref pill — punchier */
+.src-ref{background:linear-gradient(135deg,rgba(109,105,240,.12),rgba(143,112,192,.08));border:1px solid rgba(109,105,240,.3);box-shadow:0 1px 2px rgba(109,105,240,.08)}
+.src-ref:hover{background:linear-gradient(135deg,#6D69F0,#8F70C0);border-color:transparent;box-shadow:0 4px 10px rgba(109,105,240,.3)}
+
+/* Score breakdown — sharper */
+.score-breakdown{background:linear-gradient(135deg,#FAF6FE 0%,#fff 100%);border:1px solid rgba(109,105,240,.15)}
+.score-bd-fill{background:linear-gradient(90deg,#22c55e 0%,#6D69F0 100%)}
+.score-bd-item{box-shadow:0 1px 3px rgba(39,33,96,0.05);transition:transform .15s ease,box-shadow .15s ease}
+.score-bd-item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(39,33,96,0.08)}
+
+/* Sidebar scrollbar — visible, branded */
+.nav{scrollbar-width:thin;scrollbar-color:rgba(242,141,100,0.55) rgba(255,255,255,0.06)}
+.nav::-webkit-scrollbar{width:8px}
+.nav::-webkit-scrollbar-track{background:rgba(255,255,255,0.04);border-radius:99px;margin:6px 0}
+.nav::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(242,141,100,0.6),rgba(109,105,240,0.6));border-radius:99px;border:1.5px solid rgba(15,12,46,0.4)}
+.nav::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,rgba(242,141,100,0.9),rgba(109,105,240,0.9))}
+
+/* Sidebar scroll hint — subtle gradient at the bottom of the nav showing more content below */
+.sidebar{position:relative}
+.sidebar::after{content:'';position:absolute;bottom:0;left:0;right:8px;height:24px;background:linear-gradient(to top,rgba(15,12,46,0.85),transparent);pointer-events:none;border-radius:0 0 0 0;z-index:1}
+
+/* Generic page-content scrollbar polish (lighter background scrollbars) */
+.content::-webkit-scrollbar,.content-area::-webkit-scrollbar{width:10px;height:10px}
+.content::-webkit-scrollbar-track,.content-area::-webkit-scrollbar-track{background:transparent}
+.content::-webkit-scrollbar-thumb,.content-area::-webkit-scrollbar-thumb{background:rgba(109,105,240,0.18);border-radius:99px;border:2px solid transparent;background-clip:padding-box}
+.content::-webkit-scrollbar-thumb:hover,.content-area::-webkit-scrollbar-thumb:hover{background:rgba(109,105,240,0.45);background-clip:padding-box;border:2px solid transparent}
+
+/* === End v3 styles === */
+
+/* === Sidebar density v4: more menu items visible without scrolling === */
+
+/* Slimmer sidebar overall */
+.sidebar{width:228px !important;min-width:228px !important}
+
+/* Tighter top zone */
+.sb-top{padding:13px 14px 10px !important}
+.logo-icon{width:28px !important;height:28px !important}
+.logo-icon svg{width:14px !important;height:14px !important}
+.logo-name{font-size:14px !important}
+.logo-sub{font-size:9px !important}
+
+/* Tighter user row */
+.sb-user{padding:8px 14px !important}
+.user-av{width:24px !important;height:24px !important;font-size:11px !important}
+.user-email{font-size:11.5px !important}
+
+/* Tighter project switcher */
+.mp-proj-switcher{margin:6px 10px 8px !important;padding:6px 9px !important}
+.mp-proj-switcher-label{font-size:8.5px !important;margin-bottom:3px !important}
+.mp-proj-switcher-current{padding:3px !important;font-size:12px !important}
+
+/* Tighter nav buttons — biggest space win */
+.nav{padding:6px 6px !important}
+.nav-btn{padding:5px 9px !important;font-size:12px !important;gap:7px !important;margin-bottom:1px !important;border-radius:6px !important}
+.nav-btn svg{width:13px !important;height:13px !important}
+.nav-lbl{font-size:9px !important;padding:6px 9px 2px !important;margin-top:2px !important;letter-spacing:0.09em !important}
+.nav-badge{font-size:9px !important;padding:0 6px !important}
+
+/* Sign-out at the bottom of the sidebar — keep compact */
+.sb-bottom{padding:6px 10px !important;font-size:11.5px !important}
+
+/* === End sidebar density v4 === */
+
+/* === LANDING — minimal CSS, uses existing .card system === */
+
+/* Hide the marketing ticker — pages are now absolutely positioned and the ticker just adds visual noise */
+.ticker-wrap{display:none !important}
+
+/* Responsive: stack tiles on narrower screens */
+@media (max-width:1280px){#lp-grid{grid-template-columns:repeat(2,1fr) !important}.lp-grid-row{grid-template-columns:repeat(2,1fr) !important}.lp-grid-utils{grid-template-columns:repeat(3,1fr) !important}}
+@media (max-width:680px) {#lp-grid{grid-template-columns:1fr !important}.lp-grid-row{grid-template-columns:1fr !important}.lp-grid-utils{grid-template-columns:repeat(2,1fr) !important}}
+
+/* Tile hover lift */
+#lp-grid .card,.lp-grid-row .card,.lp-grid-utils .card{transition:transform .15s ease, box-shadow .15s ease}
+#lp-grid .card:hover,.lp-grid-row .card:hover,.lp-grid-utils .card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(39,33,96,0.10)}
+
+/* Auto-RFP banner */
+.auto-rfp-banner{display:none;align-items:center;gap:12px;padding:9px 14px;background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(109,105,240,0.05));border:1px solid rgba(34,197,94,0.25);border-radius:9px;margin-bottom:10px;font-size:12.5px}
+.auto-rfp-banner.show{display:flex}
+.auto-rfp-banner-icon{font-size:15px}
+.auto-rfp-banner-text{flex:1;color:var(--text2);line-height:1.4}
+.auto-rfp-banner-text strong{color:var(--green);font-weight:700}
+
+/* Modest density on content areas (not aggressive — match existing pages) */
+.topbar{height:46px}
+
+/* === End landing === */
+
+/* Two-column layout */
+.intel-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:1100px){.intel-two-col{grid-template-columns:1fr}}
+
+/* Loading dots */
+@keyframes intel-blink{0%,100%{opacity:.25}50%{opacity:1}}
+.intel-d1{animation:intel-blink 1.2s 0s infinite}
+.intel-d2{animation:intel-blink 1.2s .2s infinite}
+.intel-d3{animation:intel-blink 1.2s .4s infinite}
 </style>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     RFP INTELLIGENCE PAGE — comprehensive single-screen analysis
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-intelligence" style="flex-direction:column;overflow:hidden">
+  <div class="topbar">
+    <div class="topbar-title">🧠 RFP Intelligence</div>
+    <div style="flex:1"></div>
+    <button class="btn btn-ghost btn-sm" onclick="intelLoadSample('ai')">🤖 AI Platform Sample</button>
+    <button class="btn btn-ghost btn-sm" onclick="intelLoadSample('cyber')">🔒 Cybersecurity Sample</button>
+    <button class="btn btn-ghost btn-sm" onclick="intelLoadSample('cloud')">☁️ Cloud Sample</button>
+    <button class="btn btn-ghost btn-sm" onclick="intelClearAll()">+ New Analysis</button>
+  </div>
+
+  <div class="content" style="overflow-y:auto">
+
+    <!-- HERO -->
+    <div class="intel-hero">
+      <div class="intel-hero-glow"></div>
+      <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
+        <div>
+          <div class="intel-eyebrow">★ ONE-PAGE PRE-SALES ANALYSIS</div>
+          <div class="intel-title">RFP / RFI Intelligence Agent</div>
+          <div class="intel-sub">Drop any RFP and the AI returns a full pre-sales briefing — Bid/No-Bid score, requirements matrix, risk register, capability gaps, win themes &amp; clarification questions — in under 60 seconds.</div>
+        </div>
+        <div id="intel-status-pill" style="font-size:11px;font-weight:700;padding:7px 16px;border-radius:99px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);letter-spacing:.05em">● Idle</div>
+      </div>
+    </div>
+
+    <!-- INPUT CARD -->
+    <div class="intel-card" id="intel-input-card">
+      <div class="intel-card-hdr">
+        <div class="intel-card-icon">📁</div>
+        <div>
+          <div class="intel-card-title">Source Document</div>
+          <div class="intel-card-sub">Uses your <strong>Project RFP</strong> by default — or upload a one-off file just for this analysis</div>
+        </div>
+      </div>
+
+      <!-- Project RFP banner — shows when project RFP is loaded -->
+      <div id="intel-projrfp-banner" style="display:none;padding:12px 14px;background:linear-gradient(135deg,rgba(109,105,240,.08),rgba(143,112,192,.04));border:1px solid rgba(109,105,240,.25);border-radius:8px;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:18px">📄</span>
+          <div style="flex:1;min-width:200px">
+            <div style="font-size:11px;font-weight:700;color:var(--violet);text-transform:uppercase;letter-spacing:.06em">Project RFP loaded</div>
+            <div id="intel-projrfp-name" style="font-size:13px;color:var(--navy);font-weight:600">—</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="intelUseProjectRfp()" style="font-weight:700">Analyse this RFP</button>
+          <button class="btn btn-ghost btn-sm" onclick="goPage('projrfp')">Manage</button>
+        </div>
+      </div>
+
+      <!-- No-project-RFP banner -->
+      <div id="intel-noprojrfp-banner" style="display:none;padding:10px 14px;background:var(--surface2);border:1px dashed var(--border2);border-radius:8px;margin-bottom:14px;font-size:12px;color:var(--text3);text-align:center">
+        💡 Tip: upload your RFP once on the <a href="#" onclick="goPage('projrfp');return false" style="color:var(--violet);font-weight:600">Project RFP</a> page and every workflow reads from there. Or use the one-off upload below.
+      </div>
+
+      <!-- Upload zone (collapsed by default if project RFP exists) -->
+      <details id="intel-oneoff-details">
+        <summary style="cursor:pointer;font-size:12px;color:var(--text2);padding:8px 0;font-weight:600">📁 One-off upload (for this analysis only)</summary>
+        <div class="intel-up" id="intel-drop" style="margin-top:10px">
+          <input type="file" id="intel-file" accept=".pdf,.doc,.docx,.xlsx,.xls,.txt" onchange="intelHandleFile(event)">
+          <div class="intel-up-icon">📂</div>
+          <div class="intel-up-title">Click to browse or drop file here</div>
+          <div class="intel-up-sub">We'll extract the text and run a multi-step analysis.</div>
+          <div class="intel-ftypes">
+            <span class="intel-ftype intel-ft-pdf">PDF</span>
+            <span class="intel-ftype intel-ft-word">Word (.docx)</span>
+            <span class="intel-ftype intel-ft-xlsx">Excel (.xlsx)</span>
+            <span class="intel-ftype intel-ft-txt">Plain Text</span>
+          </div>
+        </div>
+        <div id="intel-chip-wrap"></div>
+
+        <div class="intel-or">OR paste text directly</div>
+
+        <textarea class="intel-textarea" id="intel-text" placeholder="Paste your RFP or RFI content here..."></textarea>
+
+        <div class="intel-samples">
+          <span class="intel-samples-lbl">Try a sample:</span>
+          <span class="intel-sample-pill" onclick="intelLoadSample('ai')">🤖 AI Platform RFP</span>
+          <span class="intel-sample-pill" onclick="intelLoadSample('cyber')">🔒 Cybersecurity RFI</span>
+          <span class="intel-sample-pill" onclick="intelLoadSample('cloud')">☁️ Cloud Migration RFP</span>
+        </div>
+      </details>
+
+      <div class="intel-input-row" style="margin-top:14px">
+        <input class="intel-cap-input" id="intel-capabilities" placeholder="Quick capability hint (optional) — for full inventory open Settings → Capability Inventory">
+        <button class="btn btn-ghost btn-sm" onclick="goPage('capabilities')" title="Manage capability inventory">📚 Inventory</button>
+        <button class="btn btn-ghost btn-sm" onclick="intelClearAll()">Clear</button>
+        <button class="btn btn-primary btn-sm" id="intel-run-btn" onclick="intelRunAnalysis()" style="min-width:160px;font-weight:700">
+          🔍 Analyse RFP
+        </button>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="intel-progress" id="intel-progress">
+      <div class="intel-prog-hdr">
+        <div class="intel-prog-spin"></div>
+        <div>
+          <div class="intel-prog-title">Agent running<span class="intel-d1">.</span><span class="intel-d2">.</span><span class="intel-d3">.</span></div>
+          <div class="intel-prog-sub" id="intel-prog-detail">Initialising analysis pipeline</div>
+        </div>
+      </div>
+      <div class="intel-prog-steps">
+        <div class="intel-prog-step" id="intel-step-1"><div class="intel-step-icon">1</div><span>Parsing document &amp; extracting text</span></div>
+        <div class="intel-prog-step" id="intel-step-2"><div class="intel-step-icon">2</div><span>Identifying all requirements</span></div>
+        <div class="intel-prog-step" id="intel-step-3"><div class="intel-step-icon">3</div><span>Scoring complexity &amp; priority</span></div>
+        <div class="intel-prog-step" id="intel-step-4"><div class="intel-step-icon">4</div><span>Matching against your capabilities</span></div>
+        <div class="intel-prog-step" id="intel-step-5"><div class="intel-step-icon">5</div><span>Flagging risks &amp; ambiguities</span></div>
+        <div class="intel-prog-step" id="intel-step-6"><div class="intel-step-icon">6</div><span>Building win themes &amp; clarifications</span></div>
+      </div>
+    </div>
+
+    <!-- Slim status bar (shown after analysis runs to reclaim space) -->
+    <div class="intel-slimbar" id="intel-slimbar">
+      <span class="intel-slimbar-icon">✓</span>
+      <span class="intel-slimbar-text">Analysed: <strong id="intel-slimbar-source">—</strong></span>
+      <button class="btn btn-ghost btn-sm" onclick="intelExpandInput()">↺ Re-analyse</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="intel-results" id="intel-results">
+
+      <!-- STICKY COMPACT SUMMARY -->
+      <div class="intel-stick" id="intel-stick">
+        <div class="intel-stick-row">
+          <div class="intel-stick-verdict" id="intel-stick-verdict">—</div>
+          <div style="display:flex;align-items:baseline;gap:2px">
+            <span class="intel-stick-score" id="intel-stick-score">—</span>
+            <span class="intel-stick-score-suf">/100</span>
+          </div>
+          <div style="flex:1;min-width:120px;font-size:11.5px;color:var(--text2);line-height:1.45;font-style:italic" id="intel-stick-summary">—</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap" id="intel-stick-chips"></div>
+        </div>
+      </div>
+
+      <!-- Hidden legacy chip row — replaced by stick mini chips, kept for compat -->
+      <div id="intel-sum-chips" style="display:none"></div>
+
+      <!-- TAB STRIP -->
+      <div class="intel-rtabs" id="intel-rtabs">
+        <button class="intel-rtab active" data-pane="bid"  onclick="intelSwitchTab(this,'bid')"><span class="intel-rtab-icon">🏆</span> Bid Recommendation</button>
+        <button class="intel-rtab" data-pane="req"  onclick="intelSwitchTab(this,'req')"><span class="intel-rtab-icon">📋</span> Requirements <span class="intel-rtab-count" id="intel-rtab-count-req">0</span></button>
+        <button class="intel-rtab" data-pane="risk" onclick="intelSwitchTab(this,'risk')"><span class="intel-rtab-icon">⚠️</span> Risks <span class="intel-rtab-count" id="intel-rtab-count-risk">0</span></button>
+        <button class="intel-rtab" data-pane="gap"  onclick="intelSwitchTab(this,'gap')"><span class="intel-rtab-icon">🔍</span> Capability Gaps <span class="intel-rtab-count" id="intel-rtab-count-gap">0</span></button>
+        <button class="intel-rtab" data-pane="win"  onclick="intelSwitchTab(this,'win')"><span class="intel-rtab-icon">🎯</span> Win Themes <span class="intel-rtab-count" id="intel-rtab-count-win">0</span></button>
+        <button class="intel-rtab" data-pane="clar" onclick="intelSwitchTab(this,'clar')"><span class="intel-rtab-icon">❓</span> Clarifications <span class="intel-rtab-count" id="intel-rtab-count-clar">0</span></button>
+      </div>
+
+      <!-- PANES -->
+      <div class="intel-pane active" id="intel-pane-bid">
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#dcfce7,#fef3c7)">🏆</div>
+            <div>
+              <div class="intel-card-title">Bid / No-Bid Recommendation</div>
+              <div class="intel-card-sub">Decision · weighted score breakdown · strengths &amp; risks with rationale</div>
+            </div>
+          </div>
+          <div id="intel-body-bid"></div>
+        </div>
+      </div>
+
+      <div class="intel-pane" id="intel-pane-req">
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#dbeafe,#fdf4f0)">📋</div>
+            <div>
+              <div class="intel-card-title">Requirement Matrix</div>
+              <div class="intel-card-sub">Every extracted requirement · type · complexity · capability match · source</div>
+            </div>
+          </div>
+          <div id="intel-body-req"></div>
+        </div>
+      </div>
+
+      <div class="intel-pane" id="intel-pane-risk">
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#fee2e2,#fef3c7)">⚠️</div>
+            <div>
+              <div class="intel-card-title">Risk Flags &amp; Ambiguities</div>
+              <div class="intel-card-sub">Severity = likelihood × impact · with mitigations and source refs</div>
+            </div>
+          </div>
+          <div id="intel-body-risk"></div>
+        </div>
+      </div>
+
+      <div class="intel-pane" id="intel-pane-gap">
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#fef3c7,#fdf4f0)">🔍</div>
+            <div>
+              <div class="intel-card-title">Capability Gap Analysis</div>
+              <div class="intel-card-sub">Where we're short relative to the inventory · with suggested approach</div>
+            </div>
+          </div>
+          <div id="intel-body-gap"></div>
+        </div>
+      </div>
+
+      <div class="intel-pane" id="intel-pane-win">
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#f4f1fb,#dbeafe)">🎯</div>
+            <div>
+              <div class="intel-card-title">Win Themes</div>
+              <div class="intel-card-sub">Client pain · our differentiator · proof point · source</div>
+            </div>
+          </div>
+          <div id="intel-body-win"></div>
+        </div>
+      </div>
+
+      <div class="intel-pane" id="intel-pane-clar">
+        <div class="intel-card">
+          <div class="intel-card-hdr">
+            <div class="intel-card-icon" style="background:linear-gradient(135deg,#dbeafe,#f4f1fb)">❓</div>
+            <div>
+              <div class="intel-card-title">Clarification Questions</div>
+              <div class="intel-card-sub">Grouped by audience · with criticality, owner, dependencies, and source</div>
+            </div>
+          </div>
+          <div id="intel-body-clar"></div>
+        </div>
+      </div>
+
+      <!-- Export Bar -->
+      <div class="intel-export">
+        <div class="intel-export-lbl">📦 Analysis complete — download or open the response builder</div>
+        <div class="intel-export-btns">
+          <button class="btn btn-primary btn-sm" onclick="intelExportExcel()">📊 Excel</button>
+          <button class="btn btn-primary btn-sm" onclick="intelExportPDF()" style="background:linear-gradient(135deg,#D04A02,#F28D64);border-color:#D04A02">📄 PDF</button>
+          <button class="btn btn-primary btn-sm" onclick="intelExportWord()" style="background:linear-gradient(135deg,#2B579A,#5BA3E8);border-color:#2B579A">📝 Word</button>
+          <button class="btn btn-ghost btn-sm" onclick="goPage('generate')">→ Build Response</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
 
 <!-- Loading overlay -->
 <div class="overlay" id="overlay">
@@ -2930,6 +3993,8 @@ async function init(){
     if(me.az_subscriptions) setVal('az-subs',   me.az_subscriptions);
     try{loadSettingsEditors(me);}catch(e2){console.warn('loadSettingsEditors err:',e2);}
     try{applySettingsPermissions(me);}catch(e3){console.warn('applySettingsPermissions err:',e3);}
+    // Land on Home on first load (renders username + project RFP status)
+    try{ if(typeof goPage === 'function') goPage('landing'); }catch(e4){ console.warn('initial landing render err:', e4); }
   }catch(e){
     console.error('Init failed:',e);
     window.location.href='/';
@@ -2938,11 +4003,11 @@ async function init(){
 
 // ── Navigation ────────────────────────────────────────────────────────────────
 function goPage(p){
-  ['generate','briefing','library','effort','estimations','billing','settings','guide','evidence','risk','pricing','clarify','outline','polish','solution','proposals','rules','ingest','events','history','downloads','projects','validator','projrfp','answer-review','dashboard','process','starthere'].forEach(x=>{
-    document.getElementById('page-'+x).classList.remove('active');
+  ['generate','briefing','library','effort','estimations','billing','settings','guide','evidence','risk','pricing','clarify','outline','polish','solution','proposals','rules','ingest','events','history','downloads','projects','validator','projrfp','answer-review','dashboard','process','starthere','intelligence','capabilities','landing'].forEach(x=>{
+    const el=document.getElementById('page-'+x);if(el)el.classList.remove('active');
     const n=document.getElementById('nav-'+x);if(n)n.classList.remove('active');
   });
-  document.getElementById('page-'+p).classList.add('active');
+  const targetPage=document.getElementById('page-'+p);if(targetPage)targetPage.classList.add('active');
   const nb=document.getElementById('nav-'+p);if(nb)nb.classList.add('active');
   if(p==='library')renderLibrary();
   if(p==='estimations')renderEstimationsList();
@@ -5443,14 +6508,7 @@ function applySettingsPermissions(me){
   const notice = document.getElementById('settings-readonly-notice');
   if(!isAdmin){
     if(notice) notice.style.display = 'flex';
-    // Lock API key input
-    const apiKeyInput = document.getElementById('api-key-input');
-    apiKeyInput.readOnly = true;
-    apiKeyInput.style.cssText += ';background:#f5f5f5;color:#888;cursor:not-allowed';
-    apiKeyInput.title = 'Managed by demo@email.com';
-    const saveApiBtn = document.getElementById('btn-save-apikey');
-    if(saveApiBtn){ saveApiBtn.disabled=true; saveApiBtn.title='Only demo@email.com can update the API key'; saveApiBtn.style.opacity='0.45'; }
-    document.getElementById('api-key-admin-badge').style.display='inline-block';
+    // API key is editable by all users — admin lock removed
     const elBadge = document.getElementById('eleven-key-admin-badge');
     if (elBadge) elBadge.style.display = 'inline-block';
     // Lock Rate Card
@@ -5469,7 +6527,6 @@ function applySettingsPermissions(me){
     }
   } else {
     notice.style.display='none';
-    document.getElementById('api-key-admin-badge').style.display='inline-block';
     const elBadge = document.getElementById('eleven-key-admin-badge');
     if (elBadge) elBadge.style.display = 'inline-block';
   }
@@ -11876,7 +12933,126 @@ goPage = function(p){
   _origGoPage6(p);
   if(p === 'projrfp') renderProjectRfpPage();
   if(p === 'answer-review') renderAnswerReviewPage();
+  if(p === 'intelligence' && typeof intelRefreshProjectRfpBanner === 'function') intelRefreshProjectRfpBanner();
+  if(p === 'capabilities' && typeof renderCapabilityInventoryPage === 'function') renderCapabilityInventoryPage();
+  if(p === 'landing' && typeof renderLandingPage === 'function') renderLandingPage();
+  // Auto-apply project RFP on every page that consumes one
+  if(typeof autoApplyProjectRfp === 'function') autoApplyProjectRfp(p);
 };
+
+// ═════════════════════════════════════════════════════════════════════════════
+// LANDING PAGE — render the welcome/status state
+// ═════════════════════════════════════════════════════════════════════════════
+function renderLandingPage(){
+  // Welcome name in title
+  const userEl = document.getElementById('userEmail');
+  const lpUser = document.getElementById('lp-username');
+  if(lpUser && userEl){
+    const email = (userEl.textContent || '').trim();
+    if(email && email !== 'Loading...' && email.indexOf('@') > -1){
+      const name = email.split('@')[0];
+      lpUser.textContent = ', ' + name.charAt(0).toUpperCase() + name.slice(1);
+    } else {
+      lpUser.textContent = '';
+    }
+  }
+  // Project status pill in topbar
+  const status = document.getElementById('lp-projstatus');
+  if(status){
+    const has = !!(S && S.rfpText && (S.rfpText||'').trim());
+    if(has){
+      status.innerHTML = '✅ <span style="color:var(--green)">'+esc(S.rfpFileName || 'Project RFP')+'</span> loaded · all sections share this file';
+    } else {
+      status.textContent = '📄 No project RFP loaded';
+    }
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// AUTO-APPLY PROJECT RFP — on page navigation, propagate S.rfpText/S.rfpFile
+// to whatever per-page UI uses it. The user uploads once and we wire the rest.
+// ═════════════════════════════════════════════════════════════════════════════
+function autoApplyProjectRfp(targetPage){
+  if(!S || !S.rfpText || !(S.rfpText||'').trim()) return;
+  const fname = S.rfpFileName || 'Project RFP';
+
+  try {
+    if(targetPage === 'generate'){
+      // Mirror existing useProjectRfpHere('gen') behavior automatically
+      const fpName = document.getElementById('rfp-fp-name');
+      const fpIcon = document.getElementById('rfp-fp-icon');
+      const fp = document.getElementById('rfp-fp');
+      const zoneTitle = document.getElementById('rfp-zone-title');
+      const zoneHint = document.getElementById('rfp-zone-hint');
+      if(fpName) fpName.textContent = fname;
+      if(fpIcon && typeof fIcon === 'function') fpIcon.textContent = fIcon(fname);
+      if(fp) fp.classList.add('show');
+      if(zoneTitle) zoneTitle.textContent = fname;
+      if(zoneHint) zoneHint.textContent = 'Using project RFP · ' + ((S.rfpText||'').split(/\s+/).length) + ' words · click to replace';
+      _showAutoRfpBanner('gen-auto-rfp', fname);
+    }
+    if(targetPage === 'briefing'){
+      _showAutoRfpBanner('brief-auto-rfp', fname);
+      // Brief page uses S.rfpText directly when its analyse button is clicked — no input mirroring needed
+    }
+    if(targetPage === 'intelligence'){
+      // Already handled by intelRefreshProjectRfpBanner — banner auto-shows
+    }
+    // Tool pages (evidence, risk, pricing, clarify, outline) — they each have a file input AND read S.rfpText
+    if(['evidence','risk','pricing','clarify','outline','polish','effort'].includes(targetPage)){
+      _showAutoRfpBanner(targetPage + '-auto-rfp', fname);
+    }
+  } catch(e){ console.warn('autoApplyProjectRfp', e); }
+}
+
+// Insert (or update) a slim banner at the top of a target page's content telling the user
+// the project RFP is active here. If the host element doesn't exist, create one above the first card.
+function _showAutoRfpBanner(bannerId, fname){
+  let banner = document.getElementById(bannerId);
+  if(!banner){
+    // Locate the page container by stripping the suffix
+    const pageMap = {
+      'gen-auto-rfp': 'page-generate',
+      'brief-auto-rfp': 'page-briefing',
+      'evidence-auto-rfp': 'page-evidence',
+      'risk-auto-rfp': 'page-risk',
+      'pricing-auto-rfp': 'page-pricing',
+      'clarify-auto-rfp': 'page-clarify',
+      'outline-auto-rfp': 'page-outline',
+      'polish-auto-rfp': 'page-polish',
+      'effort-auto-rfp': 'page-effort'
+    };
+    const pageId = pageMap[bannerId];
+    const pageEl = pageId ? document.getElementById(pageId) : null;
+    if(!pageEl) return;
+    // Find an insertion target — first .content / .content-area child
+    const contentEl = pageEl.querySelector('.content, .content-area');
+    if(!contentEl) return;
+    banner = document.createElement('div');
+    banner.id = bannerId;
+    banner.className = 'auto-rfp-banner';
+    banner.innerHTML = '<span class="auto-rfp-banner-icon">✓</span><span class="auto-rfp-banner-text">Using project RFP: <strong></strong> · all sections share this file. <a href="#" onclick="goPage(\'projrfp\');return false" style="color:var(--violet);font-weight:600;text-decoration:none;margin-left:6px">Replace</a></span>';
+    // Insert at the top of content
+    if(contentEl.firstChild){
+      contentEl.insertBefore(banner, contentEl.firstChild);
+    } else {
+      contentEl.appendChild(banner);
+    }
+  }
+  // Update filename and show
+  const strong = banner.querySelector('strong');
+  if(strong) strong.textContent = fname;
+  banner.classList.add('show');
+}
+
+// Re-render landing whenever project RFP changes — hook into project switch + upload
+const _origRenderProjectRfpPage = (typeof renderProjectRfpPage === 'function') ? renderProjectRfpPage : null;
+if(_origRenderProjectRfpPage){
+  renderProjectRfpPage = function(){
+    _origRenderProjectRfpPage();
+    if(typeof renderLandingPage === 'function') renderLandingPage();
+  };
+}
 
 // Refresh badges after project switches
 const _origSwitchProject2 = mpSwitchProject;
@@ -13169,6 +14345,1339 @@ mpSwitchProject = async function(pid){
 
 setTimeout(refreshStartHere, 1600);
 
+// ═══════════════════════════════════════════════════════════════════
+// 5-STEP WORKFLOW PROGRESS — keeps the rail/dots in sync with state
+// ═══════════════════════════════════════════════════════════════════
+const _origRefreshSH = (typeof refreshStartHere === 'function') ? refreshStartHere : null;
+if(_origRefreshSH){
+  refreshStartHere = function(){
+    _origRefreshSH();
+    try{ wfUpdateRail(); }catch(e){}
+  };
+}
+
+function wfUpdateRail(){
+  const fill = document.getElementById('wf-rail-fill');
+  const dots = document.querySelectorAll('.wf-rail-dot');
+  if(!fill || !dots.length) return;
+
+  const idx = (typeof mpProjectsIndex === 'function') ? mpProjectsIndex() : {list:[],current:null};
+  const currentProj = idx.list.find(p => p.id === idx.current);
+  const hasProject = !!currentProj;
+  const hasRfp = !!(S && S.rfpFileName && S.rfpText && S.rfpText.length > 50 && !/^\[(DOCX|XLSX|PDF)\]$/.test(S.rfpText));
+  const hasGenerated = !!(S && S.generatedClarifications && S.generatedClarifications.length > 0);
+  const cfg = (V('cfg-company') || V('cfg-industry') || '').length > 0;
+  const hasResp = !!(S && S.currentResp && S.currentResp.length > 100);
+
+  // Determine step
+  let active = 1;
+  if(hasResp) active = 5;
+  else if(hasGenerated) active = cfg ? 5 : 4;
+  else if(hasRfp) active = 3;
+  else if(hasProject) active = 2;
+  else active = 1;
+
+  // Dot states
+  dots.forEach(dot => {
+    const n = +dot.dataset.step;
+    dot.classList.remove('wf-rail-dot-active','wf-rail-dot-done');
+    if(n < active) dot.classList.add('wf-rail-dot-done');
+    else if(n === active) dot.classList.add('wf-rail-dot-active');
+  });
+
+  // Fill width — 0% at step 1, 25% at 2, 50% at 3, 75% at 4, 100% at 5
+  const pct = ((active - 1) / 4) * 100;
+  fill.style.width = pct + '%';
+
+  // Step 4 unlock state
+  const step4 = document.getElementById('sh-step-4');
+  const step5 = document.getElementById('sh-step-5');
+  const cfgBtn = document.getElementById('sh-cfg-btn');
+  const cfgState = document.getElementById('sh-cfg-state');
+  const goGenBtn = document.getElementById('sh-go-gen-btn');
+  const goGenState = document.getElementById('sh-go-gen-state');
+
+  if(step4){
+    step4.classList.remove('sh-active','sh-done','sh-locked');
+    if(active < 4) step4.classList.add('sh-locked');
+    else if(active === 4) step4.classList.add('sh-active');
+    else step4.classList.add('sh-done');
+    if(cfgBtn) cfgBtn.disabled = active < 4;
+    if(cfgState){
+      if(active < 4) cfgState.textContent = 'Run analysis first';
+      else if(active === 4) cfgState.textContent = 'Open the configure tab';
+      else cfgState.textContent = '✓ Configured';
+    }
+  }
+  if(step5){
+    step5.classList.remove('sh-active','sh-done','sh-locked');
+    if(active < 5) step5.classList.add('sh-locked');
+    else step5.classList.add('sh-active');
+    if(goGenBtn) goGenBtn.disabled = active < 5;
+    if(goGenState){
+      if(active < 5) goGenState.textContent = active === 4 ? 'Configure first' : 'Earlier steps required';
+      else goGenState.textContent = hasResp ? '✓ Response generated' : 'Ready to generate';
+    }
+  }
+
+  // Hero stats
+  setText('wf-stat-clarifications', (S?.generatedClarifications||[]).length || '—');
+  setText('wf-stat-risks', (S?.initialRisks||[]).length || '—');
+  setText('wf-stat-evidence', (S?.initialEvidence||[]).length || '—');
+  const bidScore = (S?.intelResult?.bid?.score) ?? (S?.scores?.win_probability);
+  setText('wf-stat-bid', bidScore != null ? bidScore : '—');
+}
+
+function setText(id, v){ const el=document.getElementById(id); if(el) el.textContent = v; }
+function V(id){ const el=document.getElementById(id); return el ? (el.value||'') : ''; }
+
+// ═══════════════════════════════════════════════════════════════════
+// RFP INTELLIGENCE — full-featured single-page analyser
+// (calls /api/analyze-rfp on the server, renders comprehensive view)
+// ═══════════════════════════════════════════════════════════════════
+
+let _intelFile = null;
+let _intelText = '';
+let _intelResult = null;
+
+const INTEL_SAMPLES = {
+  ai: `REQUEST FOR PROPOSAL — AI-Powered Citizen Services Platform
+Ministry of Digital Economy | Deadline: 30 days from issue
+
+1. EXECUTIVE OVERVIEW
+The Ministry of Digital Economy invites qualified vendors to submit proposals for the design, development, and deployment of an AI-powered citizen services platform. The platform must serve 5 million registered citizens and handle 500,000 concurrent users during peak periods.
+
+2. TECHNICAL REQUIREMENTS
+2.1 Platform deployed on sovereign cloud infrastructure within UAE borders (data residency mandatory).
+2.2 All AI models must be explainable and auditable by a government regulator.
+2.3 Full Arabic and English bilingual interfaces with RTL layout support.
+2.4 Integration with existing SAP S/4HANA ERP is mandatory. APIs must be RESTful and comply with OpenAPI 3.0.
+2.5 The system must achieve 99.99% uptime SLA with RPO of 1 hour and RTO of 4 hours.
+2.6 Mobile application (iOS and Android) must be delivered as part of the solution.
+
+3. SECURITY & COMPLIANCE
+3.1 Vendor must hold ISO 27001 and ISO 27701 certifications.
+3.2 Penetration testing conducted quarterly by an approved third party.
+3.3 Compliance with UAE Federal Decree-Law No. 45 of 2021 on Personal Data Protection.
+3.4 24/7 managed Security Operations Centre (SOC) service must be included.
+
+4. EVALUATION CRITERIA
+Technical approach: 40% | Team qualifications: 25% | Commercial: 25% | Emiratisation: 10%
+
+5. COMMERCIAL
+Budget range: AED 15–25 million. 5-year contract with optional 2-year extension.`,
+  cyber: `REQUEST FOR INFORMATION — Managed Cybersecurity Services
+Central Bank | Confidential
+
+AREAS OF INTEREST:
+1. Managed Detection and Response (MDR) with 15-minute SLA for critical alerts
+2. Zero Trust Network Architecture implementation and management
+3. Cloud Security Posture Management (CSPM) across multi-cloud (Azure, AWS)
+4. Regulatory compliance: PCI-DSS, SOC 2, local banking regulations
+5. Threat intelligence platform with Splunk integration
+6. Red team / blue team exercises — minimum 2 per year
+7. Security awareness training for 2,000 staff
+
+VENDOR REQUIREMENTS:
+- Minimum 10 years in financial sector cybersecurity
+- Local presence required — 50% onshore delivery team
+- References from 3 financial institutions of similar size
+- CREST-accredited penetration testing team`,
+  cloud: `RFP — Enterprise Cloud Migration Programme
+National Health Authority
+
+BACKGROUND: 47 hospitals and 200 primary care clinics. Migrate on-premises infrastructure (1,200 servers, 850TB data) to hybrid cloud within 18 months.
+
+KEY REQUIREMENTS:
+1. Assessment and migration strategy for all clinical, administrative, and archival workloads
+2. Zero patient data loss — full audit trail maintained throughout
+3. HIPAA, GDPR, and local health data regulations compliance
+4. Integration with HL7 FHIR and DICOM systems
+5. Disaster recovery: 2-hour RTO, 30-minute RPO
+6. Training programme for 500 IT staff
+7. 3-year managed services post-migration
+8. AI/ML capabilities for predictive maintenance
+
+CONSTRAINTS: 18-month hard deadline. Budget: $8–12M. Critical systems max 4 hours downtime during migration.`
+};
+
+function intelLoadSample(t){
+  intelRemoveFile();
+  const ta = document.getElementById('intel-text');
+  if(ta) ta.value = INTEL_SAMPLES[t] || '';
+  const cap = document.getElementById('intel-capabilities');
+  if(cap){
+    cap.value = t==='ai' ? 'Azure AI Foundry, Arabic NLP, SAP integration, ISO 27001, UAE data residency, Mobile development'
+             : t==='cyber' ? 'MDR, Zero Trust, CSPM, Splunk, CREST team, PCI-DSS'
+             : 'Azure hybrid cloud, HL7 FHIR, DICOM, disaster recovery, managed services';
+  }
+}
+
+(function intelInitDrop(){
+  // Defer until DOM ready
+  setTimeout(function(){
+    const dz = document.getElementById('intel-drop');
+    if(!dz) return;
+    dz.addEventListener('dragover', function(e){ e.preventDefault(); dz.classList.add('dragover'); });
+    dz.addEventListener('dragleave', function(){ dz.classList.remove('dragover'); });
+    dz.addEventListener('drop', function(e){
+      e.preventDefault(); dz.classList.remove('dragover');
+      const f = e.dataTransfer.files[0];
+      if(f) intelProcessFile(f);
+    });
+  }, 1000);
+})();
+
+function intelHandleFile(e){
+  const f = e.target.files[0];
+  if(f) intelProcessFile(f);
+}
+
+async function intelProcessFile(file){
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  const allowed = ['pdf','doc','docx','xlsx','xls','txt','csv'];
+  if(!allowed.includes(ext)){ toast('Unsupported file type. PDF, Word, Excel or TXT only.','error'); return; }
+
+  _intelFile = file;
+  intelShowChip(file);
+  const ta = document.getElementById('intel-text');
+  if(ta){
+    ta.value = `[ ${file.name} loaded — ${(file.size/1024).toFixed(0)} KB. Click "Analyse RFP" to extract & analyse. ]`;
+    ta.disabled = true;
+  }
+  _intelText = '';
+}
+
+function intelShowChip(file){
+  const icons = {pdf:'📕', doc:'📘', docx:'📘', xlsx:'📗', xls:'📗', txt:'📄', csv:'📄'};
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  const sz = file.size > 1048576 ? (file.size/1048576).toFixed(1)+' MB' : (file.size/1024).toFixed(0)+' KB';
+  const wrap = document.getElementById('intel-chip-wrap');
+  if(!wrap) return;
+  wrap.innerHTML = `
+    <div class="intel-chip">
+      <span class="intel-chip-icon">${icons[ext]||'📄'}</span>
+      <span class="intel-chip-name">${esc(file.name)}</span>
+      <span class="intel-chip-size">${sz}</span>
+      <span class="intel-chip-rm" onclick="intelRemoveFile()" title="Remove">✕</span>
+    </div>`;
+}
+
+function intelRemoveFile(){
+  _intelFile = null;
+  _intelText = '';
+  const wrap = document.getElementById('intel-chip-wrap');
+  if(wrap) wrap.innerHTML = '';
+  const fi = document.getElementById('intel-file');
+  if(fi) fi.value = '';
+  const ta = document.getElementById('intel-text');
+  if(ta){ ta.value = ''; ta.disabled = false; }
+}
+
+function intelClearAll(){
+  intelRemoveFile();
+  const cap = document.getElementById('intel-capabilities');
+  if(cap) cap.value = '';
+  const r = document.getElementById('intel-results');
+  if(r) r.classList.remove('show');
+  const p = document.getElementById('intel-progress');
+  if(p) p.classList.remove('show');
+  // Re-expand input card + reset slim bar
+  const card = document.getElementById('intel-input-card');
+  if(card) card.style.display = '';
+  const slim = document.getElementById('intel-slimbar');
+  if(slim) slim.classList.remove('show');
+  // Reset to first tab
+  document.querySelectorAll('#intel-rtabs .intel-rtab').forEach((t,i)=>t.classList.toggle('active', i===0));
+  document.querySelectorAll('.intel-pane').forEach((p,i)=>p.classList.toggle('active', i===0));
+  intelSetStatus('idle');
+  _intelResult = null;
+  if(S) S.intelResult = null;
+  [1,2,3,4,5,6].forEach(n => intelSetStep(n,''));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Refresh the "Project RFP" banner on the Intelligence page based on current S.rfpText
+function intelRefreshProjectRfpBanner(){
+  // Defensive: if no live analysis result, ensure the input card is visible
+  // (handles the case where user ran analysis, navigated away, came back — we don't want a blank page)
+  if(!_intelResult){
+    const card = document.getElementById('intel-input-card');
+    if(card) card.style.display = '';
+    const slim = document.getElementById('intel-slimbar');
+    if(slim) slim.classList.remove('show');
+    const results = document.getElementById('intel-results');
+    if(results) results.classList.remove('show');
+  }
+
+  const has = !!(S && S.rfpText && S.rfpText.trim());
+  const banner = document.getElementById('intel-projrfp-banner');
+  const noBanner = document.getElementById('intel-noprojrfp-banner');
+  const oneoff = document.getElementById('intel-oneoff-details');
+  if(banner) banner.style.display = has ? 'block' : 'none';
+  if(noBanner) noBanner.style.display = has ? 'none' : 'block';
+  if(oneoff) oneoff.open = !has;          // auto-open the one-off block only when no project RFP
+  const nameEl = document.getElementById('intel-projrfp-name');
+  if(nameEl) nameEl.textContent = (S && S.rfpFileName) || 'Project RFP text';
+}
+
+// Pull the project RFP into the analysis pipeline and run
+function intelUseProjectRfp(){
+  if(!S || !S.rfpText || !S.rfpText.trim()){
+    toast('No project RFP loaded — go to Project RFP page first','info');
+    return;
+  }
+  // Mirror project RFP into the Intelligence text area + clear any one-off file
+  intelRemoveFile();
+  const ta = document.getElementById('intel-text');
+  if(ta) ta.value = S.rfpText;
+  intelRunAnalysis();
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// CAPABILITY INVENTORY — feeds RFP Intelligence's match calls
+// ═════════════════════════════════════════════════════════════════════════════
+const CAP_STORAGE_KEY = 'capabilityInventory_v1';
+
+function _capDefault(){
+  return { capabilities:[], certifications:[], references:[], presence:[] };
+}
+function capLoadInventory(){
+  try {
+    const raw = localStorage.getItem(CAP_STORAGE_KEY);
+    if(raw){ S.capabilityInventory = JSON.parse(raw); }
+    else   { S.capabilityInventory = _capDefault(); }
+  } catch(e){ S.capabilityInventory = _capDefault(); }
+  return S.capabilityInventory;
+}
+function capSaveInventory(){
+  if(!S.capabilityInventory) S.capabilityInventory = _capDefault();
+  try {
+    localStorage.setItem(CAP_STORAGE_KEY, JSON.stringify(S.capabilityInventory));
+    toast('Inventory saved','success');
+    capUpdateNavCount();
+  } catch(e){ toast('Save failed: '+e.message,'error'); }
+}
+function capExportInventory(){
+  capLoadInventory();
+  const blob = new Blob([JSON.stringify(S.capabilityInventory, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'capability-inventory.json';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+function capImportInventory(input){
+  const f = input.files && input.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if(typeof data !== 'object' || !data) throw new Error('Invalid JSON');
+      // Merge defaults so missing keys don't break renders
+      S.capabilityInventory = Object.assign(_capDefault(), data);
+      capSaveInventory();
+      renderCapabilityInventoryPage();
+      toast('Inventory imported','success');
+    } catch(err){ toast('Import failed: '+err.message,'error'); }
+  };
+  r.readAsText(f);
+  input.value = '';
+}
+function capUpdateNavCount(){
+  const inv = S.capabilityInventory || _capDefault();
+  const total = (inv.capabilities||[]).length + (inv.certifications||[]).length + (inv.references||[]).length + (inv.presence||[]).length;
+  const el = document.getElementById('cap-count');
+  if(el) el.textContent = String(total);
+}
+
+function capSwitchTab(btn, key){
+  document.querySelectorAll('#page-capabilities .clar-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cap-pane').forEach(p=>p.style.display='none');
+  const pane = document.getElementById('cap-pane-'+key);
+  if(pane) pane.style.display='block';
+}
+
+// ─── Capabilities CRUD ───────────────────────────────────────────────────────
+function capAddCapability(){
+  const name = (document.getElementById('cap-new-name').value||'').trim();
+  if(!name){ toast('Name is required','error'); return; }
+  capLoadInventory();
+  S.capabilityInventory.capabilities.push({
+    id: 'CAP-'+Date.now().toString(36),
+    name,
+    category: document.getElementById('cap-new-cat').value,
+    proficiency: document.getElementById('cap-new-prof').value,
+    years: parseInt(document.getElementById('cap-new-years').value)||0,
+    resources: parseInt(document.getElementById('cap-new-resources').value)||0,
+    last_delivered: document.getElementById('cap-new-last').value || '',
+    evidence: (document.getElementById('cap-new-evidence').value||'').trim()
+  });
+  ['cap-new-name','cap-new-years','cap-new-resources','cap-new-last','cap-new-evidence'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  capSaveInventory();
+  renderCapabilityInventoryPage();
+}
+function capDeleteItem(kind, id){
+  capLoadInventory();
+  const arr = S.capabilityInventory[kind];
+  if(!arr) return;
+  S.capabilityInventory[kind] = arr.filter(x=>x.id!==id);
+  capSaveInventory();
+  renderCapabilityInventoryPage();
+}
+
+function capAddCert(){
+  const name = (document.getElementById('cert-new-name').value||'').trim();
+  if(!name){ toast('Name is required','error'); return; }
+  capLoadInventory();
+  S.capabilityInventory.certifications.push({
+    id: 'CERT-'+Date.now().toString(36),
+    name,
+    issuer: (document.getElementById('cert-new-issuer').value||'').trim(),
+    cert_id: (document.getElementById('cert-new-id').value||'').trim(),
+    valid_from: document.getElementById('cert-new-from').value||'',
+    valid_to:   document.getElementById('cert-new-to').value||''
+  });
+  ['cert-new-name','cert-new-issuer','cert-new-id','cert-new-from','cert-new-to'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  capSaveInventory();
+  renderCapabilityInventoryPage();
+}
+
+function capAddRef(){
+  const client = (document.getElementById('ref-new-client').value||'').trim();
+  if(!client){ toast('Client is required','error'); return; }
+  capLoadInventory();
+  S.capabilityInventory.references.push({
+    id: 'REF-'+Date.now().toString(36),
+    client,
+    industry: (document.getElementById('ref-new-industry').value||'').trim(),
+    year: parseInt(document.getElementById('ref-new-year').value)||null,
+    value: (document.getElementById('ref-new-value').value||'').trim(),
+    delivered: (document.getElementById('ref-new-delivered').value||'').trim(),
+    capabilities_used: (document.getElementById('ref-new-caps').value||'').split(',').map(s=>s.trim()).filter(Boolean)
+  });
+  ['ref-new-client','ref-new-industry','ref-new-year','ref-new-value','ref-new-delivered','ref-new-caps'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  capSaveInventory();
+  renderCapabilityInventoryPage();
+}
+
+function capAddPresence(){
+  const country = (document.getElementById('pres-new-country').value||'').trim();
+  if(!country){ toast('Country is required','error'); return; }
+  capLoadInventory();
+  S.capabilityInventory.presence.push({
+    id: 'PRES-'+Date.now().toString(36),
+    country,
+    city: (document.getElementById('pres-new-city').value||'').trim(),
+    headcount: parseInt(document.getElementById('pres-new-headcount').value)||0,
+    local_pct: parseInt(document.getElementById('pres-new-local-pct').value)||0,
+    notes: (document.getElementById('pres-new-notes').value||'').trim()
+  });
+  ['pres-new-country','pres-new-city','pres-new-headcount','pres-new-local-pct','pres-new-notes'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  capSaveInventory();
+  renderCapabilityInventoryPage();
+}
+
+function renderCapabilityInventoryPage(){
+  const inv = capLoadInventory();
+
+  // tab counts
+  const setCount = (id, n) => { const e=document.getElementById(id); if(e) e.textContent=String(n); };
+  setCount('cap-tab-count-cap',  (inv.capabilities||[]).length);
+  setCount('cap-tab-count-cert', (inv.certifications||[]).length);
+  setCount('cap-tab-count-ref',  (inv.references||[]).length);
+  setCount('cap-tab-count-pres', (inv.presence||[]).length);
+  capUpdateNavCount();
+
+  const profColor = (p) => p==='Expert'?'var(--green)':p==='Proficient'?'var(--violet)':p==='Familiar'?'var(--amber)':'var(--red)';
+
+  // Capabilities list
+  const capListEl = document.getElementById('cap-list');
+  if(capListEl){
+    capListEl.innerHTML = (inv.capabilities||[]).length
+      ? `<div style="display:flex;flex-direction:column;gap:6px">${inv.capabilities.map(c=>`
+          <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:6px">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:4px">
+                <strong style="color:var(--navy)">${esc(c.name)}</strong>
+                <span class="intel-badge" style="background:rgba(109,105,240,.1);color:var(--violet);font-size:9px">${esc(c.category||'')}</span>
+                <span class="intel-badge" style="background:${profColor(c.proficiency)};color:#fff;font-size:9px">${esc(c.proficiency||'')}</span>
+                ${c.years?`<span style="font-size:10.5px;color:var(--text3)">${esc(String(c.years))} yrs exp</span>`:''}
+                ${c.resources?`<span style="font-size:10.5px;color:var(--text3)">${esc(String(c.resources))} resources</span>`:''}
+                ${c.last_delivered?`<span style="font-size:10.5px;color:var(--text3)">last: ${esc(c.last_delivered)}</span>`:''}
+              </div>
+              ${c.evidence?`<div style="font-size:11.5px;color:var(--text2);line-height:1.5">${esc(c.evidence)}</div>`:''}
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="capDeleteItem('capabilities','${esc(c.id)}')" style="flex-shrink:0">✕</button>
+          </div>`).join('')}</div>`
+      : '<div class="intel-empty">No capabilities yet. Add the first one above.</div>';
+  }
+
+  // Certifications list
+  const certListEl = document.getElementById('cert-list');
+  if(certListEl){
+    const today = new Date().toISOString().slice(0,10);
+    certListEl.innerHTML = (inv.certifications||[]).length
+      ? `<div style="display:flex;flex-direction:column;gap:6px">${inv.certifications.map(c=>{
+          const expired = c.valid_to && c.valid_to < today;
+          return `<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:6px">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:4px">
+                <strong style="color:var(--navy)">${esc(c.name)}</strong>
+                ${c.issuer?`<span style="font-size:10.5px;color:var(--text3)">by ${esc(c.issuer)}</span>`:''}
+                ${expired?'<span class="intel-badge ib-gap" style="font-size:9px">EXPIRED</span>':''}
+              </div>
+              <div style="font-size:11.5px;color:var(--text2)">
+                ${c.cert_id?`ID: ${esc(c.cert_id)} · `:''}${c.valid_from?`from ${esc(c.valid_from)}`:''}${c.valid_to?` → to ${esc(c.valid_to)}`:''}
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="capDeleteItem('certifications','${esc(c.id)}')" style="flex-shrink:0">✕</button>
+          </div>`;
+      }).join('')}</div>`
+      : '<div class="intel-empty">No certifications yet.</div>';
+  }
+
+  // References list
+  const refListEl = document.getElementById('ref-list');
+  if(refListEl){
+    refListEl.innerHTML = (inv.references||[]).length
+      ? `<div style="display:flex;flex-direction:column;gap:6px">${inv.references.map(r=>`
+          <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:6px">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:4px">
+                <strong style="color:var(--navy)">${esc(r.client)}</strong>
+                ${r.industry?`<span class="intel-badge" style="background:rgba(109,105,240,.1);color:var(--violet);font-size:9px">${esc(r.industry)}</span>`:''}
+                ${r.year?`<span style="font-size:10.5px;color:var(--text3)">${esc(String(r.year))}</span>`:''}
+                ${r.value?`<span style="font-size:10.5px;color:var(--green);font-weight:600">${esc(r.value)}</span>`:''}
+              </div>
+              ${r.delivered?`<div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-bottom:4px">${esc(r.delivered)}</div>`:''}
+              ${(r.capabilities_used||[]).length?`<div style="display:flex;gap:4px;flex-wrap:wrap">${r.capabilities_used.map(x=>`<span class="dep-pill">${esc(x)}</span>`).join('')}</div>`:''}
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="capDeleteItem('references','${esc(r.id)}')" style="flex-shrink:0">✕</button>
+          </div>`).join('')}</div>`
+      : '<div class="intel-empty">No reference clients yet.</div>';
+  }
+
+  // Presence list
+  const presListEl = document.getElementById('pres-list');
+  if(presListEl){
+    presListEl.innerHTML = (inv.presence||[]).length
+      ? `<div style="display:flex;flex-direction:column;gap:6px">${inv.presence.map(p=>`
+          <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:6px">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:4px">
+                <strong style="color:var(--navy)">${esc(p.country)}</strong>
+                ${p.city?`<span style="font-size:11px;color:var(--text2)">— ${esc(p.city)}</span>`:''}
+                ${p.headcount?`<span style="font-size:10.5px;color:var(--text3)">${esc(String(p.headcount))} headcount</span>`:''}
+                ${p.local_pct?`<span style="font-size:10.5px;color:var(--green)">${esc(String(p.local_pct))}% local</span>`:''}
+              </div>
+              ${p.notes?`<div style="font-size:11.5px;color:var(--text2);line-height:1.5">${esc(p.notes)}</div>`:''}
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="capDeleteItem('presence','${esc(p.id)}')" style="flex-shrink:0">✕</button>
+          </div>`).join('')}</div>`
+      : '<div class="intel-empty">No presence locations yet.</div>';
+  }
+}
+
+// Load inventory into S on page boot
+try { capLoadInventory(); capUpdateNavCount(); } catch(e){}
+
+
+function intelSetStatus(s){
+  const p = document.getElementById('intel-status-pill');
+  if(!p) return;
+  if(s==='idle'){ p.textContent = '● Idle'; p.style.background='rgba(255,255,255,0.1)'; }
+  else if(s==='running'){ p.textContent = '◉ Running'; p.style.background='rgba(109,105,240,0.3)'; }
+  else { p.textContent = '✓ Complete'; p.style.background='rgba(21,128,61,0.3)'; }
+}
+
+function intelSetStep(n, state){
+  const el = document.getElementById('intel-step-'+n);
+  if(!el) return;
+  el.className = 'intel-prog-step ' + state;
+  const ic = el.querySelector('.intel-step-icon');
+  if(!ic) return;
+  if(state==='active') ic.innerHTML = '<span style="animation:spin .7s linear infinite;display:inline-block">⟳</span>';
+  else if(state==='done') ic.textContent = '✓';
+  else ic.textContent = n;
+}
+
+function intelSetDetail(t){
+  const el = document.getElementById('intel-prog-detail');
+  if(el) el.textContent = t || 'Processing...';
+}
+
+const _intelSleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function intelRunAnalysis(){
+  let rfpText = '';
+  let useFile = false;
+  if(_intelFile){
+    useFile = true;
+  } else {
+    rfpText = (document.getElementById('intel-text')?.value || '').trim();
+    if(!rfpText){ toast('Please upload a document or paste RFP text first','error'); return; }
+  }
+
+  const capabilities = (document.getElementById('intel-capabilities')?.value || '').trim();
+  const btn = document.getElementById('intel-run-btn');
+  if(btn) btn.disabled = true;
+
+  intelSetStatus('running');
+  const prog = document.getElementById('intel-progress');
+  if(prog) prog.classList.add('show');
+  const res = document.getElementById('intel-results');
+  if(res) res.classList.remove('show');
+  [1,2,3,4,5,6].forEach(n => intelSetStep(n,''));
+
+  intelSetStep(1,'active'); intelSetDetail('Parsing and ingesting document...');
+
+  try {
+    let result;
+
+    if(useFile){
+      // Use existing /api/analyze-rfp endpoint (handles multipart upload + extraction)
+      const fd = new FormData();
+      fd.append('rfpDoc', _intelFile);
+      fd.append('language','English');
+      fd.append('source_language','auto');
+      fd.append('source_language_name','Auto-Detect');
+
+      await _intelSleep(400); intelSetStep(1,'done'); intelSetStep(2,'active'); intelSetDetail('Extracting requirements...');
+
+      const ctrl = new AbortController();
+      const tid = setTimeout(()=>ctrl.abort(), 5*60*1000);
+      let resp;
+      try {
+        resp = await fetch('/api/analyze-rfp',{method:'POST',body:fd,credentials:'same-origin',signal:ctrl.signal});
+      } catch(fe) {
+        clearTimeout(tid);
+        throw new Error(fe.name==='AbortError'?'Request timed out':'Network error');
+      }
+      clearTimeout(tid);
+
+      intelSetStep(2,'done'); intelSetStep(3,'active'); intelSetDetail('Scoring complexity & priority...');
+
+      if(!resp.ok){ const e=await resp.json().catch(()=>({error:'Server error'})); throw new Error(e.error||'Server error'); }
+      const data = await resp.json();
+      if(!data.success) throw new Error(data.error || 'Analysis failed');
+
+      // The backend returns a brief; map it into the rich intel structure
+      result = intelMapBriefToResult(data.brief, capabilities);
+
+    } else {
+      // Use the AI chat endpoint with the existing prompt
+      await _intelSleep(400); intelSetStep(1,'done'); intelSetStep(2,'active'); intelSetDetail('Extracting requirements...');
+
+      const capInventory = (typeof S !== 'undefined' && S.capabilityInventory) ? S.capabilityInventory : null;
+      const capContext = capInventory && (capInventory.capabilities||[]).length
+        ? `\nCOMPANY CAPABILITY INVENTORY (use this to make match calls — do NOT invent capabilities not listed):\n${JSON.stringify(capInventory, null, 2)}`
+        : (capabilities ? `\nCompany capabilities (free-text — treat as preliminary, flag matches as 'presumed' until verified): ${capabilities}` : '\nNo capability inventory provided. For every requirement, set match to "Not Assessed" and explain in match_basis that capability inventory is required.');
+
+      const PROMPT = `You are a senior pre-sales AI agent. Analyse the RFP rigorously. EVERY judgment must cite the source (section or page) and explain its basis. Never assert a label (Full Match, High risk, etc.) without justification.${capContext}
+
+Return ONLY a valid JSON object with NO markdown fences:
+
+{
+  "summary": {
+    "client": "organisation name",
+    "projectTitle": "project title",
+    "totalRequirements": 0,
+    "highComplexity": 0,
+    "mediumComplexity": 0,
+    "lowComplexity": 0,
+    "matchedCapabilities": 0,
+    "gaps": 0,
+    "riskCount": 0
+  },
+  "bid": {
+    "decision": "BID",
+    "score": 75,
+    "stakeholderSummary": "1-2 sentence summary a steering committee can read in 10 seconds",
+    "breakdown": {
+      "capabilityFit":   {"score": 32, "max": 40, "basis": "why this sub-score"},
+      "complexity":      {"score": 14, "max": 20, "basis": "why"},
+      "riskProfile":     {"score": 16, "max": 20, "basis": "why"},
+      "commercialFit":   {"score": 13, "max": 20, "basis": "why"}
+    },
+    "keyStrengths": [
+      {"statement":"strength text","basis":"why we believe this — link to specific RFP section or capability","source":{"section":"3.2","page":14}}
+    ],
+    "keyRisks": [
+      {"statement":"risk text","basis":"why this is a risk","source":{"section":"5.1","page":22}}
+    ]
+  },
+  "requirements": [
+    {
+      "id":"R01",
+      "description":"the requirement, paraphrased",
+      "type":"Functional",
+      "complexity":"High",
+      "complexity_basis":"why High vs Medium vs Low — be specific",
+      "priority":"Must Have",
+      "match":"Full Match",
+      "matched_capability":"Name of OUR capability that maps to this — must come from the capability inventory; null if no inventory provided",
+      "match_evidence":"specific evidence: certification name, project name, years exp",
+      "match_basis":"why Full vs Partial vs Gap — or 'Capability inventory required' if not assessed",
+      "source":{"section":"3.2.1","page":14,"quote":"first 120 chars of the source sentence"}
+    }
+  ],
+  "risks": [
+    {
+      "severity":"High",
+      "category":"Technical",
+      "description":"...",
+      "likelihood": 4,
+      "impact": 5,
+      "severity_basis":"High because likelihood=4 (...) × impact=5 (...) — name the trigger",
+      "mitigation":"how to address",
+      "source":{"section":"5.1","page":22,"quote":"..."}
+    }
+  ],
+  "gaps": [
+    {
+      "requirement":"R01",
+      "gap":"what is missing from our capability inventory",
+      "presumed":false,
+      "suggestion":"how to address (partner, hire, sub-contract)",
+      "source":{"section":"3.2.1","page":14}
+    }
+  ],
+  "winThemes": [
+    {
+      "theme":"Theme title",
+      "client_pain":"specific pain point from the RFP",
+      "our_differentiator":"what WE bring that competitors typically lack — must come from inventory",
+      "proof_point":"named reference, certification, or project that proves it",
+      "source":{"section":"1.2","page":4}
+    }
+  ],
+  "clarifications": [
+    {
+      "id":"C01",
+      "question":"the clarification question",
+      "audience":"Customer",
+      "criticality":"Blocker",
+      "owner":"Bid Manager",
+      "rationale":"why we need this answered before proposal lock",
+      "dependencies":[],
+      "source":{"section":"4.3","page":18,"quote":"..."}
+    }
+  ]
+}
+
+ENUMS — match exactly:
+- decision: "BID" | "NO-BID" | "REVIEW"
+- type: "Functional" | "Non-Functional" | "Compliance" | "Commercial"
+- complexity: "High" | "Medium" | "Low"
+- match: "Full Match" | "Partial Match" | "Gap" | "Not Assessed"
+- severity: "High" | "Medium" | "Low"  (must be consistent with likelihood × impact)
+- audience: "Internal Team" | "Customer" | "Vendor" | "Partner"
+- criticality: "Blocker" | "High" | "Medium" | "Low"
+- likelihood, impact: integer 1-5
+
+RULES:
+1. Every requirement, risk, gap, theme and clarification MUST have a "source" object pointing to where in the RFP it came from. If page is unknown, use null but still provide section.
+2. Score breakdown numbers must sum to <= total bid score.
+3. If no capability inventory was supplied, set match to "Not Assessed" for every requirement and explain in match_basis. Do NOT guess matches.
+4. Win themes must cite a real proof_point — if none exists in the inventory, mark proof_point as "Proof point required" rather than inventing.
+5. Dependencies in clarifications reference other clarification ids (e.g. ["C03"]).
+
+DOCUMENT:
+---
+${rfpText.substring(0, 12000)}
+---`;
+
+      const r = await api('POST','/api/chat',{message:PROMPT,history:[]});
+      intelSetStep(2,'done'); intelSetStep(3,'active'); intelSetDetail('Scoring complexity & priority...');
+      let raw = (r.reply || r.response || r.message || '').replace(/```json|```/g,'').trim();
+      try { result = JSON.parse(raw); }
+      catch(e){
+        // Try to extract JSON from a longer response
+        const m = raw.match(/\{[\s\S]*\}/);
+        if(m){ try{ result = JSON.parse(m[0]); }catch(e2){ throw new Error('Could not parse AI response'); } }
+        else throw new Error('Could not parse AI response');
+      }
+    }
+
+    await _intelSleep(300); intelSetStep(3,'done'); intelSetStep(4,'active'); intelSetDetail('Matching capabilities...');
+    await _intelSleep(300); intelSetStep(4,'done'); intelSetStep(5,'active'); intelSetDetail('Flagging risks & gaps...');
+    await _intelSleep(300); intelSetStep(5,'done'); intelSetStep(6,'active'); intelSetDetail('Building output report...');
+    await _intelSleep(300); intelSetStep(6,'done');
+
+    _intelResult = result;
+    if(S) S.intelResult = result;
+
+    await _intelSleep(300);
+    if(prog) prog.classList.remove('show');
+    intelRender(result);
+    intelSetStatus('done');
+    try{ wfUpdateRail(); }catch(e){}
+    toast('Analysis complete!','success');
+
+  } catch(err){
+    console.error('[intel]', err);
+    if(prog) prog.classList.remove('show');
+    intelSetStatus('idle');
+    [1,2,3,4,5,6].forEach(n => intelSetStep(n,''));
+    toast('Error: ' + (err.message || 'Analysis failed'),'error');
+  } finally {
+    if(btn) btn.disabled = false;
+  }
+}
+
+// Map the existing executive brief response into the rich intel format
+function intelMapBriefToResult(b, capabilities){
+  if(!b) b = {};
+  const reqs = (b.key_requirements || []).map((r,i) => ({
+    id: r.id || r.req_id || ('R' + String(i+1).padStart(2,'0')),
+    description: r.description || r.title || '',
+    type: r.type || 'Functional',
+    complexity: r.complexity || (r.priority||'').toUpperCase().includes('MAND') ? 'High' : 'Medium',
+    priority: r.priority || 'Must Have',
+    match: capabilities ? 'Partial Match' : 'Full Match',
+    notes: r.section ? ('§ '+r.section) : ''
+  }));
+  const risks = (b.risk_flags || []).map(r => ({
+    severity: 'Medium',
+    category: 'Operational',
+    description: typeof r === 'string' ? r : (r.description || ''),
+    mitigation: 'Address in proposal section'
+  }));
+  const decision = (b.go_nogo || '').toUpperCase().includes('NO') ? 'NO-BID'
+                 : (b.go_nogo || '').toUpperCase().includes('COND') ? 'REVIEW' : 'BID';
+  return {
+    summary: {
+      client: b.issuer || '',
+      projectTitle: b.title || b.industry || '',
+      totalRequirements: reqs.length,
+      highComplexity: reqs.filter(r => r.complexity==='High').length,
+      mediumComplexity: reqs.filter(r => r.complexity==='Medium').length,
+      lowComplexity: reqs.filter(r => r.complexity==='Low').length,
+      matchedCapabilities: capabilities ? Math.floor(reqs.length*0.7) : 0,
+      gaps: capabilities ? Math.floor(reqs.length*0.2) : 0,
+      riskCount: risks.length
+    },
+    bid: {
+      decision: decision,
+      score: b.win_probability || 70,
+      rationale: (b.win_factors||[]).slice(0,2).join(' ') || 'See requirement details for full assessment',
+      keyStrengths: b.win_factors || [],
+      keyRisks: b.risk_flags || []
+    },
+    requirements: reqs,
+    risks: risks,
+    gaps: [],
+    winThemes: (b.win_factors || []).map((w,i) => ({
+      theme: 'Win Factor ' + (i+1),
+      description: w
+    })),
+    clarifications: b.recommended_actions || []
+  };
+}
+
+// Helper — render a clickable source-ref pill that opens the existing src panel
+function intelSrcPill(src){
+  if(!src || (!src.section && !src.page)) return '';
+  const label = src.section ? '§ '+esc(String(src.section)) : 'p.'+esc(String(src.page));
+  const kind = src.section ? 'sec' : 'pg';
+  const val = src.section ? src.section : src.page;
+  const tip = src.quote ? ' title="'+esc(String(src.quote).slice(0,200))+'"' : '';
+  return `<span class="src-ref" onclick="openSrcPanel('${kind}', ${JSON.stringify(String(val))})"${tip}><span class="src-ref-icon">📍</span>${label}${src.page&&src.section?` <span style="opacity:.6">· p.${esc(String(src.page))}</span>`:''}</span>`;
+}
+function intelSrcQuote(src){
+  if(!src || !src.quote) return '';
+  return `<div class="src-ref-quote">"${esc(String(src.quote).slice(0,240))}${String(src.quote).length>240?'…':''}"</div>`;
+}
+function intelBasis(text){
+  if(!text) return '';
+  return `<div class="basis-line">${esc(text)}</div>`;
+}
+
+function intelRender(r){
+  const res = document.getElementById('intel-results');
+  if(!res) return;
+  res.classList.add('show');
+
+  const s = r.summary || {};
+  const bid = r.bid || {};
+
+  // ── Sticky compact summary bar ──────────────────────────────
+  const stickV = document.getElementById('intel-stick-verdict');
+  const stickS = document.getElementById('intel-stick-score');
+  const stickSum = document.getElementById('intel-stick-summary');
+  const stickChips = document.getElementById('intel-stick-chips');
+  if(stickV){
+    const vc = bid.decision==='BID'?'bid':bid.decision==='NO-BID'?'nobid':'review';
+    stickV.className = 'intel-stick-verdict '+vc;
+    stickV.textContent = bid.decision || '—';
+  }
+  if(stickS) stickS.textContent = bid.score ?? '—';
+  if(stickSum){
+    const txt = bid.stakeholderSummary || bid.rationale || '';
+    stickSum.textContent = txt ? '"' + txt + '"' : '';
+  }
+  if(stickChips){
+    const mini = [
+      {v:s.totalRequirements ?? '—', l:'reqs',  c:'var(--violet)'},
+      {v:s.highComplexity ?? '—',    l:'high',  c:'#d96d3f'},
+      {v:s.gaps ?? '—',              l:'gaps',  c:'var(--amber)'},
+      {v:s.riskCount ?? '—',         l:'risks', c:'var(--red)'},
+      {v:s.matchedCapabilities ?? '—', l:'match', c:'var(--green)'}
+    ];
+    stickChips.innerHTML = mini.map(m=>`<div class="intel-stick-mini"><div class="intel-stick-mini-v" style="color:${m.c}">${m.v}</div><div class="intel-stick-mini-l">${m.l}</div></div>`).join('');
+  }
+
+  // ── Tab counts ──────────────────────────────
+  const setN = (id, n) => { const e=document.getElementById(id); if(e) e.textContent=String(n); };
+  setN('intel-rtab-count-req',  (r.requirements||[]).length);
+  setN('intel-rtab-count-risk', (r.risks||[]).length);
+  setN('intel-rtab-count-gap',  (r.gaps||[]).length);
+  setN('intel-rtab-count-win',  (r.winThemes||[]).length);
+  setN('intel-rtab-count-clar', (r.clarifications||[]).length);
+
+  // Bid recommendation — with breakdown + stakeholder summary + structured strengths/risks
+  const vc = bid.decision==='BID' ? 'bid' : bid.decision==='NO-BID' ? 'nobid' : 'review';
+  const col = bid.decision==='BID' ? 'var(--green)' : bid.decision==='NO-BID' ? 'var(--red)' : 'var(--amber)';
+  const bidEl = document.getElementById('intel-body-bid');
+  if(bidEl){
+    // Score breakdown
+    const bd = bid.breakdown || null;
+    let breakdownHtml = '';
+    if(bd){
+      const items = [
+        {key:'capabilityFit', lbl:'Capability fit'},
+        {key:'complexity',    lbl:'Complexity'},
+        {key:'riskProfile',   lbl:'Risk profile'},
+        {key:'commercialFit', lbl:'Commercial fit'}
+      ];
+      breakdownHtml = `<div class="score-breakdown">${items.map(it=>{
+        const x = bd[it.key]; if(!x) return '';
+        const pct = (x.max && x.score!=null) ? Math.round((x.score/x.max)*100) : 0;
+        return `<div class="score-bd-item">
+          <div class="score-bd-lbl">${it.lbl}</div>
+          <div class="score-bd-val">${esc(String(x.score??'—'))}<span class="max">/${esc(String(x.max??''))}</span></div>
+          <div class="score-bd-bar"><div class="score-bd-fill" style="width:${pct}%"></div></div>
+          <div class="score-bd-basis">${esc(x.basis||'')}</div>
+        </div>`;
+      }).join('')}</div>`;
+    }
+
+    // Stakeholder summary (new structured field) — fall back to old `rationale` if missing
+    const stakeholderText = bid.stakeholderSummary || bid.rationale || '';
+    const stakeholderHtml = stakeholderText ? `<div class="stakeholder-summary">${esc(stakeholderText)}</div>` : '';
+
+    // Strengths / risks — accept both new {statement,basis,source} objects AND legacy strings
+    const renderItem = (t, dotColor, label) => {
+      if(typeof t === 'string') return `<div class="intel-item-row"><div class="intel-item-dot" style="background:${dotColor}"></div><div><div class="intel-item-lbl">${label}</div><div class="intel-item-text">${esc(t)}</div></div></div>`;
+      if(!t || typeof t !== 'object') return '';
+      return `<div class="intel-item-row"><div class="intel-item-dot" style="background:${dotColor}"></div><div style="flex:1">
+        <div class="intel-item-lbl" style="display:flex;align-items:center;gap:6px">${label}${intelSrcPill(t.source)}</div>
+        <div class="intel-item-text">${esc(t.statement||'')}</div>
+        ${intelBasis(t.basis)}
+      </div></div>`;
+    };
+
+    bidEl.innerHTML = `
+      <div class="intel-verdict ${vc}">
+        <div class="intel-verdict-d" style="color:${col}">${bid.decision || '—'}</div>
+        <div class="intel-verdict-score" style="color:${col}">${bid.score ?? '—'}<span class="intel-verdict-score-suf">/100</span></div>
+        ${stakeholderHtml}
+      </div>
+      ${breakdownHtml}
+      ${(bid.keyStrengths?.length || bid.keyRisks?.length) ? `<div class="intel-verdict-grid">
+        ${(bid.keyStrengths || []).map(t => renderItem(t, 'var(--green)', 'Strength')).join('')}
+        ${(bid.keyRisks || []).map(t => renderItem(t, 'var(--red)', 'Key risk')).join('')}
+      </div>` : ''}`;
+  }
+
+  // Requirements — full-width below the two-column area would be ideal but keeping the existing layout for now
+  const reqs = r.requirements || [];
+  const typeMap = {Functional:'ib-func','Non-Functional':'ib-nonf',Compliance:'ib-comp',Commercial:'ib-comm'};
+  const cmpMap = {High:'ib-high',Medium:'ib-medium',Low:'ib-low'};
+  const mchMap = {'Full Match':'ib-match','Partial Match':'ib-partial','Gap':'ib-gap','Not Assessed':'match-not-assessed'};
+  const reqEl = document.getElementById('intel-body-req');
+  if(reqEl){
+    reqEl.innerHTML = reqs.length ? `<div style="overflow-x:auto;max-height:520px;overflow-y:auto">
+      <table class="intel-req-table"><thead><tr><th>ID</th><th>Requirement</th><th>Type</th><th>Complexity</th><th>Match</th><th>Source</th></tr></thead><tbody>
+      ${reqs.map(q => `<tr>
+        <td style="font-family:'JetBrains Mono',monospace;color:var(--text3);font-size:11px;font-weight:600;vertical-align:top">${esc(q.id||'')}</td>
+        <td style="max-width:340px;vertical-align:top">
+          <div style="font-weight:500;color:var(--navy)">${esc(q.description||'')}</div>
+          ${q.matched_capability?`<div class="evidence-line">Matched: ${esc(q.matched_capability)}${q.match_evidence?' — '+esc(q.match_evidence):''}</div>`:''}
+          ${intelBasis(q.match_basis || q.notes)}
+          ${q.complexity_basis?`<div class="basis-line" style="color:var(--text3)">Complexity: ${esc(q.complexity_basis)}</div>`:''}
+        </td>
+        <td style="vertical-align:top"><span class="intel-badge ${typeMap[q.type]||'ib-func'}">${esc(q.type||'—')}</span></td>
+        <td style="vertical-align:top"><span class="intel-badge ${cmpMap[q.complexity]||'ib-low'}">${esc(q.complexity||'—')}</span></td>
+        <td style="vertical-align:top"><span class="intel-badge ${mchMap[q.match]||'ib-gap'}">${esc(q.match||'—')}</span></td>
+        <td style="vertical-align:top">${intelSrcPill(q.source)}</td>
+      </tr>`).join('')}
+      </tbody></table></div>` : '<div class="intel-empty">No requirements extracted.</div>';
+  }
+
+  // Risks — with likelihood × impact + basis + source
+  const risks = r.risks || [];
+  const riskEl = document.getElementById('intel-body-risk');
+  if(riskEl){
+    riskEl.innerHTML = risks.length ? `<div style="display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto">
+      ${risks.map(k => `<div class="intel-item-row">
+        <div class="intel-item-dot" style="background:${k.severity==='High'?'var(--red)':k.severity==='Medium'?'var(--amber)':'var(--green)'}"></div>
+        <div style="flex:1">
+          <div style="display:flex;gap:6px;margin-bottom:5px;flex-wrap:wrap;align-items:center">
+            <span class="intel-badge ${k.severity==='High'?'ib-gap':k.severity==='Medium'?'ib-medium':'ib-low'}">${esc(k.severity||'—')}</span>
+            ${(k.likelihood && k.impact)?`<span class="li-chip">L${esc(String(k.likelihood))}×I${esc(String(k.impact))}</span>`:''}
+            <span style="font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em">${esc(k.category||'')}</span>
+            ${intelSrcPill(k.source)}
+          </div>
+          <div class="intel-item-text">${esc(k.description||'')}</div>
+          ${intelBasis(k.severity_basis)}
+          ${k.mitigation?`<div style="font-size:11.5px;color:var(--green);margin-top:6px;line-height:1.5">💡 ${esc(k.mitigation)}</div>`:''}
+        </div>
+      </div>`).join('')}
+    </div>` : '<div class="intel-empty">✓ No significant risks identified.</div>';
+  }
+
+  // Gaps — with presumed flag + source
+  const gaps = r.gaps || [];
+  const gapEl = document.getElementById('intel-body-gap');
+  if(gapEl){
+    gapEl.innerHTML = gaps.length ? `<div style="display:flex;flex-direction:column;gap:8px">
+      ${gaps.map(g => `<div class="intel-item-row">
+        <div class="intel-item-dot" style="background:var(--amber)"></div>
+        <div style="flex:1">
+          <div class="intel-item-lbl" style="display:flex;align-items:center;gap:6px">
+            ${esc(g.requirement||'')}
+            ${g.presumed?`<span class="intel-badge ib-medium" style="font-size:9px">PRESUMED — VERIFY</span>`:''}
+            ${intelSrcPill(g.source)}
+          </div>
+          <div class="intel-item-text">${esc(g.gap||'')}</div>
+          ${g.suggestion?`<div style="font-size:11.5px;color:var(--green);margin-top:5px;line-height:1.5">→ ${esc(g.suggestion)}</div>`:''}
+        </div>
+      </div>`).join('')}
+    </div>` : '<div class="intel-empty" style="color:var(--green)">✓ No capability gaps identified — verify against your inventory.</div>';
+  }
+
+  // Win themes — structured: pain + differentiator + proof
+  const themes = r.winThemes || [];
+  const winEl = document.getElementById('intel-body-win');
+  if(winEl){
+    winEl.innerHTML = themes.length ? `<div class="intel-theme-grid">
+      ${themes.map(t => {
+        // Backward-compat: if old shape with `description`, just show it
+        if(t.description && !t.client_pain){
+          return `<div class="intel-theme-card"><div class="intel-theme-title">🎯 ${esc(t.theme||'')}</div><div class="intel-theme-body">${esc(t.description||'')}</div></div>`;
+        }
+        const proofClass = (t.proof_point && /required/i.test(t.proof_point)) ? 'theme-proof-required' : 'theme-proof';
+        return `<div class="intel-theme-card">
+          <div class="intel-theme-title" style="display:flex;align-items:center;gap:6px;justify-content:space-between">
+            <span>🎯 ${esc(t.theme||'')}</span>${intelSrcPill(t.source)}
+          </div>
+          <div class="theme-row">
+            ${t.client_pain?`<div><div class="theme-row-lbl">Client pain</div><div class="theme-row-val theme-pain">${esc(t.client_pain)}</div></div>`:''}
+            ${t.our_differentiator?`<div><div class="theme-row-lbl">Our differentiator</div><div class="theme-row-val theme-diff">${esc(t.our_differentiator)}</div></div>`:''}
+            ${t.proof_point?`<div><div class="theme-row-lbl">Proof point</div><div class="theme-row-val ${proofClass}">${esc(t.proof_point)}</div></div>`:''}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>` : '<div class="intel-empty">No win themes generated.</div>';
+  }
+
+  // Clarifications — 4-tab UI grouped by audience
+  const clars = r.clarifications || [];
+  const clarEl = document.getElementById('intel-body-clar');
+  if(clarEl){
+    // If legacy flat-string array, fall back to the old simple rendering
+    if(clars.length && typeof clars[0] === 'string'){
+      clarEl.innerHTML = `<div class="intel-clar-list">
+        ${clars.map((q,i) => `<div class="intel-clar-item"><span class="intel-clar-num">Q${String(i+1).padStart(2,'0')}</span><span class="intel-clar-text">${esc(q)}</span></div>`).join('')}
+      </div>`;
+    } else if(!clars.length){
+      clarEl.innerHTML = '<div class="intel-empty">No clarification questions generated.</div>';
+    } else {
+      // Persist for tab filtering
+      window._intelClarifications = clars;
+      const buckets = {'Internal Team':[], 'Customer':[], 'Vendor':[], 'Partner':[], 'All':clars};
+      clars.forEach(c => { const a = c.audience || 'Customer'; (buckets[a] || buckets['Customer']).push(c); });
+      const tabs = [
+        {key:'All',           lbl:'All',           icon:'📋'},
+        {key:'Customer',      lbl:'Customer',      icon:'🏢'},
+        {key:'Internal Team', lbl:'Internal Team', icon:'👥'},
+        {key:'Vendor',        lbl:'Vendor',        icon:'🔧'},
+        {key:'Partner',       lbl:'Partner',       icon:'🤝'}
+      ];
+      const audClass = (a) => a==='Internal Team'?'aud-internal':a==='Customer'?'aud-customer':a==='Vendor'?'aud-vendor':'aud-partner';
+      const critClass = (c) => c==='Blocker'?'crit-blocker':c==='High'?'crit-high':c==='Medium'?'crit-medium':'crit-low';
+
+      clarEl.innerHTML = `
+        <div class="clar-tabs">${tabs.map((t,i) => `<button class="clar-tab ${i===0?'active':''}" onclick="intelSwitchClarTab(this,'${esc(t.key)}')">${t.icon} ${esc(t.lbl)}<span class="clar-tab-count">${(buckets[t.key]||[]).length}</span></button>`).join('')}</div>
+        <div id="intel-clar-cards"></div>`;
+
+      window._intelRenderClarBucket = function(key){
+        const list = buckets[key] || [];
+        const target = document.getElementById('intel-clar-cards');
+        if(!target) return;
+        if(!list.length){ target.innerHTML = '<div class="intel-empty">No clarifications in this category.</div>'; return; }
+        target.innerHTML = list.map(c => `
+          <div class="clar-card">
+            <div class="clar-card-meta">
+              <div class="clar-card-id">${esc(c.id||'C--')}</div>
+              <span class="clar-pill ${critClass(c.criticality||'Medium')}">${esc(c.criticality||'Medium')}</span>
+            </div>
+            <div class="clar-card-body">
+              <div class="clar-card-q">${esc(c.question||'')}</div>
+              <div class="clar-card-tags">
+                <span class="clar-pill ${audClass(c.audience||'Customer')}">${esc(c.audience||'Customer')}</span>
+                ${c.owner?`<span style="font-size:10.5px;color:var(--text3)">Owner: <strong style="color:var(--navy)">${esc(c.owner)}</strong></span>`:''}
+                ${(c.dependencies && c.dependencies.length)?`<span style="font-size:10px;color:var(--text3);font-weight:600">Depends on:</span>${c.dependencies.map(d=>`<span class="dep-pill">${esc(d)}</span>`).join('')}`:''}
+                ${intelSrcPill(c.source)}
+              </div>
+              ${c.rationale?intelBasis(c.rationale):''}
+              ${intelSrcQuote(c.source)}
+            </div>
+          </div>`).join('');
+      };
+      window._intelRenderClarBucket('All');
+    }
+  }
+
+  // After everything is rendered: collapse the input card into a slim bar and reveal the results
+  intelCollapseInput();
+
+  // Don't auto-scroll anymore — results are right at the top, sticky summary stays visible
+}
+
+// Switch between result panes (tabs)
+function intelSwitchTab(btn, key){
+  document.querySelectorAll('#intel-rtabs .intel-rtab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.intel-pane').forEach(p => p.classList.remove('active'));
+  const pane = document.getElementById('intel-pane-'+key);
+  if(pane) pane.classList.add('active');
+}
+
+// Collapse the input card after analysis runs (slim bar replaces full input)
+function intelCollapseInput(){
+  const card = document.getElementById('intel-input-card');
+  if(card) card.style.display = 'none';
+  const slimbar = document.getElementById('intel-slimbar');
+  if(slimbar){
+    slimbar.classList.add('show');
+    const sourceEl = document.getElementById('intel-slimbar-source');
+    if(sourceEl){
+      sourceEl.textContent = (S && S.rfpFileName) || (_intelFile && _intelFile.name) || 'pasted text';
+    }
+  }
+}
+
+// Re-expand the input card so user can analyse a different doc
+function intelExpandInput(){
+  const card = document.getElementById('intel-input-card');
+  if(card) card.style.display = '';
+  const slimbar = document.getElementById('intel-slimbar');
+  if(slimbar) slimbar.classList.remove('show');
+  // Hide the results
+  const results = document.getElementById('intel-results');
+  if(results) results.classList.remove('show');
+  intelSetStatus('idle');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Sub-tab switcher (audience filter) inside the Clarifications pane
+function intelSwitchClarTab(btn, key){
+  // Only target the .clar-tab inside the clarifications body, not capability inventory's tabs
+  const container = btn.closest('.clar-tabs');
+  if(container){
+    container.querySelectorAll('.clar-tab').forEach(t => t.classList.remove('active'));
+  }
+  btn.classList.add('active');
+  if(typeof window._intelRenderClarBucket === 'function') window._intelRenderClarBucket(key);
+}
+
+// ── EXPORTS ─────────────────────────────────────────────────────────
+function intelExportExcel(){
+  if(!_intelResult){ toast('Run an analysis first','info'); return; }
+  if(typeof XLSX === 'undefined'){
+    // Lazy load XLSX
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = ()=> intelExportExcel();
+    document.head.appendChild(s);
+    return;
+  }
+  const r = _intelResult, s = r.summary||{}, b = r.bid||{};
+  const wb = XLSX.utils.book_new();
+
+  const sumData = [
+    ['RFP / RFI Intelligence Analysis Report'],[''],
+    ['Client', s.client||''],
+    ['Project', s.projectTitle||''],
+    ['Total Requirements', s.totalRequirements||0],
+    ['High Complexity', s.highComplexity||0],
+    ['Medium Complexity', s.mediumComplexity||0],
+    ['Low Complexity', s.lowComplexity||0],
+    ['Matched Capabilities', s.matchedCapabilities||0],
+    ['Capability Gaps', s.gaps||0],
+    ['Risk Count', s.riskCount||0],
+    [''],
+    ['BID RECOMMENDATION', b.decision||''],
+    ['Bid Score', (b.score||0)+'/100'],
+    ['Rationale', b.rationale||''],
+    [''],
+    ['Key Strengths', (b.keyStrengths||[]).join('; ')],
+    ['Key Risks', (b.keyRisks||[]).join('; ')],
+    [''],
+    ['Generated', new Date().toLocaleString()],
+  ];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(sumData), 'Summary');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['ID','Description','Type','Complexity','Priority','Match','Notes'],
+    ...(r.requirements||[]).map(q=>[q.id,q.description,q.type,q.complexity,q.priority,q.match,q.notes])
+  ]), 'Requirements');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['Severity','Category','Description','Mitigation'],
+    ...(r.risks||[]).map(k=>[k.severity,k.category,k.description,k.mitigation])
+  ]), 'Risks');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['Requirement','Gap','Suggested Action'],
+    ...(r.gaps||[]).map(g=>[g.requirement,g.gap,g.suggestion])
+  ]), 'Gap Analysis');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['Theme','Description'],
+    ...(r.winThemes||[]).map(t=>[t.theme,t.description])
+  ]), 'Win Themes');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['#','Clarification Question'],
+    ...(r.clarifications||[]).map((q,i)=>[i+1,q])
+  ]), 'Clarifications');
+
+  XLSX.writeFile(wb, `RFP_Intelligence_${(s.client||'Report').replace(/\s+/g,'_')}.xlsx`);
+  toast('Excel report downloaded','success');
+}
+
+function intelExportWord(){
+  if(!_intelResult){ toast('Run an analysis first','info'); return; }
+  const r = _intelResult, s = r.summary||{}, b = r.bid||{};
+  const bidColor = b.decision==='BID'?'#15803d':b.decision==='NO-BID'?'#c0392b':'#b45309';
+  const client = s.client || 'Client';
+
+  const reqRows = (r.requirements||[]).map(q=>`
+    <tr>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-family:Courier New;font-size:11px;color:#555">${esc(q.id||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:12px">${esc(q.description||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px">${esc(q.type||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px">${esc(q.complexity||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px">${esc(q.match||'')}</td>
+    </tr>`).join('');
+  const riskRows = (r.risks||[]).map(k=>`
+    <tr>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px;font-weight:bold;color:${k.severity==='High'?'#c0392b':k.severity==='Medium'?'#b45309':'#15803d'}">${esc(k.severity||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:11px">${esc(k.category||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:12px">${esc(k.description||'')}</td>
+      <td style="padding:6px 8px;border:1px solid #dee2e6;font-size:12px;color:#555">${esc(k.mitigation||'')}</td>
+    </tr>`).join('');
+
+  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+<head><meta charset='utf-8'><title>RFP Intelligence — ${esc(client)}</title>
+<style>
+  body{font-family:Calibri,sans-serif;font-size:13px;color:#272160;margin:2cm}
+  h1{font-size:22px;color:#171339;border-bottom:3px solid #6D69F0;padding-bottom:8px;margin-bottom:6px}
+  h2{font-size:15px;color:#272160;margin-top:24px;margin-bottom:8px;border-left:4px solid #F28D64;padding-left:10px}
+  table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px}
+  th{background:#272160;color:#fff;padding:8px 10px;text-align:left;font-size:11px;border:1px solid #171339}
+  .meta{color:#6c757d;font-size:12px;margin-bottom:18px}
+  .verdict{border-radius:6px;padding:16px 20px;margin-bottom:14px;background:#f8f9fa;border-left:5px solid ${bidColor}}
+  .verdict-d{font-size:22px;font-weight:700;color:${bidColor}}
+  .verdict-s{font-size:18px;font-weight:600;color:${bidColor}}
+  .theme{padding:10px 14px;background:#f8f9fa;border-radius:4px;margin-bottom:8px;border-left:3px solid #6D69F0}
+  .theme-t{font-weight:600;color:#272160;margin-bottom:3px;font-size:12px}
+  .q{margin-bottom:6px;padding:6px 12px;background:#f8f9fa;border-left:3px solid #6D69F0;font-size:12px}
+  .str{margin-bottom:4px;font-size:12px;color:#15803d} .str::before{content:'✓  '}
+  .rsk{margin-bottom:4px;font-size:12px;color:#c0392b} .rsk::before{content:'⚠  '}
+</style></head>
+<body>
+<h1>RFP / RFI Intelligence Report</h1>
+<div class="meta"><strong>${esc(s.projectTitle||'—')}</strong> &middot; ${esc(client)} &middot; Generated ${new Date().toLocaleString()}</div>
+<h2>Bid / No-Bid Recommendation</h2>
+<div class="verdict">
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div class="verdict-d">${esc(b.decision||'—')}</div>
+    <div class="verdict-s">${b.score ?? '—'} / 100</div>
+  </div>
+  <p style="margin-top:8px;font-size:12px;color:#555">${esc(b.rationale||'')}</p>
+  <div style="margin-top:10px">
+    ${(b.keyStrengths||[]).map(t=>`<div class="str">${esc(t)}</div>`).join('')}
+    ${(b.keyRisks||[]).map(t=>`<div class="rsk">${esc(t)}</div>`).join('')}
+  </div>
+</div>
+<h2>Requirement Matrix</h2>
+<table><thead><tr><th>ID</th><th>Description</th><th>Type</th><th>Complexity</th><th>Match</th></tr></thead>
+<tbody>${reqRows||'<tr><td colspan="5" style="padding:10px;color:#999">No requirements</td></tr>'}</tbody></table>
+<h2>Risk Flags</h2>
+<table><thead><tr><th>Severity</th><th>Category</th><th>Description</th><th>Mitigation</th></tr></thead>
+<tbody>${riskRows||'<tr><td colspan="4" style="padding:10px;color:#999">No risks</td></tr>'}</tbody></table>
+<h2>Win Themes</h2>
+${(r.winThemes||[]).map(t=>`<div class="theme"><div class="theme-t">🎯 ${esc(t.theme||'')}</div><div style="font-size:12px">${esc(t.description||'')}</div></div>`).join('')||'<p style="color:#999">No win themes generated</p>'}
+<h2>Clarification Questions</h2>
+${(r.clarifications||[]).map((q,i)=>`<div class="q"><strong>Q${String(i+1).padStart(2,'0')}</strong> &nbsp;${esc(q)}</div>`).join('')||'<p style="color:#999">None</p>'}
+<div style="margin-top:30px;padding-top:12px;border-top:1px solid #dee2e6;color:#adb5bd;font-size:10px">Generated by RFP Agent &middot; Confidential &middot; ${new Date().toLocaleString()}</div>
+</body></html>`;
+
+  const blob = new Blob([html], {type:'application/msword'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `RFP_Intelligence_${client.replace(/\s+/g,'_')}.doc`;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  toast('Word report downloaded','success');
+}
+
+function intelExportPDF(){
+  if(!_intelResult){ toast('Run an analysis first','info'); return; }
+  // Use the browser's print-to-PDF on a styled HTML — simpler than jsPDF embed
+  const r = _intelResult, s = r.summary||{}, b = r.bid||{};
+  const bidColor = b.decision==='BID'?'#15803d':b.decision==='NO-BID'?'#c0392b':'#b45309';
+  const w = window.open('', '_blank');
+  if(!w){ toast('Pop-ups blocked — allow them to download PDF','error'); return; }
+  w.document.write(`<html><head><title>RFP Intelligence — ${esc(s.client||'Report')}</title><style>
+    @page{margin:1.6cm} body{font-family:'DM Sans',Calibri,sans-serif;font-size:12px;color:#272160}
+    h1{font-size:24px;color:#171339;border-bottom:3px solid #6D69F0;padding-bottom:8px;letter-spacing:-.5px}
+    h2{font-size:14px;color:#272160;margin-top:22px;border-left:4px solid #F28D64;padding-left:10px}
+    .meta{color:#6c757d;font-size:11px;margin-bottom:16px}
+    .verdict{border-radius:6px;padding:14px 18px;margin-bottom:14px;background:#f8f9fa;border-left:5px solid ${bidColor}}
+    .verdict-d{font-size:22px;font-weight:700;color:${bidColor}}
+    .verdict-s{font-size:18px;font-weight:600;color:${bidColor}}
+    table{width:100%;border-collapse:collapse;font-size:11px;margin:8px 0 12px}
+    th{background:#272160;color:#fff;padding:6px 8px;text-align:left;font-size:10px}
+    td{padding:6px 8px;border:1px solid #ddd}
+    .theme{padding:8px 12px;background:#f8f9fa;margin-bottom:6px;border-left:3px solid #6D69F0;font-size:11px}
+    .q{padding:6px 10px;background:#f8f9fa;margin-bottom:5px;border-left:3px solid #6D69F0;font-size:11px}
+  </style></head><body>
+  <h1>RFP / RFI Intelligence Report</h1>
+  <div class="meta"><strong>${esc(s.projectTitle||'—')}</strong> &middot; ${esc(s.client||'Client')} &middot; ${new Date().toLocaleDateString()}</div>
+  <div class="verdict">
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><div class="verdict-d">${esc(b.decision||'—')}</div><div class="verdict-s">${b.score ?? '—'} / 100</div></div>
+    <p style="margin-top:8px;font-size:11px;color:#555">${esc(b.rationale||'')}</p>
+  </div>
+  <h2>Requirement Matrix</h2>
+  <table><thead><tr><th>ID</th><th>Description</th><th>Type</th><th>Complexity</th><th>Match</th></tr></thead><tbody>
+  ${(r.requirements||[]).map(q=>`<tr><td>${esc(q.id||'')}</td><td>${esc(q.description||'')}</td><td>${esc(q.type||'')}</td><td>${esc(q.complexity||'')}</td><td>${esc(q.match||'')}</td></tr>`).join('')||'<tr><td colspan="5" style="color:#999">No requirements</td></tr>'}
+  </tbody></table>
+  <h2>Risk Flags</h2>
+  <table><thead><tr><th>Severity</th><th>Category</th><th>Description</th><th>Mitigation</th></tr></thead><tbody>
+  ${(r.risks||[]).map(k=>`<tr><td><strong style="color:${k.severity==='High'?'#c0392b':k.severity==='Medium'?'#b45309':'#15803d'}">${esc(k.severity||'')}</strong></td><td>${esc(k.category||'')}</td><td>${esc(k.description||'')}</td><td>${esc(k.mitigation||'')}</td></tr>`).join('')||'<tr><td colspan="4" style="color:#999">No risks</td></tr>'}
+  </tbody></table>
+  <h2>Win Themes</h2>
+  ${(r.winThemes||[]).map(t=>`<div class="theme"><strong>🎯 ${esc(t.theme||'')}</strong><br>${esc(t.description||'')}</div>`).join('')||'<p style="color:#999">None</p>'}
+  <h2>Clarification Questions</h2>
+  ${(r.clarifications||[]).map((q,i)=>`<div class="q"><strong>Q${String(i+1).padStart(2,'0')}</strong> ${esc(q)}</div>`).join('')||'<p style="color:#999">None</p>'}
+  <script>setTimeout(function(){window.print();},500);</scr` + `ipt>
+  </body></html>`);
+  w.document.close();
+  toast('Print dialog opened — save as PDF','info');
+}
+
 // ─── Restore original app initialization ───
 init();
 
@@ -13235,4 +15744,11 @@ init();
     <textarea class="chat-input" id="chat-input" placeholder="Ask anything... or click 🎤 to speak" rows="1"
       onkeydown="chatKeydown(event)" oninput="autoResizeChatInput(this)"></textarea>
     <button class="chat-send" id="chat-send-btn" onclick="sendChatMessage()">
-      <svg width="1
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+</div><!-- /.app -->
+</body>
+</html>
