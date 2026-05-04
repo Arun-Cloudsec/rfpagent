@@ -3630,6 +3630,41 @@ textarea.improve-input::placeholder{color:var(--text3)}
 
 /* === LANDING — minimal CSS, uses existing .card system === */
 
+/* === HOME BUTTON — injected into every topbar by JS === */
+.home-btn-injected{
+  display:flex !important;
+  align-items:center;
+  gap:6px;
+  padding:6px 13px 6px 11px;
+  background:linear-gradient(135deg,#F28D64,#6D69F0);
+  color:#fff !important;
+  border:none;
+  border-radius:99px;
+  font-family:inherit;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.02em;
+  cursor:pointer;
+  box-shadow:0 3px 10px rgba(109,105,240,0.28);
+  transition:transform .15s ease, box-shadow .15s ease;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.home-btn-injected:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(109,105,240,0.4);
+}
+.home-btn-injected svg{flex-shrink:0;display:block;width:14px;height:14px}
+
+/* Floating variant — used on pages WITHOUT a .topbar (Projects, Project RFP, Rule Library, etc.) */
+.home-btn-floating{
+  position:absolute !important;
+  top:14px !important;
+  right:18px !important;
+  z-index:50 !important;
+  box-shadow:0 4px 14px rgba(109,105,240,0.4),0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
 /* Hide the marketing ticker — pages are now absolutely positioned and the ticker just adds visual noise */
 .ticker-wrap{display:none !important}
 
@@ -12929,7 +12964,7 @@ async function importAnswersSheet(input){
 
 // Hook both pages into the router
 const _origGoPage6 = goPage;
-goPage = function(p){
+goPage = function(p, _fromHistory){
   _origGoPage6(p);
   if(p === 'projrfp') renderProjectRfpPage();
   if(p === 'answer-review') renderAnswerReviewPage();
@@ -12938,6 +12973,86 @@ goPage = function(p){
   if(p === 'landing' && typeof renderLandingPage === 'function') renderLandingPage();
   // Auto-apply project RFP on every page that consumes one
   if(typeof autoApplyProjectRfp === 'function') autoApplyProjectRfp(p);
+
+  // Toggle body class so the floating Home button hides on the landing page itself
+  document.body.classList.toggle('on-landing', p === 'landing');
+
+  // Push to browser history so the back button navigates within the app
+  // (skip when this navigation IS itself a back-button event, to avoid loops)
+  if(!_fromHistory){
+    try {
+      const url = '#' + p;
+      if(location.hash !== url) history.pushState({page: p}, '', url);
+    } catch(e){}
+  }
+};
+
+// Browser back/forward button — re-route within the app instead of leaving
+window.addEventListener('popstate', function(e){
+  const p = (e.state && e.state.page) || (location.hash || '').replace(/^#/, '') || 'landing';
+  if(typeof goPage === 'function') goPage(p, true);
+});
+
+// Inject a "Home" button into every page (topbar OR no-topbar pages)
+function injectHomeButtonsIntoTopbars(){
+  // 1) For pages that have a .topbar — inject the button INTO the topbar
+  document.querySelectorAll('.topbar').forEach(function(tb){
+    if(tb.closest('#page-landing')) return;          // skip landing
+    if(tb.querySelector('.home-btn-injected')) return;  // already injected
+
+    var btn = _makeHomeBtn();
+    var title = tb.querySelector('.topbar-title');
+    if(title && title.nextSibling){
+      tb.insertBefore(btn, title.nextSibling);
+    } else if(title){
+      title.parentNode.appendChild(btn);
+    } else {
+      tb.insertBefore(btn, tb.firstChild);
+    }
+  });
+
+  // 2) For pages that DON'T have a .topbar — add the button as a fixed-positioned overlay
+  //    scoped to that page (so it only shows when the page is active)
+  document.querySelectorAll('.page').forEach(function(page){
+    if(page.id === 'page-landing') return;            // skip landing
+    if(page.querySelector('.topbar')) return;         // pages with topbars handled above
+    if(page.querySelector('.home-btn-floating')) return;  // already injected
+
+    var btn = _makeHomeBtn();
+    btn.classList.add('home-btn-floating');
+    page.insertBefore(btn, page.firstChild);
+  });
+}
+
+function _makeHomeBtn(){
+  var btn = document.createElement('button');
+  btn.className = 'home-btn-injected';
+  btn.title = 'Go to Home';
+  btn.setAttribute('aria-label','Go to Home');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span>';
+  btn.onclick = function(e){ e.stopPropagation(); goPage('landing'); };
+  return btn;
+}
+
+// Run on DOM ready and again after dynamic page renders
+window.addEventListener('DOMContentLoaded', function(){
+  injectHomeButtonsIntoTopbars();
+
+  const initial = (location.hash || '').replace(/^#/, '');
+  if(initial && typeof goPage === 'function'){
+    setTimeout(() => goPage(initial), 200);
+  } else {
+    try { history.replaceState({page: 'landing'}, '', '#landing'); } catch(e){}
+    document.body.classList.add('on-landing');
+  }
+});
+
+// Some pages render their topbar dynamically — re-run after each navigation just in case
+const _injectAfterNav = goPage;
+goPage = function(p, _fromHistory){
+  _injectAfterNav(p, _fromHistory);
+  // After page change, ensure Home buttons exist on any newly-visible topbar
+  setTimeout(injectHomeButtonsIntoTopbars, 50);
 };
 
 // ═════════════════════════════════════════════════════════════════════════════
