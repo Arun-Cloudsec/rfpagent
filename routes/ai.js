@@ -192,121 +192,249 @@ router.post('/improve', async (req, res, next) => {
 });
 
 // ════════════════════════════════════════════════════════════════════════════
-// POST /api/analyze-rfp (multipart) — Build the executive brief JSON
+// Language handling — shared by the brief + expand endpoints
+// ════════════════════════════════════════════════════════════════════════════
+// The frontend historically posted the target language as `language` while the
+// server read `output_language`, so the target was silently ignored and every
+// brief came back in English. We now accept BOTH names.
+// ----------------------------------------------------------------------------
+const LANG_NAMES = {
+  en: 'English',    ar: 'Arabic',     fr: 'French',   es: 'Spanish',
+  de: 'German',     it: 'Italian',    pt: 'Portuguese', ru: 'Russian',
+  zh: 'Chinese',    ja: 'Japanese',   ko: 'Korean',   hi: 'Hindi',
+  ta: 'Tamil',      tr: 'Turkish',    nl: 'Dutch',    af: 'South African English',
+  id: 'Indonesian', pl: 'Polish',     sv: 'Swedish',  uk: 'Ukrainian',
+};
+
+/** Resolve the requested output language from a request body, accepting either
+ *  field name and either a code ("ar") or a display name ("Arabic"). */
+function resolveOutputLanguage(body = {}) {
+  const raw = String(
+    body.output_language || body.language || body.outputLanguage || ''
+  ).trim();
+  if (!raw) return 'English';
+  const lower = raw.toLowerCase();
+  if (LANG_NAMES[lower]) return LANG_NAMES[lower];        // was a code
+  return raw;                                             // already a name
+}
+
+function resolveSourceLanguage(body = {}) {
+  const name = String(body.source_language_name || '').trim();
+  if (name && !/^auto/i.test(name)) return name;
+  const code = String(body.source_language || '').trim().toLowerCase();
+  if (code && code !== 'auto' && LANG_NAMES[code]) return LANG_NAMES[code];
+  return '';                                              // auto-detect
+}
+
+/** A deliberately loud translation directive. This sits at the TOP of the
+ *  system prompt — a one-line hint buried mid-prompt was being ignored. */
+function langDirective(outLang, srcLang) {
+  return [
+    '═══════ OUTPUT LANGUAGE — THIS OVERRIDES EVERYTHING BELOW ═══════',
+    `Write ALL free-text output in ${outLang}.`,
+    srcLang
+      ? `The source document is written in ${srcLang}. Read it in ${srcLang}, then TRANSLATE your analysis into ${outLang}.`
+      : `The source document may be in ANY language (Arabic, French, Tamil, Spanish, Chinese...). Detect it, read it, then TRANSLATE your analysis into ${outLang}.`,
+    `Every string VALUE you emit — summaries, scope, titles, reasons, questions, risks, event names, skill names — must be written in ${outLang}.`,
+    'JSON KEYS stay in English exactly as specified in the schema. Only VALUES get translated.',
+    'Leave these untranslated even inside a translated sentence: organisation and company names, RFP reference numbers, requirement IDs (REQ-001), standard and certification names (ISO 27001, NIST, SOC 2), currency codes (AED, USD), product names (Microsoft Azure), and any enum value the schema lists literally (GO, NO GO, MANDATORY, HIGH, AMBIGUITY...).',
+    `If the source document is already in ${outLang}, pass the content through without translating.`,
+    outLang.toLowerCase().startsWith('english')
+      ? 'Target language is English — translate any non-English source into English.'
+      : `Do NOT reply in English. The reader does not read English. Reply in ${outLang}.`,
+    '═════════════════════════════════════════════════════════════════',
+  ].join('\n');
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// POST /api/analyze-rfp (multipart) — FAST executive summary ONLY
 // ════════════════════════════════════════════════════════════════════════════
 //
-// FormData fields: rfpDoc (file), output_language, source_language, source_language_name
-// Returns: { success: true, brief: { ... } }
+// FormData: rfpDoc (file), output_language (or language), source_language,
+//           source_language_name
+// Returns:  { success: true, brief: {...}, source: {...} }
+//
+// Deliberately LEAN. Clarifications, risk registers, decision-criteria
+// matrices and effort modelling are NOT produced here — they are separate
+// on-demand calls to POST /api/brief/expand. The old version asked for all of
+// that in one 12k-token JSON blob, which is why the brief took ~60s. This
+// version asks for roughly a tenth of the output and returns in seconds.
 // ----------------------------------------------------------------------------
 router.post('/analyze-rfp', upload.single('rfpDoc'), async (req, res, next) => {
   try {
     if (!req.file) return res.status(400).json({ success: false, error: 'rfpDoc file is required' });
-    const outLang = req.body.output_language || 'English';
-    const ext = await extractor.extract(req.file.buffer, req.file.originalname);
+
+    const outLang = resolveOutputLanguage(req.body);
+    const srcLang = resolveSourceLanguage(req.body);
+    const ext     = await extractor.extract(req.file.buffer, req.file.originalname);
 
     const system = [
-      'You are a senior bid manager analysing an RFP for a vendor. Produce a structured Executive Brief as STRICT JSON.',
-      'Output ONLY a single JSON object — no preamble, no markdown fences.',
+      langDirective(outLang, srcLang),
       '',
-      `Output language for free-text fields: ${outLang}.`,
+      'You are a senior bid manager. In under 60 seconds a busy executive must understand what this RFP is and whether we should bid.',
+      'Produce ONLY an executive summary as STRICT JSON. Output a single JSON object — no preamble, no markdown fences.',
       '',
-      'JSON shape (all fields required, use null/empty array if unknown):',
+      'SCHEMA (all keys required; use null or [] when the document does not say):',
       '{',
-      '  "title": string,',
-      '  "ref": string,                      // RFP reference / number',
+      '  "title": string,                    // the opportunity in one line',
+      '  "ref": string,                      // RFP reference / tender number',
       '  "issuer": string,',
       '  "industry": string,',
-      '  "contract_value": string,           // formatted, with currency',
+      '  "contract_value": string,           // include the currency',
       '  "contract_duration": string,',
-      '  "submission_date": string,          // YYYY-MM-DD or natural date',
+      '  "submission_date": string,          // YYYY-MM-DD where possible',
       '  "qa_deadline": string,',
       '  "award_date": string,',
-      '  "scope": string,                    // 2-4 sentences describing scope',
-      '  "executive_summary": string,        // 3-5 sentences',
+      '  "scope": string,                    // 2-3 sentences: what the buyer wants delivered',
+      '  "executive_summary": string,        // 3-4 sentences: what this is, why it matters, what it takes to win',
+      '  "headlines": string[],              // 3-5 single-line facts leadership must know',
       '  "go_nogo": "GO" | "CONDITIONAL GO" | "NO GO",',
-      '  "go_nogo_reason": string,            // 1-2 sentences summarising the headline rationale',
-      '  "go_nogo_criteria": [                 // 3-6 specific criteria evaluated, each cited',
-      '    { "criterion": string,              // e.g. "Azure Expert MSP certification"',
-      '      "verdict": "MET"|"GAP"|"PARTIAL"|"UNKNOWN",',
-      '      "rationale": string,              // why this verdict (cite Section/Page/REQ-id)',
-      '      "weight": "HIGH"|"MEDIUM"|"LOW" } // how much this drives the GO/NO-GO',
+      '  "go_nogo_reason": string,           // 1-2 sentences',
+      '  "win_probability": number,          // 0-100',
+      '  "key_requirements": [               // TOP 5 ONLY — do not exceed 5',
+      '    { "id": "REQ-001", "title": string, "description": string,',
+      '      "priority": "MANDATORY"|"HIGH"|"MEDIUM", "section": string, "page": number }',
       '  ],',
-      '  "win_probability": number,           // 0-100',
-      '  "key_requirements": [',
-      '    { "id": "REQ-001", "title": string, "description": string, "priority": "MANDATORY"|"HIGH"|"MEDIUM",',
-      '      "section": string, "page": number }   // section/page MUST be filled where the source identifies them',
-      '  ],',
-      '  "eval_criteria":   [{ "criterion": string, "weight": string }],',
-      '  "compliance_standards": string[],',
-      '  "win_factors":     string[],',
-      '  "risk_flags":      string[],',
-      '  "recommended_actions": string[],',
-      '  "local_content":   string,',
-      '  "timeline":        [{ "date": string, "event": string }],',
-      '  "clarifications":  [                 // open questions / ambiguities / contradictions to raise with issuer',
-      '    { "question": string,              // the actual clarification question',
-      '      "kind": "AMBIGUITY"|"CONTRADICTION"|"GAP"|"RULE",',
-      '      "where": string,                 // Section/Page citation in the RFP',
-      '      "impact": "HIGH"|"MEDIUM"|"LOW" } // pricing/scope/risk impact if not resolved',
-      '  ],',
-      '  "effort_breakdown": {                // end-to-end delivery estimate by phase × team',
-      '    "phases": [',
-      '      { "phase": "Design"|"Hardware Deployment"|"Implementation"|"Integration & Testing"|"Go-Live & Hypercare",',
-      '        "duration_weeks": number,',
-      '        "teams": [',
-      '          { "team": "Infrastructure"|"DevOps"|"Application"|"AI/Data"|"Security"|"PMO"|"QA",',
-      '            "fte_count": number,         // people needed concurrently',
-      '            "person_days": number,       // total effort in this phase',
-      '            "skills": string[] }         // 3-6 skill names',
-      '        ] }',
-      '    ],',
-      '    "total_person_days": number,',
-      '    "critical_skills": string[],         // top 6-10 must-have skills overall',
-      '    "team_summary": [                    // total person-days per team across all phases',
-      '      { "team": string, "total_person_days": number, "fte_peak": number }',
-      '    ]',
-      '  }',
+      '  "eval_criteria": [{ "criterion": string, "weight": string }],',
+      '  "compliance_standards": string[],   // max 8',
+      '  "timeline": [{ "date": string, "event": string }]   // max 5, chronological',
       '}',
       '',
-      'IMPORTANT — section/page mapping:',
-      '• Use the [[PAGE n]] markers in the RFP text to populate "page" for each requirement.',
-      '• Use the RFP\'s own numbering (e.g. "4.2") for "section". If the RFP uses bare headings, use the heading text.',
-      '• If you genuinely cannot find a page or section, omit those keys (do NOT invent values).',
-      '',
-      'IMPORTANT — go_nogo_criteria:',
-      '• List each MAJOR criterion the bidder must meet (e.g. mandatory certifications, headcount minimums, data residency, compliance standards, local-content thresholds).',
-      '• For each, set verdict by judging the GENERIC bidder profile (cannot know the specific bidder yet) — assume a typical regional MSP. Set verdict to UNKNOWN when bidder-specific.',
-      '• "rationale" must include a Section / Page / REQ-XXX citation so the UI can render clickable pills.',
-      '',
-      'IMPORTANT — clarifications:',
-      '• Surface AMBIGUITIES (vague language, undefined terms, missing thresholds), CONTRADICTIONS (statements that conflict — e.g. one section says NET 60 and another says NET 30), GAPS (information bidders need that the RFP omits — e.g. existing tech stack, ramp-up dates, data volumes, integration endpoints), and RULES that need official confirmation.',
-      '• Each clarification needs a "where" citation pointing to where the issue is in the RFP.',
-      '• Aim for 5-12 clarifications. Quality > quantity.',
-      '',
-      'IMPORTANT — effort_breakdown:',
-      '• Cover all five phases end-to-end: Design, Hardware Deployment, Implementation, Integration & Testing, Go-Live & Hypercare.',
-      '• Cover all relevant teams: Infrastructure, DevOps, Application, AI/Data, Security, PMO, QA. Omit teams that genuinely don\'t apply.',
-      '• Estimate person_days realistically based on RFP scale (users, sites, integrations). For UAE government cybersecurity RFPs at the size described, total typical effort = 2,500-5,000 person-days across 12 months delivery.',
-      '• Skills should be specific (e.g. "Microsoft Sentinel KQL", "Azure Landing Zone", "ServiceNow ITSM scripting"), not generic ("Cloud", "Security").',
-      '• team_summary aggregates person_days per team across all phases — must be internally consistent with phases[].teams[].',
+      'RULES:',
+      '• Keep it SHORT. This is a summary, not an analysis. Descriptions max 20 words.',
+      '• Do NOT output risks, clarification questions, mitigation plans, effort estimates, staffing or decision-criteria matrices. Those are requested separately.',
+      '• Use the [[PAGE n]] markers in the text to fill "page". Use the document\'s own numbering for "section". Omit the key rather than inventing a value.',
+      '• Never invent dates, values or certifications that are not in the document.',
     ].join('\n');
 
     const { data: brief } = await completeJson({
       apiKey: userKey(req),
+      model: process.env.BRIEF_MODEL || undefined,
       system,
-      messages: [{ role: 'user', content: `RFP TEXT (${ext.kind}, ${ext.pages} pages, ${ext.words} words):\n\n${ext.text.slice(0, 30000)}` }],
-      maxTokens: 12000,
+      messages: [{ role: 'user', content:
+        `RFP DOCUMENT (${ext.kind}, ${ext.pages} pages, ${ext.words} words):\n\n${ext.text.slice(0, 16000)}` }],
+      maxTokens: 3000,
       temperature: 0.2,
     });
 
-    // Persist a tiny breadcrumb so /api/recent shows it
+    // Echo the language back so the UI can label / direction the slide correctly
+    brief.output_language = outLang;
+    brief.source_language = srcLang || 'auto-detected';
+
     storage.insert('recent', {
       name: brief.title || req.file.originalname,
       page: 'briefing',
       score: Number(brief.win_probability) || 0,
     });
 
-    res.json({ success: true, brief, source: { words: ext.words, pages: ext.pages, kind: ext.kind } });
+    res.json({
+      success: true,
+      brief,
+      source: { words: ext.words, pages: ext.pages, kind: ext.kind },
+    });
+  } catch (e) { next(e); }
+});
+
+// ════════════════════════════════════════════════════════════════════════════
+// POST /api/brief/expand (multipart) — on-demand deep-dive sections
+// ════════════════════════════════════════════════════════════════════════════
+//
+// FormData / JSON: kind, rfpDoc (file) OR rfpText, output_language, ...
+// kind ∈ clarifications | risks | rationale | effort | requirements
+//
+// Each pack is a separate, small model call so the user only pays the latency
+// for the section they actually asked for.
+// ----------------------------------------------------------------------------
+const EXPAND_PACKS = {
+  clarifications: {
+    maxTokens: 3500,
+    schema: [
+      'Surface the questions the bidder must send the issuer BEFORE submitting.',
+      'Return: { "clarifications": [ { "question": string, "kind": "AMBIGUITY"|"CONTRADICTION"|"GAP"|"RULE", "where": string, "impact": "HIGH"|"MEDIUM"|"LOW" } ] }',
+      'AMBIGUITY = vague or undefined terms. CONTRADICTION = two parts of the document that conflict. GAP = something a bidder must know to price or scope but the document omits. RULE = a rule needing official confirmation.',
+      'Be specific, not generic. Bad: "What is the budget?" Good: "Section 2.3 gives an indicative value of AED 9-14M but Annex B requires fixed-fee pricing — confirm whether that figure is a cap or indicative."',
+      '"where" must cite a section or page. Aim for 5-10 items.',
+    ],
+  },
+  risks: {
+    maxTokens: 3000,
+    schema: [
+      'Identify delivery, commercial and compliance risks in this opportunity, plus the obligations the bidder would be signing up to.',
+      'Return: { "risk_flags": [ { "risk": string, "severity": "HIGH"|"MEDIUM"|"LOW", "category": "Delivery"|"Commercial"|"Compliance"|"Technical"|"Resourcing", "where": string, "mitigation": string } ], "obligations": [ { "obligation": string, "where": string } ], "win_factors": string[], "recommended_actions": string[] }',
+      'Aim for 5-8 risks, 3-6 obligations, 3-4 win factors, 3-4 actions. Cite a section or page in "where".',
+    ],
+  },
+  rationale: {
+    maxTokens: 2500,
+    schema: [
+      'Evaluate the major criteria that drive the bid / no-bid decision.',
+      'Return: { "go_nogo_criteria": [ { "criterion": string, "verdict": "MET"|"GAP"|"PARTIAL"|"UNKNOWN", "rationale": string, "weight": "HIGH"|"MEDIUM"|"LOW" } ] }',
+      'Cover mandatory certifications, headcount minimums, data residency, compliance standards and local-content thresholds where the document sets them.',
+      'Judge against a typical regional MSP. Use UNKNOWN where the answer depends on the specific bidder. Cite a Section / Page / REQ id in "rationale". Aim for 4-7 criteria.',
+    ],
+  },
+  requirements: {
+    maxTokens: 4000,
+    schema: [
+      'Extract the full requirements list.',
+      'Return: { "key_requirements": [ { "id": "REQ-001", "title": string, "description": string, "priority": "MANDATORY"|"HIGH"|"MEDIUM", "section": string, "page": number } ] }',
+      'Use the [[PAGE n]] markers for "page" and the document\'s own numbering for "section". Omit those keys rather than inventing them. Aim for 10-25 requirements.',
+    ],
+  },
+  effort: {
+    maxTokens: 4000,
+    schema: [
+      'Produce an end-to-end delivery effort estimate.',
+      'Return: { "effort_breakdown": { "phases": [ { "phase": "Design"|"Hardware Deployment"|"Implementation"|"Integration & Testing"|"Go-Live & Hypercare", "duration_weeks": number, "teams": [ { "team": "Infrastructure"|"DevOps"|"Application"|"AI/Data"|"Security"|"PMO"|"QA", "fte_count": number, "person_days": number, "skills": string[] } ] } ], "total_person_days": number, "critical_skills": string[], "team_summary": [ { "team": string, "total_person_days": number, "fte_peak": number } ] } }',
+      'Scale person_days to the size described (users, sites, integrations). Skills must be specific ("Microsoft Sentinel KQL", not "Security"). team_summary must reconcile with phases[].teams[].',
+    ],
+  },
+};
+
+router.post('/brief/expand', upload.single('rfpDoc'), async (req, res, next) => {
+  try {
+    const kind = String(req.body.kind || '').trim().toLowerCase();
+    const pack = EXPAND_PACKS[kind];
+    if (!pack) {
+      return res.status(400).json({
+        success: false,
+        error: `Unknown kind "${kind}". Expected one of: ${Object.keys(EXPAND_PACKS).join(', ')}`,
+      });
+    }
+
+    let rfpText = String(req.body.rfpText || '').trim();
+    if (req.file && !rfpText) {
+      const ext = await extractor.extract(req.file.buffer, req.file.originalname);
+      rfpText = ext.text;
+    }
+    if (!rfpText) return res.status(400).json({ success: false, error: 'Provide rfpDoc or rfpText' });
+
+    const outLang = resolveOutputLanguage(req.body);
+    const srcLang = resolveSourceLanguage(req.body);
+
+    const system = [
+      langDirective(outLang, srcLang),
+      '',
+      'You are a senior bid manager analysing an RFP for a vendor.',
+      'Output ONLY a single STRICT JSON object — no preamble, no markdown fences.',
+      '',
+      ...pack.schema,
+    ].join('\n');
+
+    const context = req.body.briefContext
+      ? `EXECUTIVE SUMMARY ALREADY PRODUCED (for context, do not repeat it):\n${String(req.body.briefContext).slice(0, 2000)}\n\n`
+      : '';
+
+    const { data } = await completeJson({
+      apiKey: userKey(req),
+      model: process.env.BRIEF_MODEL || undefined,
+      system,
+      messages: [{ role: 'user', content: `${context}RFP DOCUMENT (with [[PAGE n]] markers):\n\n${rfpText.slice(0, 20000)}` }],
+      maxTokens: pack.maxTokens,
+      temperature: 0.25,
+    });
+
+    res.json({ success: true, kind, data, output_language: outLang });
   } catch (e) { next(e); }
 });
 
