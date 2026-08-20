@@ -282,6 +282,45 @@ main.main{position:relative !important;flex:1 1 auto !important}
 .bs-fullsec-title{font-size:14px;font-weight:800;color:var(--navy);letter-spacing:-0.2px}
 .bs-fullsec-sub{font-size:11px;font-weight:600;color:var(--text3);margin-top:2px;letter-spacing:0.04em;text-transform:uppercase}
 
+/* ── On-demand deep-dive panel ──────────────────────────────────────────── */
+.bs-expand-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.bs-expand-btns .btn{transition:all .15s}
+.bs-expand-btns .btn.loaded{background:#EEF2FF;border-color:#6D69F0;color:#4338CA;font-weight:700}
+.bs-expand-btns .btn.loading{opacity:.6;cursor:wait}
+.bs-xsec{margin-top:16px;padding-top:14px;border-top:1px dashed #ECE7F4}
+.bs-xsec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.bs-xsec-title{font-size:13px;font-weight:800;color:var(--navy)}
+.bs-xsec-sub{font-size:10.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
+.bs-xsec-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:2px 6px;border-radius:5px}
+.bs-xsec-close:hover{background:#F3F0FA;color:var(--navy)}
+.bs-obl-row{display:flex;gap:9px;padding:8px 11px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;align-items:flex-start;font-size:12px;color:var(--text2);line-height:1.5}
+.bs-obl-where{font-size:9.5px;font-weight:800;color:#6D69F0;background:#EEF2FF;padding:2px 7px;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.bs-risk-row{display:flex;gap:10px;padding:10px 12px;background:#fff;border:1px solid #ECE7F4;border-radius:8px;border-left:3px solid #94a3b8;align-items:flex-start}
+.bs-risk-row.sev-high{border-left-color:#dc2626}
+.bs-risk-row.sev-medium{border-left-color:#ea580c}
+.bs-risk-row.sev-low{border-left-color:#16a34a}
+.bs-risk-cat{font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px;background:#F3F0FA;color:#6D69F0;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap}
+.bs-risk-mit{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.5;font-style:italic}
+
+/* ── RTL (Arabic, Hebrew, Farsi, Urdu) ──────────────────────────────────── */
+.brief-slide[dir="rtl"]{direction:rtl;text-align:right}
+.brief-slide[dir="rtl"] .bs-req-item,
+.brief-slide[dir="rtl"] .bs-rat-row,
+.brief-slide[dir="rtl"] .bs-clar-row,
+.brief-slide[dir="rtl"] .bs-risk-row,
+.brief-slide[dir="rtl"] .bs-obl-row,
+.brief-slide[dir="rtl"] .bs-factor,
+.brief-slide[dir="rtl"] .bs-risk,
+.brief-slide[dir="rtl"] .bs-action{flex-direction:row-reverse}
+.brief-slide[dir="rtl"] .bs-rat-row,
+.brief-slide[dir="rtl"] .bs-risk-row{border-left:1px solid #ECE7F4;border-right:3px solid #6D69F0}
+.brief-slide[dir="rtl"] .bs-tl-item{flex-direction:row-reverse}
+.brief-slide[dir="rtl"] .bs-expand-btns{flex-direction:row-reverse}
+/* Numbers, refs and IDs stay LTR even inside RTL text */
+.brief-slide[dir="rtl"] .bs-kpi-val,
+.brief-slide[dir="rtl"] .bs-req-tag,
+.brief-slide[dir="rtl"] .bs-win-pct{direction:ltr;unicode-bidi:embed}
+
 /* Decision Rationale */
 .bs-rationale-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:900px){.bs-rationale-grid{grid-template-columns:1fr}}
@@ -1026,7 +1065,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
 
   <!-- LIBRARY PAGE -->
   <!-- EXECUTIVE BRIEF PAGE -->
-  <div class="page" id="page-briefing">
+  <div class="page active" id="page-briefing">
     <div class="topbar"><div class="topbar-title">Executive Brief</div></div>
     <div id="brief-projrfp-banner" style="padding:10px 20px;background:linear-gradient(135deg,var(--blue-light),var(--surface2));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px">
       <span style="font-weight:700;color:var(--violet);text-transform:uppercase;letter-spacing:.06em;font-size:11px">🤖 Project RFP</span>
@@ -1040,10 +1079,11 @@ textarea.improve-input::placeholder{color:var(--text3)}
         <div class="help-title"><span>⚡</span> RFP / RFI Executive Briefing</div>
         <div class="help-steps">
           <div class="help-step"><div class="help-num">1</div><div><strong>Upload the RFP/RFI document</strong> — supports .pdf, .docx, .xlsx, .zip (multi-document packages).</div></div>
-          <div class="help-step"><div class="help-num">2</div><div><strong>Click Analyse</strong> — AI extracts scope, key requirements, timeline, submission date, compliance standards, and more.</div></div>
-          <div class="help-step"><div class="help-num">3</div><div><strong>Share the brief</strong> — download as PDF or copy the slide to share with your senior leadership team.</div></div>
+          <div class="help-step"><div class="help-num">2</div><div><strong>Pick the languages</strong> — set the document's own language (or leave on Auto-Detect) and the language you want the brief written in. Any direction works: Arabic → English, English → Spanish, Tamil → English.</div></div>
+          <div class="help-step"><div class="help-num">3</div><div><strong>Click Analyse</strong> — you get the executive summary only: scope, dates, commercials, top requirements and a GO / NO-GO call. This is deliberately fast.</div></div>
+          <div class="help-step"><div class="help-num">4</div><div><strong>Go deeper if you need to</strong> — clarification questions, risks &amp; obligations, decision rationale, full requirements and effort estimates are each one click, underneath the brief.</div></div>
         </div>
-        <div class="help-tip">💡 <strong>Tip:</strong> The brief includes a GO / NO-GO recommendation, win factors, risk flags, and next-action steps — everything leadership needs in 60 seconds.</div>
+        <div class="help-tip">💡 <strong>Tip:</strong> The summary is what leadership wants first — what this is, what it's worth, when it's due, and whether we should bid. Everything heavier is on demand so you're not waiting for analysis nobody asked for.</div>
       </div>
 
       <div class="card">
@@ -1109,6 +1149,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
               <button class="btn btn-ghost btn-sm" onclick="loadSampleDoc('en')" style="font-size:11px;padding:3px 10px">🇬🇧 English</button>
               <button class="btn btn-ghost btn-sm" onclick="loadSampleDoc('ar')" style="font-size:11px;padding:3px 10px">🇦🇪 Arabic</button>
               <button class="btn btn-ghost btn-sm" onclick="loadSampleDoc('fr')" style="font-size:11px;padding:3px 10px">🇫🇷 French</button>
+              <button class="btn btn-ghost btn-sm" onclick="loadSampleDoc('es')" style="font-size:11px;padding:3px 10px">🇪🇸 Spanish</button>
               <button class="btn btn-ghost btn-sm" onclick="loadSampleDoc('ta')" style="font-size:11px;padding:3px 10px">🇮🇳 Tamil</button>
               <button class="btn btn-ghost btn-sm" onclick="loadSampleDoc('af')" style="font-size:11px;padding:3px 10px">🇿🇦 South African</button>
             </div>
@@ -1149,6 +1190,11 @@ textarea.improve-input::placeholder{color:var(--text3)}
           <select id="vp-engine" onchange="_voiceBlob=null;stopVoice();" style="font-size:11px;border:1px solid var(--border);border-radius:5px;padding:2px 6px;color:var(--navy);background:white;cursor:pointer" title="Voice engine">
             <option value="elevenlabs">🎙️ ElevenLabs AI ⭐ Recommended</option>
             <option value="browser">🌐 Browser Voice (free)</option>
+          </select>
+          <select id="vp-model" style="font-size:11px;border:1px solid var(--border);border-radius:5px;padding:2px 6px;color:var(--navy);background:white;cursor:pointer" title="ElevenLabs model">
+            <option value="eleven_multilingual_v2">Multilingual v2 — best quality</option>
+            <option value="eleven_flash_v2_5">Flash v2.5 — fastest + language lock</option>
+            <option value="eleven_turbo_v2_5">Turbo v2.5 — balanced + language lock</option>
           </select>
           <select id="vp-voice" style="font-size:11px;border:1px solid var(--border);border-radius:5px;padding:2px 6px;color:var(--navy);background:white;cursor:pointer" title="Select voice">
             <option value="nPczCjzI2devNBz1zQrb">Brian — Executive ⭐</option>
@@ -2307,7 +2353,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
 <!-- ═══════════════════════════════════════════════════════════════
      PAGE: Landing — comprehensive home with all workflow stages
 ═══════════════════════════════════════════════════════════════════ -->
-<div class="page active" id="page-landing">
+<div class="page" id="page-landing">
   <div class="topbar">
     <div class="topbar-title">🏠 Home</div>
     <div style="flex:1"></div>
@@ -4028,8 +4074,9 @@ async function init(){
     if(me.az_subscriptions) setVal('az-subs',   me.az_subscriptions);
     try{loadSettingsEditors(me);}catch(e2){console.warn('loadSettingsEditors err:',e2);}
     try{applySettingsPermissions(me);}catch(e3){console.warn('applySettingsPermissions err:',e3);}
-    // Land on Home on first load (renders username + project RFP status)
-    try{ if(typeof goPage === 'function') goPage('landing'); }catch(e4){ console.warn('initial landing render err:', e4); }
+    // Land on the Executive Brief — it is the first thing everyone wants.
+    // Clarifications, risks and effort are requested from the brief afterwards.
+    try{ if(typeof goPage === 'function') goPage('briefing'); }catch(e4){ console.warn('initial page render err:', e4); }
   }catch(e){
     console.error('Init failed:',e);
     window.location.href='/';
@@ -4891,7 +4938,7 @@ ${rows}
   }
 }
 // ── Executive Brief ──────────────────────────────────────────────────────────
-let S_BRIEF = { file: null, filename: '', data: null, lang: 'English', langCode: 'en', srcLang: 'Auto-Detect', srcCode: 'auto' };
+let S_BRIEF = { file: null, filename: '', data: null, source: null, expand: {}, lang: 'English', langCode: 'en', srcLang: 'Auto-Detect', srcCode: 'auto' };
 
 function handleBriefFile(input) {
   const file = input.files[0]; if (!file) return;
@@ -4916,6 +4963,7 @@ function selectBriefLang(btn) {
   S_BRIEF.lang     = btn.dataset.lang;
   S_BRIEF.langCode = btn.dataset.code;
   updateLangConversionBadge();
+  try { suggestVoiceForLang(); } catch(e) { /* player not mounted yet */ }
   // Reset cached brief + voice when language changes
   S_BRIEF.data   = null;
   _lastAudioUrl  = null;
@@ -4957,13 +5005,17 @@ async function runBriefAnalysis() {
   const lang = S_BRIEF.lang || 'English';
   const srcLabel = S_BRIEF.srcCode==='auto'?'any language':S_BRIEF.srcLang;
   const convLabel = S_BRIEF.srcCode!=='auto'&&S_BRIEF.srcCode!==S_BRIEF.langCode ? srcLabel+' → '+lang : lang;
-  showOverlaySteps('Generating Executive Brief: ' + convLabel, [
-    'Extracting document text (any language)...','Translating & identifying requirements...','Analysing timeline & deadlines...','Assessing win factors & risks...','Building executive brief in ' + lang + '...'
+  showOverlaySteps('Executive Summary: ' + convLabel, [
+    'Extracting document text...',
+    'Reading source (' + srcLabel + ')...',
+    'Writing the summary in ' + lang + '...'
   ]);
   try {
     const fd = new FormData();
     fd.append('rfpDoc', S_BRIEF.file);
-    fd.append('language', lang);
+    fd.append('output_language', lang);      // ← the field the server reads
+    fd.append('language', lang);             // kept for backwards compatibility
+    fd.append('output_language_code', S_BRIEF.langCode || 'en');
     fd.append('source_language', S_BRIEF.srcCode || 'auto');
     fd.append('source_language_name', S_BRIEF.srcLang || 'Auto-Detect');
     const controller = new AbortController();
@@ -4980,6 +5032,8 @@ async function runBriefAnalysis() {
     const result = await resp.json();
     if (!result.success) throw new Error(result.error || 'Analysis failed');
     S_BRIEF.data = result.brief;
+    S_BRIEF.source = result.source || null;
+    S_BRIEF.expand = {};              // reset on-demand packs for the new doc
     renderBriefSlide(result.brief);
     document.getElementById('brief-output').style.display = 'block';
     document.getElementById('brief-output').scrollIntoView({ behavior:'smooth', block:'start' });
@@ -5017,10 +5071,6 @@ function renderBriefSlide(b) {
   // Compliance tags
   const compHtml = (b.compliance_standards||[]).map(s=>`<span class="bs-pill">${esc(s)}</span>`).join('') || '<span class="bs-pill">Not specified</span>';
 
-  // Win/risk/actions
-  const winHtml  = (b.win_factors||[]).slice(0,4).map(w=>`<div class="bs-factor">${esc(w)}</div>`).join('');
-  const riskHtml = (b.risk_flags||[]).slice(0,3).map(r=>`<div class="bs-risk">${esc(r)}</div>`).join('');
-  const actHtml  = (b.recommended_actions||[]).slice(0,3).map(a=>`<div class="bs-action">${esc(a)}</div>`).join('');
 
   // Meta pills
   const metaItems = [
@@ -5032,7 +5082,12 @@ function renderBriefSlide(b) {
     b.submission_date  ? `⏰ Due: ${b.submission_date}` : null,
   ].filter(Boolean);
 
-  const isRTL = (S_BRIEF.langCode === 'ar');
+  const isRTL = ['ar','he','fa','ur'].indexOf(S_BRIEF.langCode) !== -1;
+  // Set direction on the whole slide, not just the header, so requirement
+  // rows, timelines and the on-demand sections all flow correctly.
+  const slideEl = document.getElementById('brief-slide');
+  if (slideEl) { slideEl.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+                 slideEl.setAttribute('lang', S_BRIEF.langCode || 'en'); }
   // Colourful redesigned slide
   const reqHtml2 = (b.key_requirements||[]).slice(0,6).map(r => {
     const pri = (r.priority||'').toUpperCase();
@@ -5064,9 +5119,6 @@ function renderBriefSlide(b) {
   }).join('') || '<div style="font-size:12px;color:var(--text3)">Not specified</div>';
 
   // ── Build factor/risk/action with icons
-  const winHtml2  = (b.win_factors||[]).slice(0,3).map(w=>`<div class="bs-factor"><span class="bs-factor-icon">✅</span><span>${esc(w)}</span></div>`).join('');
-  const riskHtml2 = (b.risk_flags||[]).slice(0,2).map(r=>`<div class="bs-risk"><span class="bs-risk-icon">⚠️</span><span>${esc(r)}</span></div>`).join('');
-  const actHtml2  = (b.recommended_actions||[]).slice(0,3).map(a=>`<div class="bs-action"><span class="bs-action-icon">→</span><span>${esc(a)}</span></div>`).join('');
 
   // ── KPI values
   const kpiValue    = b.contract_value     || '—';
@@ -5079,93 +5131,15 @@ function renderBriefSlide(b) {
   const sentences   = summaryFull.split(/(?<=[.!?])\s+/);
   const summaryShort = sentences.slice(0,2).join(' ');
 
-  // ── Decision Rationale (NEW) — GO/NO-GO criteria with verdicts & citations
-  const goCriteria = Array.isArray(b.go_nogo_criteria) ? b.go_nogo_criteria : [];
-  const verdictMeta = {
-    MET:     { cls:'met',     icon:'✓', label:'MET' },
-    PARTIAL: { cls:'partial', icon:'◐', label:'PARTIAL' },
-    GAP:     { cls:'gap',     icon:'✗', label:'GAP' },
-    UNKNOWN: { cls:'unknown', icon:'?', label:'UNKNOWN' },
-  };
-  const rationaleHtml = goCriteria.length ? goCriteria.map(c => {
-    const v  = (c.verdict||'UNKNOWN').toUpperCase();
-    const vm = verdictMeta[v] || verdictMeta.UNKNOWN;
-    const wt = (c.weight||'MEDIUM').toUpperCase();
-    return `<div class="bs-rat-row">
-      <span class="bs-rat-verdict ${vm.cls}" title="${vm.label}">${vm.icon}</span>
-      <div class="bs-rat-body">
-        <div class="bs-rat-head">
-          <span class="bs-rat-criterion">${esc(c.criterion||'')}</span>
-          <span class="bs-rat-weight w-${wt.toLowerCase()}">${esc(wt)} IMPACT</span>
-        </div>
-        <div class="bs-rat-rationale">${esc(c.rationale||'—')}</div>
-      </div>
-    </div>`;
-  }).join('') : `<div class="bs-rat-empty">${esc(b.go_nogo_reason || 'No detailed criteria captured. Re-run the analysis to populate the decision rationale.')}</div>`;
+  // Deep-dive data (decision rationale, clarifications, risks, effort) is no
+  // longer produced by the summary call — it is fetched on demand by
+  // expandBrief() and rendered into #brief-expand-body below the slide.
 
-  // ── Clarifications (NEW) — ambiguities / contradictions / gaps
-  const clars = Array.isArray(b.clarifications) ? b.clarifications : [];
-  const kindMeta = {
-    AMBIGUITY:     { cls:'ambig', icon:'❓', label:'Ambiguity' },
-    CONTRADICTION: { cls:'contra', icon:'⚠️', label:'Contradiction' },
-    GAP:           { cls:'gap',   icon:'🔍', label:'Information Gap' },
-    RULE:          { cls:'rule',  icon:'📜', label:'Rule Confirmation' },
-  };
-  const clarHtml = clars.length ? clars.map(c => {
-    const k  = (c.kind||'AMBIGUITY').toUpperCase();
-    const km = kindMeta[k] || kindMeta.AMBIGUITY;
-    const im = (c.impact||'MEDIUM').toUpperCase();
-    return `<div class="bs-clar-row">
-      <span class="bs-clar-kind ${km.cls}">${km.icon} ${km.label}</span>
-      <div class="bs-clar-body">
-        <div class="bs-clar-q">${esc(c.question||'—')}</div>
-        <div class="bs-clar-foot">
-          ${c.where ? `<span class="bs-clar-where">${esc(c.where)}</span>` : ''}
-          <span class="bs-clar-impact i-${im.toLowerCase()}">${esc(im)} IMPACT</span>
-        </div>
-      </div>
-    </div>`;
-  }).join('') : '<div class="bs-rat-empty">No clarification items extracted.</div>';
-
-  // ── Effort & Skills (NEW) — phases × teams matrix
-  const eb = b.effort_breakdown || {};
-  const phases = Array.isArray(eb.phases) ? eb.phases : [];
-  const teamSummary = Array.isArray(eb.team_summary) ? eb.team_summary : [];
-  const critSkills = Array.isArray(eb.critical_skills) ? eb.critical_skills : [];
-  const totalDays = eb.total_person_days || phases.reduce((s,p)=>s+(p.teams||[]).reduce((t,x)=>t+(x.person_days||0),0),0);
-
-  // Team summary tiles
-  const teamTilesHtml = teamSummary.length ? teamSummary.map(t =>
-    `<div class="bs-team-tile">
-      <div class="bs-team-name">${esc(t.team||'')}</div>
-      <div class="bs-team-days">${esc(String(t.total_person_days||'—'))}</div>
-      <div class="bs-team-days-l">person-days</div>
-      ${t.fte_peak ? `<div class="bs-team-fte">peak FTE: ${esc(String(t.fte_peak))}</div>` : ''}
-    </div>`
-  ).join('') : '<div class="bs-rat-empty" style="grid-column:1/-1">No team summary extracted.</div>';
-
-  // Phases — compact stacked bars
-  const phaseRowsHtml = phases.length ? phases.map(ph => {
-    const teams = Array.isArray(ph.teams) ? ph.teams : [];
-    const phasePD = teams.reduce((s,t)=>s+(t.person_days||0), 0);
-    const teamsHtml = teams.map(t => {
-      const skills = Array.isArray(t.skills) ? t.skills.slice(0,5) : [];
-      return `<div class="bs-phase-team">
-        <div class="bs-phase-team-head">
-          <span class="bs-team-chip team-${(t.team||'').toLowerCase().replace(/[^a-z]/g,'')}">${esc(t.team||'')}</span>
-          <span class="bs-phase-team-meta">${esc(String(t.fte_count||'—'))} FTE · ${esc(String(t.person_days||'—'))} pd</span>
-        </div>
-        ${skills.length ? `<div class="bs-skills">${skills.map(s=>`<span class="bs-skill-pill">${esc(s)}</span>`).join('')}</div>` : ''}
-      </div>`;
-    }).join('') || '<div class="bs-rat-empty">No team breakdown</div>';
-    return `<div class="bs-phase-row">
-      <div class="bs-phase-head">
-        <span class="bs-phase-name">${esc(ph.phase||'')}</span>
-        <span class="bs-phase-meta">${esc(String(ph.duration_weeks||'—'))} wks · ${phasePD} pd</span>
-      </div>
-      <div class="bs-phase-teams">${teamsHtml}</div>
-    </div>`;
-  }).join('') : '<div class="bs-rat-empty">No phase breakdown extracted.</div>';
+  // Headlines — the 3-5 facts leadership needs, from the lean summary payload
+  const headlines = Array.isArray(b.headlines) ? b.headlines : [];
+  const headlinesHtml = headlines.slice(0,5)
+    .map(h=>`<div class="bs-factor"><span class="bs-factor-icon">▪</span><span>${esc(h)}</span></div>`)
+    .join('') || '<div style="font-size:12px;color:var(--text3)">—</div>';
 
   document.getElementById('brief-slide').innerHTML = `
   <div class="bs-header" ${isRTL ? 'dir="rtl" style="text-align:right"' : ''}>
@@ -5208,50 +5182,36 @@ function renderBriefSlide(b) {
     </div>
     <div class="bs-col">
       <div class="bs-section">
-        <div class="bs-sec-title">🏆 Why We Win</div>
-        ${winHtml2||'<div style="font-size:12px;color:var(--text3)">—</div>'}
+        <div class="bs-sec-title">📣 Headlines</div>
+        ${headlinesHtml}
       </div>
       <div class="bs-section">
-        <div class="bs-sec-title">⚠️ Key Risks</div>
-        ${riskHtml2||'<div style="font-size:12px;color:var(--text3)">None identified</div>'}
+        <div class="bs-sec-title">🎯 Scope</div>
+        <div class="bs-summary">${esc(b.scope||'—')}</div>
       </div>
       <div class="bs-section">
-        <div class="bs-sec-title">🚀 Next Actions</div>
-        ${actHtml2||'<div style="font-size:12px;color:var(--text3)">—</div>'}
+        <div class="bs-sec-title">🧭 Recommendation</div>
+        <div class="bs-summary">${esc(b.go_nogo_reason||'—')}</div>
       </div>
     </div>
   </div>
 
-  <!-- Decision Rationale (full width) — why GO / NO-GO with citations -->
-  <div class="bs-fullsection">
+  <!-- ── On-demand deep dives ──────────────────────────────────────────
+       The summary above is deliberately fast. Everything heavier is a
+       separate call, requested only when someone actually wants it. -->
+  <div class="bs-fullsection" id="brief-expand-panel">
     <div class="bs-fullsec-head">
-      <div class="bs-fullsec-title">⚖️ Decision Rationale</div>
-      <div class="bs-fullsec-sub">Criteria evaluated · ${goCriteria.length || 0} factors · ${esc(b.go_nogo||'GO')}</div>
+      <div class="bs-fullsec-title">🔎 Go Deeper</div>
+      <div class="bs-fullsec-sub">The summary is done. Pull in any of these when you need them — each takes a few seconds.</div>
     </div>
-    <div class="bs-rationale-grid">${rationaleHtml}</div>
-  </div>
-
-  <!-- Clarifications & Open Questions -->
-  <div class="bs-fullsection">
-    <div class="bs-fullsec-head">
-      <div class="bs-fullsec-title">❓ Clarifications &amp; Open Questions</div>
-      <div class="bs-fullsec-sub">Ambiguities, contradictions, and gaps to raise with the issuer · ${clars.length} item${clars.length===1?'':'s'}</div>
+    <div class="bs-expand-btns">
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('clarifications')" id="xb-clarifications">❓ Clarification Questions</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('risks')"          id="xb-risks">⚠️ Risks &amp; Obligations</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('rationale')"      id="xb-rationale">⚖️ Decision Rationale</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('requirements')"   id="xb-requirements">📌 Full Requirements</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('effort')"         id="xb-effort">📊 Effort &amp; Skills</button>
     </div>
-    <div class="bs-clar-grid">${clarHtml}</div>
-  </div>
-
-  <!-- Effort & Skills Breakdown -->
-  <div class="bs-fullsection">
-    <div class="bs-fullsec-head">
-      <div class="bs-fullsec-title">📊 Effort &amp; Skills — End-to-End Delivery</div>
-      <div class="bs-fullsec-sub">Total estimate: <strong>${totalDays || '—'} person-days</strong>${critSkills.length ? ' · '+critSkills.length+' critical skills' : ''}</div>
-    </div>
-    <div class="bs-team-tiles">${teamTilesHtml}</div>
-    ${critSkills.length ? `<div class="bs-crit-skills">
-      <span class="bs-crit-skills-l">Critical skills:</span>
-      ${critSkills.slice(0,12).map(s=>`<span class="bs-skill-pill crit">${esc(s)}</span>`).join('')}
-    </div>` : ''}
-    <div class="bs-phases">${phaseRowsHtml}</div>
+    <div id="brief-expand-body"></div>
   </div>
 
   <div class="bs-footer">
@@ -5266,6 +5226,9 @@ function renderBriefSlide(b) {
     <div class="bs-footer-meta">RFP Agent · ${new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</div>
   </div>`;
 
+  // Re-attach any deep-dive sections the user had already pulled in
+  try { renderExpandSections(); } catch(e) { /* panel not in DOM yet */ }
+
   // Animate win bar with staggered entry
   setTimeout(()=>{
     const el = document.getElementById('brief-win-fill');
@@ -5275,6 +5238,266 @@ function renderBriefSlide(b) {
       setTimeout(() => { bar.style.width = bar.style.width; }, i * 80);
     });
   }, 400);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// On-demand deep dives — everything that is NOT the executive summary
+// ════════════════════════════════════════════════════════════════════════════
+// The summary call is deliberately small so it returns fast. Clarifications,
+// risks, decision rationale, full requirements and effort modelling are each a
+// separate call to /api/brief/expand, made only when the user asks for one.
+// ----------------------------------------------------------------------------
+
+const XPACKS = {
+  clarifications: { icon:'❓', label:'Clarification Questions', sub:'Questions to send the issuer before submitting' },
+  risks:          { icon:'⚠️', label:'Risks & Obligations',     sub:'Delivery, commercial and compliance exposure' },
+  rationale:      { icon:'⚖️', label:'Decision Rationale',      sub:'Criteria behind the GO / NO-GO call' },
+  requirements:   { icon:'📌', label:'Full Requirements',       sub:'Complete extracted requirements list' },
+  effort:         { icon:'📊', label:'Effort & Skills',         sub:'End-to-end delivery estimate' },
+};
+const XORDER = ['clarifications','risks','rationale','requirements','effort'];
+
+async function expandBrief(kind){
+  if(!XPACKS[kind]) return;
+  if(!S_BRIEF.data){ toast('Generate the executive summary first','error'); return; }
+  if(!S_BRIEF.file){ toast('Re-upload the document to expand this section','error'); return; }
+  S_BRIEF.expand = S_BRIEF.expand || {};
+
+  // Already loaded → toggle it off
+  if(S_BRIEF.expand[kind]){
+    delete S_BRIEF.expand[kind];
+    renderExpandSections();
+    return;
+  }
+
+  const btn = document.getElementById('xb-'+kind);
+  if(btn){ btn.classList.add('loading'); btn.disabled = true; }
+
+  try{
+    const fd = new FormData();
+    fd.append('kind', kind);
+    fd.append('rfpDoc', S_BRIEF.file);
+    fd.append('output_language', S_BRIEF.lang || 'English');
+    fd.append('output_language_code', S_BRIEF.langCode || 'en');
+    fd.append('source_language', S_BRIEF.srcCode || 'auto');
+    fd.append('source_language_name', S_BRIEF.srcLang || 'Auto-Detect');
+    if(S_BRIEF.data && S_BRIEF.data.executive_summary){
+      fd.append('briefContext', S_BRIEF.data.executive_summary);
+    }
+
+    const controller = new AbortController();
+    const tid = setTimeout(()=>controller.abort(), 3*60*1000);
+    let resp;
+    try{
+      resp = await fetch('/api/brief/expand',{method:'POST',body:fd,credentials:'same-origin',signal:controller.signal});
+    }catch(fe){
+      clearTimeout(tid);
+      throw new Error(fe.name==='AbortError' ? 'Timed out — the document may be too large.' : 'Network error.');
+    }
+    clearTimeout(tid);
+    if(!resp.ok){ const e=await resp.json().catch(()=>({error:'Server error'})); throw new Error(e.error||'Server error'); }
+    const out = await resp.json();
+    if(!out.success) throw new Error(out.error||'Expand failed');
+
+    S_BRIEF.expand[kind] = out.data || {};
+    renderExpandSections();
+    const node = document.getElementById('xsec-'+kind);
+    if(node) node.scrollIntoView({behavior:'smooth',block:'nearest'});
+    toast(XPACKS[kind].label + ' ready','success');
+  }catch(e){
+    toast('Error: '+e.message,'error');
+  }finally{
+    if(btn){ btn.classList.remove('loading'); btn.disabled = false; }
+  }
+}
+
+function renderExpandSections(){
+  const body = document.getElementById('brief-expand-body');
+  if(!body) return;
+  const loaded = XORDER.filter(k => S_BRIEF.expand && S_BRIEF.expand[k]);
+
+  XORDER.forEach(k=>{
+    const btn = document.getElementById('xb-'+k);
+    if(btn) btn.classList.toggle('loaded', loaded.indexOf(k) !== -1);
+  });
+
+  body.innerHTML = loaded.map(k=>{
+    const meta = XPACKS[k];
+    const inner =
+      k==='clarifications' ? renderXClarifications(S_BRIEF.expand[k]) :
+      k==='risks'          ? renderXRisks(S_BRIEF.expand[k])          :
+      k==='rationale'      ? renderXRationale(S_BRIEF.expand[k])      :
+      k==='requirements'   ? renderXRequirements(S_BRIEF.expand[k])   :
+      k==='effort'         ? renderXEffort(S_BRIEF.expand[k])         : '';
+    return `<div class="bs-xsec" id="xsec-${k}">
+      <div class="bs-xsec-head">
+        <div>
+          <div class="bs-xsec-title">${meta.icon} ${esc(meta.label)}</div>
+          <div class="bs-xsec-sub">${esc(meta.sub)}</div>
+        </div>
+        <button class="bs-xsec-close" onclick="expandBrief('${k}')" title="Hide this section">✕</button>
+      </div>
+      ${inner}
+    </div>`;
+  }).join('');
+}
+
+const XEMPTY = m => `<div class="bs-rat-empty">${esc(m)}</div>`;
+
+function renderXClarifications(d){
+  const items = Array.isArray(d.clarifications) ? d.clarifications : [];
+  if(!items.length) return XEMPTY('No clarification items found.');
+  const km = {
+    AMBIGUITY:{cls:'ambig',icon:'❓',label:'Ambiguity'},
+    CONTRADICTION:{cls:'contra',icon:'⚠️',label:'Contradiction'},
+    GAP:{cls:'gap',icon:'🔍',label:'Information Gap'},
+    RULE:{cls:'rule',icon:'📜',label:'Rule Confirmation'},
+  };
+  return `<div class="bs-clar-grid">` + items.map(c=>{
+    const k = (c.kind||'AMBIGUITY').toUpperCase();
+    const m = km[k] || km.AMBIGUITY;
+    const im = (c.impact||'MEDIUM').toUpperCase();
+    return `<div class="bs-clar-row">
+      <span class="bs-clar-kind ${m.cls}">${m.icon} ${m.label}</span>
+      <div class="bs-clar-body">
+        <div class="bs-clar-q">${esc(c.question||'—')}</div>
+        <div class="bs-clar-foot">
+          ${c.where?`<span class="bs-clar-where">${esc(c.where)}</span>`:''}
+          <span class="bs-clar-impact i-${im.toLowerCase()}">${esc(im)} IMPACT</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+function renderXRisks(d){
+  const risks = Array.isArray(d.risk_flags) ? d.risk_flags : [];
+  const obls  = Array.isArray(d.obligations) ? d.obligations : [];
+  const wins  = Array.isArray(d.win_factors) ? d.win_factors : [];
+  const acts  = Array.isArray(d.recommended_actions) ? d.recommended_actions : [];
+
+  const riskHtml = risks.length ? `<div class="bs-rationale-grid">` + risks.map(r=>{
+    const sev = (r.severity||'MEDIUM').toUpperCase();
+    return `<div class="bs-risk-row sev-${sev.toLowerCase()}">
+      <div class="bs-rat-body">
+        <div class="bs-rat-head">
+          <span class="bs-rat-criterion">${esc(r.risk||'—')}</span>
+          <span class="bs-rat-weight w-${sev.toLowerCase()}">${esc(sev)}</span>
+        </div>
+        <div class="bs-rat-rationale">
+          ${r.category?`<span class="bs-risk-cat">${esc(r.category)}</span> `:''}
+          ${r.where?`<span class="bs-clar-where">${esc(r.where)}</span>`:''}
+        </div>
+        ${r.mitigation?`<div class="bs-risk-mit">Mitigation: ${esc(r.mitigation)}</div>`:''}
+      </div>
+    </div>`;
+  }).join('') + `</div>` : XEMPTY('No risks identified.');
+
+  const oblHtml = obls.length ? `<div class="bs-xsec" style="border-top:none;margin-top:12px;padding-top:0">
+    <div class="bs-xsec-sub" style="margin-bottom:8px">Obligations we would be signing up to</div>
+    <div class="bs-rationale-grid">` + obls.map(o=>
+      `<div class="bs-obl-row"><span>${esc(o.obligation||'—')}</span>${o.where?`<span class="bs-obl-where">${esc(o.where)}</span>`:''}</div>`
+    ).join('') + `</div></div>` : '';
+
+  const listBlock = (title, arr, icon) => arr.length ? `<div class="bs-xsec" style="border-top:none;margin-top:12px;padding-top:0">
+    <div class="bs-xsec-sub" style="margin-bottom:8px">${esc(title)}</div>
+    ${arr.map(x=>`<div class="bs-factor"><span class="bs-factor-icon">${icon}</span><span>${esc(x)}</span></div>`).join('')}
+  </div>` : '';
+
+  return riskHtml + oblHtml + listBlock('Why we win', wins, '✅') + listBlock('Recommended actions', acts, '→');
+}
+
+function renderXRationale(d){
+  const items = Array.isArray(d.go_nogo_criteria) ? d.go_nogo_criteria : [];
+  if(!items.length) return XEMPTY('No decision criteria extracted.');
+  const vm = {
+    MET:{cls:'met',icon:'✓'}, PARTIAL:{cls:'partial',icon:'◐'},
+    GAP:{cls:'gap',icon:'✗'}, UNKNOWN:{cls:'unknown',icon:'?'},
+  };
+  return `<div class="bs-rationale-grid">` + items.map(c=>{
+    const v = (c.verdict||'UNKNOWN').toUpperCase();
+    const m = vm[v] || vm.UNKNOWN;
+    const wt = (c.weight||'MEDIUM').toUpperCase();
+    return `<div class="bs-rat-row">
+      <span class="bs-rat-verdict ${m.cls}" title="${esc(v)}">${m.icon}</span>
+      <div class="bs-rat-body">
+        <div class="bs-rat-head">
+          <span class="bs-rat-criterion">${esc(c.criterion||'')}</span>
+          <span class="bs-rat-weight w-${wt.toLowerCase()}">${esc(wt)} IMPACT</span>
+        </div>
+        <div class="bs-rat-rationale">${esc(c.rationale||'—')}</div>
+      </div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+function renderXRequirements(d){
+  const reqs = Array.isArray(d.key_requirements) ? d.key_requirements : [];
+  if(!reqs.length) return XEMPTY('No requirements extracted.');
+  return reqs.map(r=>{
+    const pri = (r.priority||'').toUpperCase();
+    const cls = pri.indexOf('MAND')!==-1?'mandatory':pri.indexOf('HIGH')!==-1?'high':'medium';
+    const lbl = pri.indexOf('MAND')!==-1?'MANDATORY':pri.indexOf('HIGH')!==-1?'HIGH':'MEDIUM';
+    const tags=[];
+    if(r.id)      tags.push(`<span class="bs-req-tag id">📌 ${esc(r.id)}</span>`);
+    if(r.section) tags.push(`<span class="bs-req-tag sec">§ Section ${esc(r.section)}</span>`);
+    if(r.page)    tags.push(`<span class="bs-req-tag pg">📄 Page ${esc(String(r.page))}</span>`);
+    return `<div class="bs-req-item ${cls}" style="margin-bottom:8px">
+      <span class="bs-req-pri ${cls}">${lbl}</span>
+      <div style="flex:1;min-width:0">
+        <div class="bs-req-title">${esc(r.title||r.id||'')}</div>
+        ${r.description?`<div class="bs-req-desc">${esc(r.description)}</div>`:''}
+        ${tags.length?`<div class="bs-req-src">${tags.join('')}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderXEffort(d){
+  const eb = d.effort_breakdown || d || {};
+  const phases = Array.isArray(eb.phases) ? eb.phases : [];
+  const teams  = Array.isArray(eb.team_summary) ? eb.team_summary : [];
+  const skills = Array.isArray(eb.critical_skills) ? eb.critical_skills : [];
+  const total  = eb.total_person_days || phases.reduce((s,p)=>s+(p.teams||[]).reduce((t,x)=>t+(x.person_days||0),0),0);
+  if(!phases.length && !teams.length) return XEMPTY('No effort breakdown extracted.');
+
+  const tiles = teams.length ? `<div class="bs-team-tiles">` + teams.map(t=>
+    `<div class="bs-team-tile">
+      <div class="bs-team-name">${esc(t.team||'')}</div>
+      <div class="bs-team-days">${esc(String(t.total_person_days||'—'))}</div>
+      <div class="bs-team-days-l">person-days</div>
+      ${t.fte_peak?`<div class="bs-team-fte">peak FTE: ${esc(String(t.fte_peak))}</div>`:''}
+    </div>`).join('') + `</div>` : '';
+
+  const skillsHtml = skills.length ? `<div class="bs-crit-skills">
+    <span class="bs-crit-skills-l">Critical skills:</span>
+    ${skills.slice(0,12).map(x=>`<span class="bs-skill-pill crit">${esc(x)}</span>`).join('')}
+  </div>` : '';
+
+  const phaseHtml = phases.length ? `<div class="bs-phases">` + phases.map(ph=>{
+    const ts = Array.isArray(ph.teams)?ph.teams:[];
+    const pd = ts.reduce((s,t)=>s+(t.person_days||0),0);
+    const tHtml = ts.map(t=>{
+      const sk = Array.isArray(t.skills)?t.skills.slice(0,5):[];
+      return `<div class="bs-phase-team">
+        <div class="bs-phase-team-head">
+          <span class="bs-team-chip">${esc(t.team||'')}</span>
+          <span class="bs-phase-team-meta">${esc(String(t.fte_count||'—'))} FTE · ${esc(String(t.person_days||'—'))} pd</span>
+        </div>
+        ${sk.length?`<div class="bs-skills">${sk.map(x=>`<span class="bs-skill-pill">${esc(x)}</span>`).join('')}</div>`:''}
+      </div>`;
+    }).join('') || XEMPTY('No team breakdown');
+    return `<div class="bs-phase-row">
+      <div class="bs-phase-head">
+        <span class="bs-phase-name">${esc(ph.phase||'')}</span>
+        <span class="bs-phase-meta">${esc(String(ph.duration_weeks||'—'))} wks · ${pd} pd</span>
+      </div>
+      <div class="bs-phase-teams">${tHtml}</div>
+    </div>`;
+  }).join('') + `</div>` : '';
+
+  return `<div class="bs-xsec-sub" style="margin-bottom:10px">Total estimate: <strong>${total||'—'} person-days</strong></div>`
+    + tiles + skillsHtml + phaseHtml;
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -5353,8 +5576,39 @@ function _splitBrandTitle(title) {
 }
 
 // ─── PDF (2 pages — A4 landscape) ──────────────────────────────────────────
+// Exports and the voice-over should include any deep dives the user has
+// actually loaded, while still working fine when only the summary exists.
+function mergedBrief(){
+  if (typeof S_BRIEF === 'undefined' || !S_BRIEF.data) return null;
+  const out = Object.assign({}, S_BRIEF.data);
+  const x = S_BRIEF.expand || {};
+  if (x.risks) {
+    if (Array.isArray(x.risks.risk_flags)) {
+      // Deep-dive risks are objects; flatten to strings for the exporters.
+      out.risk_flags = x.risks.risk_flags.map(r =>
+        typeof r === 'string' ? r
+          : (r.risk || '') + (r.severity ? ' (' + r.severity + ')' : ''));
+    }
+    if (Array.isArray(x.risks.win_factors))         out.win_factors = x.risks.win_factors;
+    if (Array.isArray(x.risks.recommended_actions)) out.recommended_actions = x.risks.recommended_actions;
+    if (Array.isArray(x.risks.obligations))         out.obligations = x.risks.obligations;
+  }
+  if (x.rationale && Array.isArray(x.rationale.go_nogo_criteria)) {
+    out.go_nogo_criteria = x.rationale.go_nogo_criteria;
+  }
+  if (x.clarifications && Array.isArray(x.clarifications.clarifications)) {
+    out.clarifications = x.clarifications.clarifications;
+  }
+  if (x.requirements && Array.isArray(x.requirements.key_requirements)
+      && x.requirements.key_requirements.length) {
+    out.key_requirements = x.requirements.key_requirements;   // fuller list wins
+  }
+  if (x.effort && x.effort.effort_breakdown) out.effort_breakdown = x.effort.effort_breakdown;
+  return out;
+}
+
 function downloadBriefPDF() {
-  const b = (typeof S_BRIEF !== 'undefined') ? S_BRIEF.data : null;
+  const b = mergedBrief();
   if (!b) { toast('Generate the brief first','error'); return; }
   const fname  = (S_BRIEF && S_BRIEF.filename) ? S_BRIEF.filename : 'RFP';
   const winPct = Math.min(100, Math.max(0, parseInt(b.win_probability)||65));
@@ -5788,7 +6042,7 @@ window.addEventListener('load', function(){
 
 // ─── PPT (2 slides — 16:9 widescreen) ──────────────────────────────────────
 async function downloadBriefPPTX(){
-  const b = (typeof S_BRIEF !== 'undefined') ? S_BRIEF.data : null;
+  const b = mergedBrief();
   if(!b){ toast('Generate the brief first','error'); return; }
   showOverlay && showOverlay('Building PowerPoint…');
   try {
@@ -6187,6 +6441,7 @@ async function saveBriefToLibrary() {
 let _voiceAudio    = null;   // HTMLAudioElement
 let _voiceBlob     = null;   // cached audio blob
 let _voicePlaying  = false;
+let _briefForVoice = null;  // summary + any loaded deep dives
 
 function buildBriefScript(b) {
   if (!b) return '';
@@ -6219,6 +6474,7 @@ function buildBriefScript(b) {
   parts.push(p[0] + ': ' + (b.title || 'RFP Overview') + '.');
   if (b.issuer)            parts.push(p[1] + ': ' + b.issuer + '.');
   if (b.executive_summary) parts.push(b.executive_summary);
+  if ((b.headlines||[]).length) parts.push(b.headlines.slice(0,4).join('. ') + '.');
   if (b.go_nogo)           parts.push(p[2] + ': ' + b.go_nogo + '. ' + (b.go_nogo_reason || ''));
   if (b.scope)             parts.push(p[3] + ': ' + b.scope);
   if (b.submission_date)   parts.push(p[4] + ': ' + b.submission_date + '.');
@@ -6244,6 +6500,7 @@ async function toggleVoicePlay() {
 
 async function startVoice() {
   if (!S_BRIEF.data) { toast('Generate the brief first','error'); return; }
+  _briefForVoice = mergedBrief() || S_BRIEF.data;
   const engine = (document.getElementById('vp-engine')||{}).value || 'browser';
   if (engine === 'elevenlabs') { await startElevenLabsVoice(); }
   else                         { startBrowserVoice(); }
@@ -6255,7 +6512,7 @@ function startBrowserVoice() {
   const playBtn = document.getElementById('vp-play-btn');
   const status  = document.getElementById('vp-status');
   window.speechSynthesis.cancel();
-  const script = buildBriefScript(S_BRIEF.data);
+  const script = buildBriefScript(_briefForVoice || S_BRIEF.data);
   const utt    = new SpeechSynthesisUtterance(script);
   utt.rate     = 0.95;
   utt.pitch    = 1;
@@ -6302,16 +6559,55 @@ function startBrowserVoice() {
 let _lastAudioUrl = null;
 
 async function elevenLabsTTS(text, voiceId, langCode) {
+  // model_id matters: only Turbo v2.5 / Flash v2.5 accept language_code.
+  // The server drops the field for models that would reject it, so we can
+  // always send both and let it decide.
+  const modelSel = document.getElementById('vp-model');
+  const model    = (modelSel && modelSel.value) || 'eleven_multilingual_v2';
   const resp = await fetch('/api/elevenlabs/speak', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'same-origin',
-    body: JSON.stringify({ text, voice_id: voiceId, language_code: langCode || S_BRIEF.langCode || 'en' })
+    body: JSON.stringify({
+      text,
+      voice_id: voiceId,
+      model_id: model,
+      language_code: langCode || S_BRIEF.langCode || 'en'
+    })
   });
-  const data = await resp.json();
+  const data = await resp.json().catch(()=>({ error: 'ElevenLabs returned a non-JSON response' }));
   if (!resp.ok || !data.ok) throw new Error(data.error || 'ElevenLabs error');
-  console.log('[ElevenLabs] audio URL:', data.url, 'size:', data.size);
-  return data.url; // static file URL served by IIS
+  if (data.warning) toast(data.warning, 'info');
+  console.log('[ElevenLabs] url:', data.url, 'size:', data.size,
+              'model:', data.model, 'language_enforced:', data.language_enforced);
+  return data.url;
+}
+
+// The stock voice list is English-native. Multilingual v2 can speak all 29
+// supported languages with any of them, but some voices carry the accent
+// less obviously — these read more naturally for non-English scripts.
+const VOICE_BY_LANG = {
+  ar: 'EXAVITQu4vr4xnSDxMaL',  // Sarah — clearest on Arabic script
+  ta: 'EXAVITQu4vr4xnSDxMaL',
+  hi: 'EXAVITQu4vr4xnSDxMaL',
+  ja: '21m00Tcm4TlvDq8ikWAM',  // Rachel
+  ko: '21m00Tcm4TlvDq8ikWAM',
+  zh: '21m00Tcm4TlvDq8ikWAM',
+};
+
+// Nudge the voice + model to sensible defaults whenever the brief language
+// changes, unless the user has already picked something themselves.
+function suggestVoiceForLang(){
+  const code = S_BRIEF.langCode || 'en';
+  const vSel = document.getElementById('vp-voice');
+  const mSel = document.getElementById('vp-model');
+  if (vSel && !vSel.dataset.userPicked && VOICE_BY_LANG[code]) {
+    vSel.value = VOICE_BY_LANG[code];
+  }
+  // Non-English → Flash v2.5 so language enforcement is actually available.
+  if (mSel && !mSel.dataset.userPicked && code !== 'en' && code !== 'af') {
+    mSel.value = 'eleven_flash_v2_5';
+  }
 }
 
 async function startElevenLabsVoice() {
@@ -6321,7 +6617,7 @@ async function startElevenLabsVoice() {
   status.textContent = 'Generating audio…';
   try {
     if (!_lastAudioUrl) {
-      const script  = buildBriefScript(S_BRIEF.data);
+      const script  = buildBriefScript(_briefForVoice || S_BRIEF.data);
       const voiceId  = document.getElementById('vp-voice').value;
       const langCode = S_BRIEF.langCode || 'en';
       console.log('[Voice] Generating:', langCode, 'voice:', voiceId);
@@ -6417,9 +6713,11 @@ function seekVoice(e) {
 // Reset cached audio when voice selection changes
 document.addEventListener('DOMContentLoaded', () => {
   const sel = document.getElementById('vp-voice');
-  if (sel) sel.addEventListener('change', () => { _voiceBlob = null; _lastAudioUrl = null; stopVoice(); });
+  if (sel) sel.addEventListener('change', () => { sel.dataset.userPicked = '1'; _voiceBlob = null; _lastAudioUrl = null; stopVoice(); });
   const eng = document.getElementById('vp-engine');
   if (eng) eng.addEventListener('change', () => { _voiceBlob = null; _lastAudioUrl = null; stopVoice(); });
+  const mdl = document.getElementById('vp-model');
+  if (mdl) mdl.addEventListener('change', () => { mdl.dataset.userPicked = '1'; _voiceBlob = null; _lastAudioUrl = null; stopVoice(); });
 });
 
 async function testElevenKey() {
@@ -8906,12 +9204,22 @@ function loadSampleDoc(lang){
   var arText='طلب تقديم عروض — خدمات سحابية\nرقم: ADNOC-IT-2026-0047 | تاريخ: 30 أبريل 2026 | قيمة: 18-25 مليون درهم\nالجهة: شركة أبوظبي الوطنية للنفط\n\nالمتطلبات: Azure Expert MSP، 50 مهندس بالإمارات، 5 سنوات نفط وغاز، ISO27001\nالتقييم: تقني 40%، تجاري 35%، شركة 15%، امتثال 10%';
   var taText='திட்ட முந்மொழிவு கோரிக்கை\nகுறிப்பு: ADNOC-IT-2026-0047 | சமர்ப்பிப்பு: 30 ஏப்ரல் 2026 | மதிப்பு: AED 18-25M\nவெளியிட்டவர்: ADNOC\n\nகட்டாய தேவைகள்: Azure Expert MSP، 50+ உள்ளூர் போரியாளர்கள்، 5 ஆண்டு அனுபவம்، ISO27001\nமதிப்பீடு: தொழில்நுட்பம் 40%, வணிகம் 35%, நிறுவனம் 15%, இணக்கம் 10%';
   var afText='REQUEST FOR PROPOSAL — Cloud Infrastructure\nRef: ADNOC-IT-2026-0047 | Deadline: 30 April 2026 | Value: AED 18-25M\nIssuing Authority: Abu Dhabi National Oil Company\n\nBACKGROUND: Suitably qualified vendors invited to design and manage cloud platform across 5 subsidiaries (12,000+ users).\n\nMANDATORY:\n- Microsoft Azure Expert MSP certification\n- UAE presence with 50+ resident engineers\n- 5 years Oil & Gas IT experience\n- ISO 27001 and ISO 9001 certified\n- Emiratisation: 10% UAE Nationals minimum\n\nEVALUATION: Technical 40%, Commercial 35%, Company 15%, Compliance 10%';
-  var map={en:{name:'Sample_EN.txt',code:'en',text:enText},fr:{name:'Sample_FR.txt',code:'fr',text:frText},ar:{name:'Sample_AR.txt',code:'ar',text:arText},ta:{name:'Sample_TA.txt',code:'ta',text:taText},af:{name:'Sample_ZA.txt',code:'af',text:afText}};
+  var esText='SOLICITUD DE PROPUESTA — Servicios de Infraestructura en la Nube\nRef: ADNOC-IT-2026-0047 | Presentacion: 30 de abril de 2026 | Valor: 18-25M AED / 3 anos\nEmisor: Abu Dhabi National Oil Company\n\nALCANCE: Migrar mas de 200 cargas de trabajo a Azure en 5 filiales (mas de 12.000 usuarios).\nServicios: Migracion a la nube, SOC 24/7, Confianza Cero, Data Lake, Power BI, piloto de IA generativa.\n\nREQUISITOS OBLIGATORIOS:\nREQ-001: Certificacion Microsoft Azure Expert MSP\nREQ-002: Presencia en EAU con mas de 50 ingenieros locales\nREQ-003: Mas de 5 anos de experiencia en TI de Petroleo y Gas\nREQ-004: Certificacion ISO 27001 e ISO 9001\n\nEVALUACION: Tecnica 40%, Comercial 35%, Perfil de Empresa 15%, Cumplimiento 10%';
+  var map={en:{name:'Sample_EN.txt',code:'en',text:enText},es:{name:'Sample_ES.txt',code:'es',text:esText},fr:{name:'Sample_FR.txt',code:'fr',text:frText},ar:{name:'Sample_AR.txt',code:'ar',text:arText},ta:{name:'Sample_TA.txt',code:'ta',text:taText},af:{name:'Sample_ZA.txt',code:'af',text:afText}};
   var d=map[lang]; if(!d) return;
   S_BRIEF.file=new File([new Blob([d.text],{type:'text/plain'})],d.name,{type:'text/plain'});
   S_BRIEF.filename=d.name;
-  var btn=document.querySelector('.lang-btn[data-code="'+d.code+'"]');
-  if(btn) selectBriefLang(btn);
+  // The sample's language is the SOURCE. The old code ran an unscoped
+  // querySelector (which matched the source button) through selectBriefLang,
+  // so the TARGET was set to the sample's own language and no translation ever
+  // happened — this is why "converting to source language" looked broken.
+  var srcBtn=document.querySelector('#src-lang-btns .lang-btn[data-code="'+d.code+'"]');
+  if(srcBtn) selectSrcLang(srcBtn);
+  // Pick a different target so the conversion is actually visible:
+  // non-English sample → English; English sample → Arabic.
+  var tgtCode = (d.code === 'en') ? 'ar' : 'en';
+  var tgtBtn=document.querySelector('#tgt-lang-btns .lang-btn[data-code="'+tgtCode+'"]');
+  if(tgtBtn) selectBriefLang(tgtBtn);
   document.getElementById('brief-up-icon').textContent='📄';
   document.getElementById('brief-up-title').textContent=d.name;
   document.getElementById('brief-up-hint').textContent='Sample loaded — click Analyse to generate brief';
@@ -9299,7 +9607,7 @@ function loadPolishSample() {
 // ══ WhatsApp Sharing ══════════════════════════════════════
 function shareWhatsAppBrief() {
   if(!S_BRIEF.data){toast('Generate the brief first','error');return;}
-  var b=S_BRIEF.data, winPct=b.win_probability||65;
+  var b=mergedBrief()||S_BRIEF.data, winPct=b.win_probability||65;
   var winEmoji=winPct>=70?'🟢':winPct>=50?'🟡':'🔴';
   var goEmoji=(b.go_nogo||'').indexOf('NO')>-1?'🚫':(b.go_nogo||'').indexOf('COND')>-1?'⚡':'✅';
   var reqList='';
