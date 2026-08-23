@@ -10,6 +10,7 @@ const express = require('express');
 const multer  = require('multer');
 
 const { complete, completeJson } = require('../lib/anthropic');
+const XLSX      = require('xlsx');
 const usageLog = require('../lib/usage');
 const pricing   = require('../lib/pricing');
 const storage   = require('../lib/storage');
@@ -361,25 +362,36 @@ function getCachedDoc(id) {
 // ════════════════════════════════════════════════════════════════════════════
 // Token + cost dashboard
 // ════════════════════════════════════════════════════════════════════════════
+// Tenant scoping: a normal user sees only their own spend. Admins may pass
+// ?scope=all to see the organisation-wide picture. Without this, any logged-in
+// user could read every other user's token spend AND their RFP filenames.
+function usageScope(req) {
+  const wantsAll = String(req.query.scope || '') === 'all';
+  if (wantsAll && req.user && req.user.isAdmin) return null;      // null = no filter
+  return (req.user && (req.user.id || req.user.email)) || '__none__';
+}
+
 router.get('/usage/summary', (req, res) => {
   const tiers = Object.keys(SPEED_MODELS).map(k => ({ tier: k, model: SPEED_MODELS[k] }));
+  const scope = usageScope(req);
   res.json({
     success: true,
-    ...usageLog.summarise({ since: req.query.since || null }),
-    insights: usageLog.insights(tiers),
+    scope: scope === null ? 'organisation' : 'you',
+    ...usageLog.summarise({ since: req.query.since || null, userId: scope }),
+    insights: usageLog.insights(tiers, scope),
     tiers: tiers.map(t => ({ ...t, ...pricing.ratesFor(t.model) })),
   });
 });
 
 router.get('/usage/recent', (req, res) => {
   const n = Math.min(Number(req.query.n) || 50, 200);
-  res.json({ success: true, rows: usageLog.all().slice(0, n) });
+  res.json({ success: true, rows: usageLog.all(usageScope(req)).slice(0, n) });
 });
 
 // What the recorded traffic would have cost on each tier — the basis for the
 // "should we switch?" conversation, using real token counts rather than guesses.
-router.get('/usage/what-if', (_req, res) => {
-  const rows = usageLog.all();
+router.get('/usage/what-if', (req, res) => {
+  const rows = usageLog.all(usageScope(req));
   const totals = rows.reduce((a, r) => ({
     input_tokens: a.input_tokens + (r.input_tokens || 0),
     output_tokens: a.output_tokens + (r.output_tokens || 0),
@@ -400,9 +412,165 @@ router.get('/usage/what-if', (_req, res) => {
              actual_cost: Math.round(actual * 1e6) / 1e6, scenarios });
 });
 
-router.post('/usage/reset', (_req, res) => {
+// Clearing the ledger wipes an audit trail, so only an admin may do it, and
+// only for the whole ledger — a user clearing "their" rows would leave the
+// organisation totals silently wrong.
+router.post('/usage/reset', (req, res) => {
+  if (!(req.user && req.user.isAdmin)) {
+    return res.status(403).json({ success: false, error: 'Only an administrator can clear the usage ledger.' });
+  }
   usageLog.reset();
   res.json({ success: true });
+});
+
+// ════════════════════════════════════════════════════════════════════════════
+// POST /api/brief/export-xlsx — the brief + whatever deep dives were loaded
+// ════════════════════════════════════════════════════════════════════════════
+// One sheet per section so a bid manager can work the tabs, assign owners and
+// mark items off. The Assumptions sheet deliberately ships with empty review
+// columns — assumptions are drafts until a human signs them off.
+// ----------------------------------------------------------------------------
+function sheetFrom(rows, headers) {
+  const ws = XLSX.utils.json_to_sheet(rows, { header: headers });
+  // Column widths sized to the header, widened for prose columns
+  ws['!cols'] = headers.map(h => {
+    const wide = /description|question|rationale|mitigation|requirement|assumption|notes|basis|impact|rule|obligation|why|evidence|breakdown|risk|gap|action|factor|criterion/i.test(h);
+    return { wch: wide ? 52 : Math.max(14, Math.min(h.length + 4, 30)) };
+  });
+  ws['!autofilter'] = { ref: XLSX.utils.encode_range({
+    s: { c: 0, r: 0 }, e: { c: headers.length - 1, r: Math.max(rows.length, 1) } }) };
+  ws['!freeze'] = { xSplit: 0, ySplit: 1 };
+  return ws;
+}
+
+const YN = v => (v === true ? 'Yes' : v === false ? 'No' : '—');
+
+router.post('/brief/export-xlsx', (req, res, next) => {
+  try {
+    const b = req.body.brief || {};
+    const x = req.body.expand || {};
+    const wb = XLSX.utils.book_new();
+
+    // ── Executive summary ────────────────────────────────────────────────
+    const sum = [
+      ['Title', b.title], ['Reference', b.ref], ['Issuer', b.issuer],
+      ['Industry', b.industry], ['Contract value', b.contract_value],
+      ['Duration', b.contract_duration], ['Submission date', b.submission_date],
+      ['Q&A deadline', b.qa_deadline], ['Award date', b.award_date],
+      ['Recommendation', b.go_nogo], ['Reason', b.go_nogo_reason],
+      ['Win probability', b.win_probability != null ? b.win_probability + '%' : ''],
+      ['Scope', b.scope], ['Executive summary', b.executive_summary],
+      ['Output language', b.output_language],
+      ['', ''],
+      ['Generated', new Date().toISOString().slice(0, 16).replace('T', ' ')],
+      ['Note', 'AI-generated decision support. Every item cites its source section or page — verify against the RFP before submitting.'],
+    ].map(([k, v]) => ({ Field: k, Value: v == null ? '' : String(v) }));
+    (b.headlines || []).forEach((h, i) => sum.push({ Field: 'Headline ' + (i + 1), Value: h }));
+    const wsSum = sheetFrom(sum, ['Field', 'Value']);
+    wsSum['!cols'] = [{ wch: 22 }, { wch: 100 }];
+    XLSX.utils.book_append_sheet(wb, wsSum, 'Executive Summary');
+
+    const add = (name, rows, headers) => {
+      if (!rows || !rows.length) return;
+      XLSX.utils.book_append_sheet(wb, sheetFrom(rows, headers), name);
+    };
+
+    // ── Requirements ─────────────────────────────────────────────────────
+    const reqs = (x.requirements && x.requirements.key_requirements) || b.key_requirements || [];
+    add('Requirements', reqs.map(r => ({
+      'ID': r.id || '', 'Requirement': r.title || '', 'Description': r.description || '',
+      'Priority': r.priority || '', 'Section': r.section || '', 'Page': r.page || '',
+      'Compliance (Y/N/Partial)': '', 'Owner': '', 'Notes': '',
+    })), ['ID','Requirement','Description','Priority','Section','Page','Compliance (Y/N/Partial)','Owner','Notes']);
+
+    // ── Clarifications ───────────────────────────────────────────────────
+    const clars = (x.clarifications && x.clarifications.clarifications) || [];
+    add('Clarifications', clars.map((c, i) => ({
+      '#': i + 1, 'Question': c.question || '', 'Type': c.kind || '',
+      'Impact': c.impact || '', 'Source': c.where || '',
+      'Sent to issuer (date)': '', 'Response received': '', 'Owner': '',
+    })), ['#','Question','Type','Impact','Source','Sent to issuer (date)','Response received','Owner']);
+
+    // ── Risks + obligations ──────────────────────────────────────────────
+    const risks = (x.risks && x.risks.risk_flags) || [];
+    add('Risks', risks.map((r, i) => ({
+      '#': i + 1, 'Risk': r.risk || '', 'Severity': r.severity || '',
+      'Category': r.category || '', 'Mitigation': r.mitigation || '',
+      'Source': r.where || '', 'Owner': '', 'Status': '',
+    })), ['#','Risk','Severity','Category','Mitigation','Source','Owner','Status']);
+
+    const obls = (x.risks && x.risks.obligations) || [];
+    add('Obligations', obls.map((o, i) => ({
+      '#': i + 1, 'Obligation': o.obligation || '', 'Source': o.where || '',
+      'Can we meet it?': '', 'Owner': '',
+    })), ['#','Obligation','Source','Can we meet it?','Owner']);
+
+    // ── Decision rationale ───────────────────────────────────────────────
+    const crit = (x.rationale && x.rationale.go_nogo_criteria) || [];
+    add('Bid Decision', crit.map(c => ({
+      'Criterion': c.criterion || '', 'Verdict': c.verdict || '',
+      'Weight': c.weight || '', 'Rationale': c.rationale || '',
+      'Human review': '', 'Agreed?': '',
+    })), ['Criterion','Verdict','Weight','Rationale','Human review','Agreed?']);
+
+    // ── Supporting documents ─────────────────────────────────────────────
+    const docs = (x.documents && x.documents.supporting_documents) || [];
+    add('Supporting Documents', docs.map((d, i) => ({
+      '#': i + 1, 'Document': d.document || '', 'Category': d.category || '',
+      'Mandatory': YN(d.mandatory), 'Format required': d.format || '',
+      'Source': d.where || '', 'Notes': d.notes || '',
+      'Do we have it?': '', 'Expiry / valid until': '', 'Owner': '',
+    })), ['#','Document','Category','Mandatory','Format required','Source','Notes','Do we have it?','Expiry / valid until','Owner']);
+
+    // ── Pricing requested ────────────────────────────────────────────────
+    const pr = (x.pricing_requested && x.pricing_requested.pricing_requested) || [];
+    add('Pricing Requested', pr.map((r, i) => ({
+      '#': i + 1, 'Item to price': r.item || '', 'Pricing model': r.pricing_model || '',
+      'Breakdown required': r.breakdown_required || '', 'Currency': r.currency || '',
+      'Source': r.where || '', 'Owner': '', 'Status': '',
+    })), ['#','Item to price','Pricing model','Breakdown required','Currency','Source','Owner','Status']);
+
+    const crules = (x.pricing_requested && x.pricing_requested.commercial_rules) || [];
+    add('Commercial Rules', crules.map((r, i) => ({
+      '#': i + 1, 'Rule': r.rule || '', 'Source': r.where || '', 'Accepted?': '', 'Notes': '',
+    })), ['#','Rule','Source','Accepted?','Notes']);
+
+    // ── Assumptions — drafts pending human sign-off ──────────────────────
+    const asm = (x.assumptions && x.assumptions.assumptions) || [];
+    add('Assumptions', asm.map((a, i) => ({
+      '#': i + 1, 'Assumption (DRAFT)': a.assumption || '', 'Area': a.area || '',
+      'Basis': a.basis || '', 'Confidence': a.confidence || '',
+      'Impact if wrong': a.impact_if_wrong || '', 'How to validate': a.validate_by || '',
+      'Reviewed by': '', 'Review date': '', 'Confirmed / Rejected': '',
+    })), ['#','Assumption (DRAFT)','Area','Basis','Confidence','Impact if wrong','How to validate','Reviewed by','Review date','Confirmed / Rejected']);
+
+    // ── Security ─────────────────────────────────────────────────────────
+    const sec = (x.security && x.security.security_requirements) || [];
+    add('Security Requirements', sec.map((r, i) => ({
+      '#': i + 1, 'Requirement': r.requirement || '', 'Domain': r.domain || '',
+      'Mandatory': YN(r.mandatory), 'Standard': r.standard || '',
+      'Evidence required': r.evidence_required || '', 'Source': r.where || '',
+      'Do we comply?': '', 'Evidence held': '', 'Owner': '',
+    })), ['#','Requirement','Domain','Mandatory','Standard','Evidence required','Source','Do we comply?','Evidence held','Owner']);
+
+    const fw = (x.security && x.security.compliance_frameworks) || [];
+    add('Compliance Frameworks', fw.map((f, i) => ({
+      '#': i + 1, 'Framework': f.framework || '', 'Mandatory': YN(f.mandatory),
+      'Source': f.where || '', 'Certified?': '', 'Certificate expiry': '',
+    })), ['#','Framework','Mandatory','Source','Certified?','Certificate expiry']);
+
+    const gaps = (x.security && x.security.security_gaps) || [];
+    add('Security Gaps', gaps.map((g, i) => ({
+      '#': i + 1, 'Gap (RFP is silent)': g.gap || '', 'Why it matters': g.why || '',
+      'Raise as clarification?': '', 'Owner': '',
+    })), ['#','Gap (RFP is silent)','Why it matters','Raise as clarification?','Owner']);
+
+    const buf = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
+    const safe = String(b.title || b.ref || 'RFP_Brief').replace(/[^\w\-. ]+/g, '_').slice(0, 60).trim();
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="${safe || 'RFP_Brief'}.xlsx"`);
+    res.send(buf);
+  } catch (e) { next(e); }
 });
 
 router.get('/brief/models', (_req, res) => {
@@ -553,12 +721,49 @@ const EXPAND_PACKS = {
       'Use the [[PAGE n]] markers for "page" and the document\'s own numbering for "section". Omit those keys rather than inventing them. Aim for 10-25 requirements.',
     ],
   },
-  effort: {
+
+  // ── Submission-readiness packs ───────────────────────────────────────
+  documents: {
+    maxTokens: 3500,
+    schema: [
+      'List every DOCUMENT, certificate, form or artefact the bidder must SUBMIT with the proposal.',
+      'Return: { "supporting_documents": [ { "document": string, "category": "Legal"|"Financial"|"Technical"|"Certification"|"HR"|"Reference"|"Form", "mandatory": true|false, "format": string, "where": string, "notes": string } ] }',
+      '"format" is what the document says about form: original, certified copy, notarised, attested, PDF, signed and stamped, on letterhead, valid within N months. Use "Not specified" when the document is silent.',
+      'Typical items: trade licence, VAT/tax registration, audited financial statements, bank guarantee or bid bond, ISO certificates, CVs of key personnel, past-performance references, insurance certificates, power of attorney, MoF/supplier registration, signed tender forms and annexes, Emiratisation or local-content evidence.',
+      'Only list what THIS document actually asks for. Do not pad with items a tender usually wants. Cite the section or page in "where". Aim for 8-20 items.',
+    ],
+  },
+  pricing_requested: {
+    maxTokens: 3500,
+    schema: [
+      'Describe what COMMERCIAL and PRICING INFORMATION the issuer is asking the bidder to provide, and the rules that govern how it must be submitted.',
+      'This is NOT an estimate of our costs. It is a specification of what the customer wants priced and how.',
+      'Return: { "pricing_requested": [ { "item": string, "pricing_model": "Fixed price"|"Time and materials"|"Unit rate"|"Milestone"|"Subscription"|"Not specified", "breakdown_required": string, "currency": string, "where": string } ], "commercial_rules": [ { "rule": string, "where": string } ] }',
+      '"breakdown_required" is the level of detail demanded: per year, per site, per user, per phase, CAPEX vs OPEX split, rate card by role, bill of quantities.',
+      '"commercial_rules" covers price validity period, currency and exchange rules, tax and VAT treatment, payment terms and milestones, retention or performance bond, price escalation clauses, whether a separate sealed financial envelope is required.',
+      'Cite a section or page for every item. Aim for 4-10 priced items and 3-8 rules.',
+    ],
+  },
+  assumptions: {
+    maxTokens: 3500,
+    schema: [
+      'List the ASSUMPTIONS a bidder would have to make because the document does not state the answer, and which must be validated by a human before submission.',
+      'Return: { "assumptions": [ { "assumption": string, "area": "Scope"|"Volume"|"Technical"|"Commercial"|"Timeline"|"Resourcing"|"Compliance", "basis": string, "confidence": "HIGH"|"MEDIUM"|"LOW", "impact_if_wrong": string, "validate_by": string } ] }',
+      '"basis" is why the assumption is reasonable — an inference from the document, an industry norm, or a comparable clause elsewhere in the tender.',
+      '"impact_if_wrong" must be concrete: what breaks in the price, the schedule or the compliance position.',
+      '"validate_by" says how to confirm it: a clarification question to the issuer, a site visit, an internal check with a named function.',
+      'Every assumption is a DRAFT for human review — never state one as fact. Aim for 5-12.',
+    ],
+  },
+  security: {
     maxTokens: 4000,
     schema: [
-      'Produce an end-to-end delivery effort estimate.',
-      'Return: { "effort_breakdown": { "phases": [ { "phase": "Design"|"Hardware Deployment"|"Implementation"|"Integration & Testing"|"Go-Live & Hypercare", "duration_weeks": number, "teams": [ { "team": "Infrastructure"|"DevOps"|"Application"|"AI/Data"|"Security"|"PMO"|"QA", "fte_count": number, "person_days": number, "skills": string[] } ] } ], "total_person_days": number, "critical_skills": string[], "team_summary": [ { "team": string, "total_person_days": number, "fte_peak": number } ] } }',
-      'Scale person_days to the size described (users, sites, integrations). Skills must be specific ("Microsoft Sentinel KQL", not "Security"). team_summary must reconcile with phases[].teams[].',
+      'Extract every SECURITY, PRIVACY and DATA-PROTECTION requirement the customer specifies.',
+      'Return: { "security_requirements": [ { "requirement": string, "domain": "Certification"|"Data residency"|"Access control"|"Encryption"|"Monitoring / SOC"|"Incident response"|"Vulnerability management"|"Personnel security"|"Physical security"|"Privacy / Data protection"|"Audit / Assurance"|"Business continuity", "mandatory": true|false, "standard": string, "where": string, "evidence_required": string } ], "compliance_frameworks": [ { "framework": string, "where": string, "mandatory": true|false } ], "security_gaps": [ { "gap": string, "why": string } ] }',
+      '"standard" names the standard or control cited: ISO 27001, ISO 22301, SOC 2, NIST CSF, PCI DSS, GDPR, UAE IA Standard, NESA, ADHICS, Dubai ISR, CSA STAR. Use "Not specified" when the document states a control without naming a standard.',
+      '"evidence_required" is what must be shown: a certificate, an audit report, a policy document, a penetration-test report, a named CISO.',
+      '"security_gaps" flags where the document is SILENT on something a bidder would normally need to know — data residency, breach-notification windows, right-to-audit, subcontractor security, encryption key ownership. These become clarification questions.',
+      'Cite a section or page for every item. Aim for 8-20 requirements.',
     ],
   },
 };
