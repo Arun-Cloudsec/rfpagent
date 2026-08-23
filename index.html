@@ -530,6 +530,22 @@ textarea.improve-input::placeholder{color:var(--text3)}
 .ov-clock-lbl{display:block;font-family:inherit;font-size:9.5px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--text3);margin-top:4px}
 
+/* ── Deep-dive in-progress card ── */
+.x-pending{border:1.5px dashed rgba(109,105,240,.45);border-radius:var(--radius);
+  padding:14px 16px;background:linear-gradient(135deg,rgba(109,105,240,.06),rgba(242,141,100,.04));
+  border-top:1.5px dashed rgba(109,105,240,.45);margin-top:16px}
+.x-pending-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.x-pending-spin{width:20px;height:20px;border:2.5px solid rgba(109,105,240,.22);
+  border-top-color:#6D69F0;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+.x-pending-sub{font-size:11.5px;color:var(--text2);margin-top:2px}
+.x-pending-time{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:15px;
+  font-weight:800;color:#6D69F0;font-variant-numeric:tabular-nums;white-space:nowrap}
+.x-skel{height:11px;border-radius:6px;margin-bottom:8px;
+  background:linear-gradient(90deg,rgba(109,105,240,.10) 25%,rgba(109,105,240,.20) 37%,rgba(109,105,240,.10) 63%);
+  background-size:400% 100%;animation:xshimmer 1.4s ease infinite}
+.x-skel.s2{width:88%} .x-skel.s3{width:64%;margin-bottom:0}
+@keyframes xshimmer{0%{background-position:100% 50%}100%{background-position:0 50%}}
+
 /* ── Tokens & Cost dashboard ── */
 .uk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:16px}
 .uk{background:white;border:1px solid var(--border2);border-radius:var(--radius);padding:14px 16px}
@@ -926,6 +942,8 @@ textarea.improve-input::placeholder{color:var(--text3)}
     <button class="nav-btn" id="nav-estimations" onclick="goPage('estimations')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Estimation History<span class="nav-badge" id="est-count">0</span></button>
     <button class="nav-btn" id="nav-guide" onclick="goPage('guide')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>User Guide</button>
     <div class="nav-lbl" style="margin-top:8px">Admin</div>
+    <div id="build-stamp" style="font-size:9.5px;color:var(--text3);padding:6px 12px;letter-spacing:.04em"
+         title="Version currently served. If this is stale after a deploy, hard-refresh (Ctrl/Cmd+Shift+R).">v…</div>
     <button class="nav-btn" id="nav-usage" onclick="goPage('usage')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 5-7"/></svg>Tokens &amp; Cost</button>
     <button class="nav-btn" id="nav-settings" onclick="goPage('settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings</button>
     <div class="nav-lbl" style="margin-top:6px">Recent</div>
@@ -1579,6 +1597,11 @@ textarea.improve-input::placeholder{color:var(--text3)}
 
     <div id="usage-kpis" class="uk-grid"></div>
     <div id="usage-insights"></div>
+
+    <div class="card">
+      <div class="card-title">Spend by vendor</div>
+      <div id="usage-vendors"></div>
+    </div>
 
     <div class="card">
       <div class="card-title">Spend by model</div>
@@ -4250,6 +4273,13 @@ async function init(){
     if(me.az_subscriptions) setVal('az-subs',   me.az_subscriptions);
     try{loadSettingsEditors(me);}catch(e2){console.warn('loadSettingsEditors err:',e2);}
     try{applySettingsPermissions(me);}catch(e3){console.warn('applySettingsPermissions err:',e3);}
+    // Stamp the running version. If a redeploy appears to change nothing, this
+    // tells you instantly whether the browser is holding an old copy.
+    try{
+      const h = await (await fetch('/health',{credentials:'same-origin'})).json();
+      const bs = document.getElementById('build-stamp');
+      if(bs && h && h.app_version) bs.textContent = 'v' + h.app_version;
+    }catch(e){ /* health unavailable — not fatal */ }
     // Show the language direction banner immediately, so nobody has to guess
     // which way the conversion will run before they touch anything.
     try{ updateLangConversionBadge(); }catch(e5){ /* page not mounted */ }
@@ -5228,6 +5258,23 @@ async function runBriefAnalysis() {
     'Writing the summary in ' + lang + '...'
   ]);
   startClock('Executive summary');
+  // Also run the clock on the button itself. If the overlay is missed, dismissed
+  // or the page is scrolled, the elapsed time is still visible where they clicked.
+  const aBtn = document.getElementById('brief-analyze-btn');
+  const aHtml = aBtn ? aBtn.innerHTML : '';
+  let aTick = null;
+  const aT0 = performance.now();
+  if (aBtn) {
+    aBtn.disabled = true;
+    aTick = setInterval(() => {
+      aBtn.innerHTML = '⏳ Working… <span class="tm-inline">' +
+        fmtElapsed(performance.now() - aT0) + '</span>';
+    }, 100);
+  }
+  const stopBtnTick = () => {
+    if (aTick) { clearInterval(aTick); aTick = null; }
+    if (aBtn) { aBtn.innerHTML = aHtml; aBtn.disabled = false; }
+  };
   try {
     const fd = new FormData();
     fd.append('rfpDoc', S_BRIEF.file);
@@ -5271,13 +5318,14 @@ async function runBriefAnalysis() {
     document.getElementById('brief-output').scrollIntoView({ behavior:'smooth', block:'start' });
     const _dlv=document.getElementById('btn-dl-voice');if(_dlv)_dlv.style.display='inline-flex';const _waa=document.getElementById('btn-wa-audio');if(_waa)_waa.style.display='inline-flex';
     hideOverlay();
+    stopBtnTick();
     const lt = document.getElementById('brief-last-time');
     if (lt) lt.innerHTML = timeBadge(elapsed, 30, 'Summary in');
     if (result.timing && result.timing.fell_back) {
       toast('Fast model unavailable on this key — used the configured model instead.', 'info');
     }
     toast('Executive brief ready in ' + fmtElapsed(elapsed), 'success');
-  } catch(e) { stopClock(); hideOverlay(); toast('Error: '+e.message,'error'); }
+  } catch(e) { stopBtnTick(); stopClock(); hideOverlay(); toast('Error: '+e.message,'error'); }
 }
 
 function renderBriefSlide(b) {
@@ -5521,12 +5569,17 @@ async function expandBrief(kind){
   const t0 = performance.now();
   if(btn){
     btn.classList.add('loading'); btn.disabled = true;
-    // Count up on the button itself so the wait is visible where the user clicked
+    // Say "Working…" outright rather than just dimming the button. A dimmed
+    // button reads as disabled, not as in-progress.
     tick = setInterval(()=>{
-      btn.innerHTML = btnHtml + '<span class="tm-inline">' +
+      btn.innerHTML = '⏳ Working… <span class="tm-inline">' +
         fmtElapsed(performance.now() - t0) + '</span>';
     }, 100);
   }
+
+  // Drop an in-progress card into the content area straight away, so something
+  // visibly happens below the fold too — not only on the button.
+  showExpandPending(kind, t0);
 
   try{
     const fd = new FormData();
@@ -5574,6 +5627,7 @@ async function expandBrief(kind){
     toast('Error: '+e.message,'error');
   }finally{
     if(tick) clearInterval(tick);
+    clearExpandPending(kind);
     if(btn){ btn.classList.remove('loading'); btn.disabled = false; btn.innerHTML = btnHtml; }
   }
 }
@@ -5588,6 +5642,9 @@ function renderExpandSections(){
     if(btn) btn.classList.toggle('loaded', loaded.indexOf(k) !== -1);
   });
 
+  // Preserve any in-progress cards; innerHTML would otherwise remove them
+  // mid-request and the user would watch the progress vanish.
+  const pending = Array.from(body.querySelectorAll('.x-pending'));
   body.innerHTML = loaded.map(k=>{
     const meta = XPACKS[k];
     const inner =
@@ -5612,6 +5669,7 @@ function renderExpandSections(){
       ${inner}
     </div>`;
   }).join('');
+  pending.forEach(el => body.insertBefore(el, body.firstChild));
 }
 
 /** Headline turnaround panel. Shows the summary time, then each deep dive
@@ -5664,6 +5722,48 @@ function renderTimingStrip(){
     <div class="tm-strip-note" style="flex-basis:100%">${note}
       ${cost > 0 ? ` <a href="#" onclick="goPage('usage');return false;" style="color:#4338CA;font-weight:700">See full token &amp; cost breakdown →</a>` : ''}</div>
   </div>`;
+}
+
+// ── In-progress card for a deep dive ─────────────────────────────────────
+// Rendered the instant the button is clicked, above whatever is already loaded,
+// with its own running clock so the wait is visibly accounted for.
+const _xPendingTicks = {};
+
+function showExpandPending(kind, t0){
+  const body = document.getElementById('brief-expand-body');
+  const meta = XPACKS[kind];
+  if(!body || !meta) return;
+
+  if(!document.getElementById('xpend-'+kind)){
+    const el = document.createElement('div');
+    el.className = 'bs-xsec x-pending';
+    el.id = 'xpend-'+kind;
+    el.innerHTML = `
+      <div class="x-pending-head">
+        <span class="x-pending-spin"></span>
+        <div style="flex:1;min-width:0">
+          <div class="bs-xsec-title">${meta.icon} ${esc(meta.label)}</div>
+          <div class="x-pending-sub">Working on it — reading the document and drafting this section…</div>
+        </div>
+        <span class="x-pending-time" id="xpend-t-${kind}">0.0s</span>
+      </div>
+      <div class="x-skel"></div><div class="x-skel s2"></div><div class="x-skel s3"></div>`;
+    body.insertBefore(el, body.firstChild);
+    // Scrolling is a nicety — never let it stop the progress card appearing.
+    try { if(el.scrollIntoView) el.scrollIntoView({behavior:'smooth', block:'nearest'}); } catch(e) {}
+  }
+
+  if(_xPendingTicks[kind]) clearInterval(_xPendingTicks[kind]);
+  _xPendingTicks[kind] = setInterval(()=>{
+    const t = document.getElementById('xpend-t-'+kind);
+    if(t) t.textContent = fmtElapsed(performance.now() - t0);
+  }, 100);
+}
+
+function clearExpandPending(kind){
+  if(_xPendingTicks[kind]){ clearInterval(_xPendingTicks[kind]); delete _xPendingTicks[kind]; }
+  const el = document.getElementById('xpend-'+kind);
+  if(el) el.remove();
 }
 
 const XEMPTY = m => `<div class="bs-rat-empty">${esc(m)}</div>`;
@@ -6845,13 +6945,24 @@ function startBrowserVoice() {
   const voices    = window.speechSynthesis.getVoices();
   const briefLang = (S_BRIEF.langCode || 'en').toLowerCase();
   // Try to find a voice matching the brief language first
-  const preferred =
+  const exact =
     voices.find(v => v.lang.toLowerCase().startsWith(briefLang) && v.localService) ||
-    voices.find(v => v.lang.toLowerCase().startsWith(briefLang)) ||
+    voices.find(v => v.lang.toLowerCase().startsWith(briefLang));
+  const preferred = exact ||
     voices.find(v => /en.*(GB|US)/i.test(v.lang)) ||
     voices.find(v => /en/i.test(v.lang)) || voices[0];
   if (preferred) { utt.voice = preferred; utt.lang = preferred.lang; }
   else           { utt.lang = briefLang; }
+
+  // No installed voice for this language means an English voice will read the
+  // script — Arabic or Tamil script comes out as noise, with no error raised.
+  // Warn instead of letting it play garbage in front of a stakeholder.
+  if (!exact && briefLang !== 'en') {
+    const langName = (S_BRIEF.lang || briefLang);
+    toast('No ' + langName + ' voice installed in this browser — it will be read with a ' +
+          (preferred ? preferred.lang : 'default') + ' voice and will not sound correct. ' +
+          'Use ElevenLabs for ' + langName + ' audio.', 'error');
+  }
   utt.onstart = () => {
     _voicePlaying = true;
     playBtn.textContent = '⏸'; playBtn.title = 'Pause'; playBtn.disabled = false;
@@ -7261,10 +7372,13 @@ function renderUsage(){
   if(pv) pv.textContent = sum.pricing_verified || '—';
 
   // ── KPI tiles ────────────────────────────────────────────────────────
+  const tts = sum.tts || { calls:0, characters:0, cost_total:0, approx_minutes:0 };
+  const grand = sum.grand_total_cost != null ? sum.grand_total_cost : t.cost_total;
+
   document.getElementById('usage-kpis').innerHTML = `
     <div class="uk"><div class="uk-lbl">Total spend</div>
-      <div class="uk-val money">${fmtUsd(t.cost_total)}</div>
-      <div class="uk-sub">${t.calls} model call${t.calls===1?'':'s'}</div></div>
+      <div class="uk-val money">${fmtUsd(grand)}</div>
+      <div class="uk-sub">${t.calls} model call${t.calls===1?'':'s'}${tts.calls?` · ${tts.calls} voice-over${tts.calls===1?'':'s'}`:''}</div></div>
     <div class="uk"><div class="uk-lbl">Avg per call</div>
       <div class="uk-val money">${fmtUsd(t.avg_cost_per_call)}</div>
       <div class="uk-sub">${t.avg_ms_per_call?fmtElapsed(t.avg_ms_per_call):'—'} average</div></div>
@@ -7276,7 +7390,36 @@ function renderUsage(){
       <div class="uk-sub">generated — priced ~5x input</div></div>
     <div class="uk"><div class="uk-lbl">Total tokens</div>
       <div class="uk-val">${fmtTok(t.total_tokens)}</div>
-      <div class="uk-sub">input + output + cache</div></div>`;
+      <div class="uk-sub">input + output + cache</div></div>
+    ${tts.calls ? `<div class="uk"><div class="uk-lbl">Voice-over (ElevenLabs)</div>
+      <div class="uk-val money">${fmtUsd(tts.cost_total)}</div>
+      <div class="uk-sub">${fmtTok(tts.characters)} chars · ~${tts.approx_minutes} min audio</div></div>` : ''}`;
+
+  // Vendor split — two suppliers on the bill, priced in different units, so
+  // they are shown side by side rather than merged into one number.
+  const vs = document.getElementById('usage-vendors');
+  if (vs) {
+    vs.innerHTML = (t.calls || tts.calls) ? `
+      <table class="u-tbl"><thead><tr>
+        <th>Vendor</th><th>What is billed</th><th class="num">Volume</th>
+        <th class="num">Cost</th><th class="num">Share</th>
+      </tr></thead><tbody>
+        <tr><td><strong>Anthropic (Claude)</strong></td><td>Tokens in / out</td>
+          <td class="num">${fmtTok(t.total_tokens)} tokens</td>
+          <td class="num money">${fmtUsd(t.cost_total)}</td>
+          <td class="num">${grand>0?Math.round((t.cost_total/grand)*100):0}%</td></tr>
+        <tr><td><strong>ElevenLabs (voice)</strong></td><td>Characters of speech</td>
+          <td class="num">${fmtTok(tts.characters)} chars</td>
+          <td class="num money">${fmtUsd(tts.cost_total)}</td>
+          <td class="num">${grand>0?Math.round((tts.cost_total/grand)*100):0}%</td></tr>
+      </tbody></table>
+      <p style="font-size:11px;color:var(--text3);margin-top:9px;line-height:1.55">
+        ${esc(tts.rate_note || 'ElevenLabs bills characters as credits against a monthly plan allowance.')}
+        The free browser voice costs nothing, but plays locally only — it cannot produce a
+        downloadable or shareable file, and non-English voices depend on what is installed
+        on each machine.
+      </p>` : '<div class="u-empty">No spend recorded yet.</div>';
+  }
 
   // ── Insights ─────────────────────────────────────────────────────────
   const ins = sum.insights || [];
@@ -7321,14 +7464,14 @@ function renderUsage(){
   document.getElementById('usage-recent').innerHTML = rows.length
     ? `<thead><tr>
          <th>When</th><th>Operation</th><th>Model</th>
-         <th class="num">In</th><th class="num">Out</th><th class="num">Time</th><th class="num">Cost</th>
+         <th class="num">In / chars</th><th class="num">Out / audio</th><th class="num">Time</th><th class="num">Cost</th>
        </tr></thead><tbody>${rows.map(r=>`
          <tr>
            <td style="white-space:nowrap">${esc(new Date(r.created_at).toLocaleString())}</td>
            <td>${esc(r.operation||'—')}${r.document?`<div style="font-size:10.5px;color:var(--text3)">${esc(r.document)}</div>`:''}</td>
            <td>${esc(r.model_label||r.model||'—')}${r.speed?`<div style="font-size:10.5px;color:var(--text3)">${esc(r.speed)} tier</div>`:''}</td>
-           <td class="num">${fmtTok(r.input_tokens)}</td>
-           <td class="num">${fmtTok(r.output_tokens)}</td>
+           <td class="num">${r.provider==='elevenlabs'?fmtTok(r.characters)+' ch':fmtTok(r.input_tokens)}</td>
+           <td class="num">${r.provider==='elevenlabs'?'~'+(r.approx_minutes||0)+' min':fmtTok(r.output_tokens)}</td>
            <td class="num">${r.ms?fmtElapsed(r.ms):'—'}</td>
            <td class="num money">${r.known_pricing===false?'<span title="No published rate for this model">n/a</span>':fmtUsd(r.cost_total)}</td>
          </tr>`).join('')}</tbody>`
@@ -7357,9 +7500,10 @@ function breakdownTable(obj, grandTotal, headLabel){
 function exportUsageCsv(){
   const rows = (S_USAGE && S_USAGE.rec && S_USAGE.rec.rows) || [];
   if(!rows.length){ toast('Nothing to export yet','error'); return; }
-  const cols = ['created_at','operation','model','model_label','speed','input_tokens',
-                'output_tokens','cache_read_tokens','total_tokens','ms','cost_input',
-                'cost_output','cost_total','document','language'];
+  const cols = ['created_at','provider','operation','model','model_label','speed','input_tokens',
+                'output_tokens','cache_read_tokens','total_tokens','characters','credits',
+                'approx_minutes','ms','cost_input','cost_output','cost_total','estimated',
+                'document','language'];
   const esc2 = v => {
     const t = v==null ? '' : String(v);
     return /[",\n]/.test(t) ? '"'+t.replace(/"/g,'""')+'"' : t;
@@ -7390,6 +7534,22 @@ let _clockIv = null, _clockT0 = 0;
 
 /** Which model tier the user has selected. Defaults to balanced (Sonnet 5),
  *  which is the best quality-per-second option in the current lineup. */
+/** Which voice engine is selected: 'browser' (free, plays only) or 'elevenlabs'. */
+function currentVoiceEngine(){
+  const el = document.getElementById('vp-engine');
+  return (el && el.value) || 'browser';
+}
+
+/** Is there a browser voice installed for this language? If not, the Web Speech
+ *  API silently reads the text with whatever voice it has — an English voice
+ *  reading Arabic script produces gibberish, with no error. */
+function browserVoiceFor(langCode){
+  if(!window.speechSynthesis) return null;
+  const code = String(langCode || 'en').toLowerCase();
+  const voices = window.speechSynthesis.getVoices() || [];
+  return voices.find(v => String(v.lang||'').toLowerCase().startsWith(code)) || null;
+}
+
 function briefSpeed(){
   const el = document.querySelector('#brief-speed-picker .spd-opt.active');
   return (el && el.dataset.speed) || 'balanced';
@@ -9748,7 +9908,16 @@ function renderExtraCostsList(items){
 
 applyDismissed();
 function downloadVoiceAudio(){
-  if(!_lastAudioUrl){toast('Click Play first to generate audio','info');return;}
+  if(!_lastAudioUrl){
+    // The browser's speech engine speaks straight to the speakers — the Web
+    // Speech API gives no way to capture an audio buffer, so there is no file
+    // to download. Say that plainly rather than "click Play first", which the
+    // user has usually already done.
+    if(currentVoiceEngine() === 'browser'){
+      toast('Free browser voice plays out loud but cannot produce a file. Switch the engine to ElevenLabs to download or share an mp3.','info');
+      return;
+    }
+    toast('Click Play first to generate audio','info');return;}
   var a=document.createElement('a');
   a.href=_lastAudioUrl;
   a.download='Executive_Brief_'+(S_BRIEF&&S_BRIEF.lang?S_BRIEF.lang:'EN').replace(/\s+/g,'_')+'.mp3';
@@ -10203,7 +10372,12 @@ function shareWhatsAppBrief() {
 }
 
 function shareWhatsAppAudio() {
-  if(!_lastAudioUrl){toast('Click ▶ to generate audio first','error');return;}
+  if(!_lastAudioUrl){
+    if(currentVoiceEngine() === 'browser'){
+      toast('Free browser voice cannot be shared — it plays locally and produces no file. Switch the engine to ElevenLabs to send a voice link.','info');
+      return;
+    }
+    toast('Click ▶ to generate audio first','error');return;}
   var b=S_BRIEF.data||{};
   var audioUrl=_lastAudioUrl.indexOf('http')===0?_lastAudioUrl:window.location.origin+_lastAudioUrl;
   var lines=[
