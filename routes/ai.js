@@ -10,6 +10,8 @@ const express = require('express');
 const multer  = require('multer');
 
 const { complete, completeJson } = require('../lib/anthropic');
+const usageLog = require('../lib/usage');
+const pricing   = require('../lib/pricing');
 const storage   = require('../lib/storage');
 const extractor = require('../lib/extract');
 const authRoute = require('./auth');
@@ -247,6 +249,100 @@ function langDirective(outLang, srcLang) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
+// Extracted-text cache
+// ════════════════════════════════════════════════════════════════════════════
+// Each deep dive used to re-upload the file and re-run extraction — on a large
+// PDF that is several seconds per section, five times over, for text we already
+// had. The brief now caches its extraction and hands back a docId the expand
+// calls can quote instead.
+// ----------------------------------------------------------------------------
+// ── Quality / speed tiers ────────────────────────────────────────────────
+// Three named tiers rather than a binary fast toggle, because "quick" and
+// "good" are not actually opposed at the current model lineup — Sonnet 5
+// performs close to Opus 4.8 while being cheaper and faster than the Sonnet 4.6
+// this app used to default to. So the DEFAULT tier is the quality-per-second
+// pick, and the other two are the deliberate trade-offs either side of it.
+//
+//   fast     — Haiku 4.5.  Cheapest and quickest. Mechanical extraction.
+//   balanced — Sonnet 5.   DEFAULT. Near-Opus quality at Sonnet speed.
+//   quality  — Opus 5.     Hardest reasoning, slowest, most expensive.
+//
+// Anything unavailable on the caller's key falls back rather than erroring.
+const SPEED_MODELS = {
+  fast:     process.env.BRIEF_MODEL_FAST    || 'claude-haiku-4-5-20251001',
+  balanced: process.env.BRIEF_MODEL         || 'claude-sonnet-5',
+  quality:  process.env.BRIEF_MODEL_QUALITY || 'claude-opus-5',
+};
+
+const SPEED_LABELS = {
+  fast:     'Haiku 4.5 — fastest',
+  balanced: 'Sonnet 5 — best quality per second',
+  quality:  'Opus 5 — highest quality',
+};
+
+function normaliseSpeed(v) {
+  const k = String(v || 'balanced').toLowerCase();
+  return SPEED_MODELS[k] ? k : 'balanced';
+}
+
+function pickModel(speed) {
+  return SPEED_MODELS[normaliseSpeed(speed)];
+}
+
+/** Run completeJson, retrying once on the configured model if the requested
+ *  one is rejected (unknown model / no access on this key). */
+async function completeWithFallback(opts, requestedModel) {
+  try {
+    const out = await completeJson({ ...opts, model: requestedModel });
+    return { ...out, modelUsed: out.model || requestedModel || 'default', fellBack: false };
+  } catch (e) {
+    const msg = String(e && e.message || '');
+    const looksLikeModelProblem = /model|not_found|404|permission|access/i.test(msg);
+    if (!requestedModel || !looksLikeModelProblem) throw e;
+    console.warn(`[brief] model "${requestedModel}" unavailable (${msg.slice(0, 120)}) — falling back`);
+    const out = await completeJson({ ...opts, model: SPEED_MODELS.balanced });
+    return { ...out, modelUsed: out.model || SPEED_MODELS.balanced || 'default', fellBack: true };
+  }
+}
+
+/** Record a call in the ledger and return the costed breakdown for the response. */
+function logUsage(req, { operation, model, usage, ms, speed, meta }) {
+  const row = usageLog.record({
+    operation, model, usage, ms, speed,
+    userId: (req.user && (req.user.id || req.user.email)) || null,
+    meta: meta || {},
+  });
+  const c = pricing.costOf(model, usage || {});
+  return {
+    model, model_label: c.model_label,
+    input_tokens: c.input_tokens, output_tokens: c.output_tokens,
+    cache_read_tokens: c.cache_read_tokens, cache_write_tokens: c.cache_write_tokens,
+    total_tokens: c.total_tokens,
+    cost_total: c.cost_total, cost_input: c.cost_input, cost_output: c.cost_output,
+    rate_in: c.rate_in, rate_out: c.rate_out, known_pricing: c.known_pricing,
+    logged: !!row,
+  };
+}
+
+const DOC_CACHE = new Map();          // docId -> { text, kind, pages, words, at }
+const DOC_TTL_MS = 60 * 60 * 1000;    // an hour is plenty for one working session
+
+function cacheDoc(ext) {
+  const id = 'doc_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 9);
+  DOC_CACHE.set(id, { ...ext, at: Date.now() });
+  // Opportunistic sweep — no timer, no leak on an idle dyno
+  for (const [k, v] of DOC_CACHE) if (Date.now() - v.at > DOC_TTL_MS) DOC_CACHE.delete(k);
+  return id;
+}
+
+function getCachedDoc(id) {
+  const hit = DOC_CACHE.get(id);
+  if (!hit) return null;
+  if (Date.now() - hit.at > DOC_TTL_MS) { DOC_CACHE.delete(id); return null; }
+  return hit;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
 // POST /api/analyze-rfp (multipart) — FAST executive summary ONLY
 // ════════════════════════════════════════════════════════════════════════════
 //
@@ -260,13 +356,76 @@ function langDirective(outLang, srcLang) {
 // that in one 12k-token JSON blob, which is why the brief took ~60s. This
 // version asks for roughly a tenth of the output and returns in seconds.
 // ----------------------------------------------------------------------------
+// Lets the UI render the tier picker from whatever the server is configured
+// with, instead of hardcoding model names in two places.
+// ════════════════════════════════════════════════════════════════════════════
+// Token + cost dashboard
+// ════════════════════════════════════════════════════════════════════════════
+router.get('/usage/summary', (req, res) => {
+  const tiers = Object.keys(SPEED_MODELS).map(k => ({ tier: k, model: SPEED_MODELS[k] }));
+  res.json({
+    success: true,
+    ...usageLog.summarise({ since: req.query.since || null }),
+    insights: usageLog.insights(tiers),
+    tiers: tiers.map(t => ({ ...t, ...pricing.ratesFor(t.model) })),
+  });
+});
+
+router.get('/usage/recent', (req, res) => {
+  const n = Math.min(Number(req.query.n) || 50, 200);
+  res.json({ success: true, rows: usageLog.all().slice(0, n) });
+});
+
+// What the recorded traffic would have cost on each tier — the basis for the
+// "should we switch?" conversation, using real token counts rather than guesses.
+router.get('/usage/what-if', (_req, res) => {
+  const rows = usageLog.all();
+  const totals = rows.reduce((a, r) => ({
+    input_tokens: a.input_tokens + (r.input_tokens || 0),
+    output_tokens: a.output_tokens + (r.output_tokens || 0),
+  }), { input_tokens: 0, output_tokens: 0 });
+
+  const actual = rows.reduce((a, r) => a + (r.cost_total || 0), 0);
+  const scenarios = Object.keys(SPEED_MODELS).map(tier => {
+    const model = SPEED_MODELS[tier];
+    const c = pricing.costOf(model, totals);
+    return {
+      tier, model, label: c.model_label,
+      cost_total: c.cost_total,
+      delta_vs_actual: Math.round((c.cost_total - actual) * 1e6) / 1e6,
+    };
+  }).sort((a, b) => a.cost_total - b.cost_total);
+
+  res.json({ success: true, calls: rows.length, totals,
+             actual_cost: Math.round(actual * 1e6) / 1e6, scenarios });
+});
+
+router.post('/usage/reset', (_req, res) => {
+  usageLog.reset();
+  res.json({ success: true });
+});
+
+router.get('/brief/models', (_req, res) => {
+  res.json({
+    success: true,
+    default: 'balanced',
+    tiers: Object.keys(SPEED_MODELS).map(k => ({
+      id: k, model: SPEED_MODELS[k], label: SPEED_LABELS[k],
+    })),
+  });
+});
+
 router.post('/analyze-rfp', upload.single('rfpDoc'), async (req, res, next) => {
   try {
     if (!req.file) return res.status(400).json({ success: false, error: 'rfpDoc file is required' });
 
+    const tStart  = Date.now();
     const outLang = resolveOutputLanguage(req.body);
     const srcLang = resolveSourceLanguage(req.body);
-    const ext     = await extractor.extract(req.file.buffer, req.file.originalname);
+
+    const tExtract0 = Date.now();
+    const ext       = await extractor.extract(req.file.buffer, req.file.originalname);
+    const extractMs = Date.now() - tExtract0;
 
     const system = [
       langDirective(outLang, srcLang),
@@ -307,15 +466,18 @@ router.post('/analyze-rfp', upload.single('rfpDoc'), async (req, res, next) => {
       '• Never invent dates, values or certifications that are not in the document.',
     ].join('\n');
 
-    const { data: brief } = await completeJson({
+    const speedTier = normaliseSpeed(req.body.speed);
+    const wantModel = pickModel(speedTier);
+    const tModel0 = Date.now();
+    const { data: brief, modelUsed, fellBack, usage } = await completeWithFallback({
       apiKey: userKey(req),
-      model: process.env.BRIEF_MODEL || undefined,
       system,
       messages: [{ role: 'user', content:
         `RFP DOCUMENT (${ext.kind}, ${ext.pages} pages, ${ext.words} words):\n\n${ext.text.slice(0, 16000)}` }],
       maxTokens: 3000,
       temperature: 0.2,
-    });
+    }, wantModel);
+    const modelMs = Date.now() - tModel0;
 
     // Echo the language back so the UI can label / direction the slide correctly
     brief.output_language = outLang;
@@ -330,7 +492,17 @@ router.post('/analyze-rfp', upload.single('rfpDoc'), async (req, res, next) => {
     res.json({
       success: true,
       brief,
+      // Quoting this on the expand calls skips a re-upload and a re-extraction
+      docId: cacheDoc(ext),
       source: { words: ext.words, pages: ext.pages, kind: ext.kind },
+      timing: { total_ms: Date.now() - tStart, extract_ms: extractMs, model_ms: modelMs,
+                model: modelUsed, speed: speedTier, speed_label: SPEED_LABELS[speedTier],
+                fell_back: !!fellBack },
+      usage: logUsage(req, {
+        operation: 'brief', model: modelUsed, usage, ms: modelMs, speed: speedTier,
+        meta: { document: req.file.originalname, language: outLang,
+                pages: ext.pages, words: ext.words },
+      }),
     });
   } catch (e) { next(e); }
 });
@@ -402,12 +574,24 @@ router.post('/brief/expand', upload.single('rfpDoc'), async (req, res, next) => 
       });
     }
 
+    const tStart = Date.now();
     let rfpText = String(req.body.rfpText || '').trim();
-    if (req.file && !rfpText) {
+    let cacheHit = false;
+    let extractMs = 0;
+
+    // Prefer the cached extraction from the brief — it is already parsed.
+    const cached = req.body.docId ? getCachedDoc(String(req.body.docId)) : null;
+    if (cached && !rfpText) { rfpText = cached.text; cacheHit = true; }
+
+    if (!rfpText && req.file) {
+      const t0 = Date.now();
       const ext = await extractor.extract(req.file.buffer, req.file.originalname);
+      extractMs = Date.now() - t0;
       rfpText = ext.text;
     }
-    if (!rfpText) return res.status(400).json({ success: false, error: 'Provide rfpDoc or rfpText' });
+    if (!rfpText) {
+      return res.status(400).json({ success: false, error: 'Provide docId, rfpDoc or rfpText' });
+    }
 
     const outLang = resolveOutputLanguage(req.body);
     const srcLang = resolveSourceLanguage(req.body);
@@ -425,16 +609,26 @@ router.post('/brief/expand', upload.single('rfpDoc'), async (req, res, next) => 
       ? `EXECUTIVE SUMMARY ALREADY PRODUCED (for context, do not repeat it):\n${String(req.body.briefContext).slice(0, 2000)}\n\n`
       : '';
 
-    const { data } = await completeJson({
+    const tModel0 = Date.now();
+    const { data, modelUsed, usage } = await completeWithFallback({
       apiKey: userKey(req),
-      model: process.env.BRIEF_MODEL || undefined,
       system,
       messages: [{ role: 'user', content: `${context}RFP DOCUMENT (with [[PAGE n]] markers):\n\n${rfpText.slice(0, 20000)}` }],
       maxTokens: pack.maxTokens,
       temperature: 0.25,
-    });
+    }, pickModel(req.body.speed));
+    const modelMs = Date.now() - tModel0;
 
-    res.json({ success: true, kind, data, output_language: outLang });
+    res.json({
+      success: true, kind, data, output_language: outLang,
+      timing: { total_ms: Date.now() - tStart, extract_ms: extractMs, model_ms: modelMs,
+                cached: cacheHit, model: modelUsed },
+      usage: logUsage(req, {
+        operation: 'expand:' + kind, model: modelUsed, usage, ms: modelMs,
+        speed: normaliseSpeed(req.body.speed),
+        meta: { language: outLang, doc_cached: cacheHit },
+      }),
+    });
   } catch (e) { next(e); }
 });
 
