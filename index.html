@@ -522,6 +522,82 @@ textarea.improve-input::placeholder{color:var(--text3)}
 .ov-step.act{color:var(--navy);font-weight:600}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── Live stopwatch on the loading overlay ── */
+.ov-clock{display:none;margin-top:12px;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  font-size:30px;font-weight:800;color:var(--orange);letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;line-height:1}
+.ov-clock.show{display:block}
+.ov-clock-lbl{display:block;font-family:inherit;font-size:9.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text3);margin-top:4px}
+
+/* ── Tokens & Cost dashboard ── */
+.uk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:16px}
+.uk{background:white;border:1px solid var(--border2);border-radius:var(--radius);padding:14px 16px}
+.uk-lbl{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+.uk-val{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:24px;font-weight:800;
+  color:var(--navy);margin-top:4px;font-variant-numeric:tabular-nums;line-height:1.1}
+.uk-val.money{color:#15803d}
+.uk-sub{font-size:11px;color:var(--text3);margin-top:3px}
+
+.u-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.u-tbl th{text-align:left;font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text3);padding:7px 10px;border-bottom:1.5px solid var(--border2);white-space:nowrap}
+.u-tbl td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.u-tbl tr:last-child td{border-bottom:none}
+.u-tbl .num{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;text-align:right;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.u-tbl .money{color:#15803d;font-weight:700}
+.u-bar{height:6px;border-radius:99px;background:var(--surface3);overflow:hidden;margin-top:5px;min-width:70px}
+.u-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#6D69F0,#F28D64)}
+
+.u-ins{display:flex;gap:11px;padding:12px 14px;border-radius:var(--radius);margin-bottom:9px;
+  border:1px solid var(--border2);background:white;align-items:flex-start}
+.u-ins.high{border-left:3px solid #dc2626;background:rgba(220,38,38,.03)}
+.u-ins.medium{border-left:3px solid #ea580c;background:rgba(234,88,12,.03)}
+.u-ins.low{border-left:3px solid #64748b}
+.u-ins-t{font-size:12.5px;font-weight:800;color:var(--navy);margin-bottom:3px}
+.u-ins-d{font-size:12px;color:var(--text2);line-height:1.55}
+.u-ins-save{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:800;
+  color:#15803d;white-space:nowrap;margin-left:auto}
+
+.u-empty{padding:26px;text-align:center;font-size:12.5px;color:var(--text3);
+  background:var(--surface2);border:1px dashed var(--border2);border-radius:var(--radius)}
+
+/* Per-query cost chip, shown beside the timing badges */
+.cost-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;
+  background:rgba(109,105,240,.10);border:1px solid rgba(109,105,240,.3);
+  font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11px;font-weight:800;
+  color:#4338CA;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cost-badge .tm-k{font-size:9px;letter-spacing:.06em;opacity:.75;text-transform:uppercase}
+
+/* ── Model tier picker ── */
+.spd-picker{display:inline-flex;gap:2px;padding:3px;border-radius:9px;background:var(--surface3);
+  border:1px solid var(--border)}
+.spd-opt{border:none;background:none;padding:5px 11px;border-radius:7px;font-size:11.5px;
+  font-weight:700;color:var(--text3);cursor:pointer;white-space:nowrap;transition:all .13s;font-family:inherit}
+.spd-opt:hover{color:var(--navy)}
+.spd-opt.active{background:white;color:var(--navy);box-shadow:0 1px 3px rgba(39,33,96,.14)}
+
+/* ── Elapsed-time badges ── */
+.tm-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;
+  background:rgba(16,163,74,0.10);border:1px solid rgba(16,163,74,0.3);
+  font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11px;font-weight:800;
+  color:#15803d;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tm-badge.slow{background:rgba(234,88,12,0.10);border-color:rgba(234,88,12,0.3);color:#c2410c}
+.tm-badge .tm-k{font-size:9px;font-weight:800;letter-spacing:.06em;opacity:.75;text-transform:uppercase}
+.bs-xsec-time{margin-left:auto}
+.btn .tm-inline{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:10px;
+  font-weight:800;opacity:.85;margin-left:5px;font-variant-numeric:tabular-nums}
+
+/* Total-time strip above the brief */
+.tm-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;padding:10px 14px;
+  border-radius:var(--radius);background:linear-gradient(135deg,rgba(16,163,74,0.09),rgba(109,105,240,0.06));
+  border:1.5px solid rgba(16,163,74,0.28)}
+.tm-strip-lbl{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+.tm-strip-val{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:22px;font-weight:800;
+  color:#15803d;font-variant-numeric:tabular-nums;line-height:1}
+.tm-strip-note{font-size:11.5px;color:var(--text2);line-height:1.45}
+
 /* ── Toasts ── */
 .toasts{position:fixed;bottom:20px;right:20px;z-index:300;display:flex;flex-direction:column;gap:7px}
 .toast{background:white;border:1px solid var(--border2);color:var(--navy);padding:10px 14px;border-radius:var(--radius);font-size:13px;font-weight:500;box-shadow:0 4px 18px rgba(39,33,96,0.14);display:flex;align-items:center;gap:8px;animation:slideIn .2s ease;max-width:320px}
@@ -850,6 +926,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
     <button class="nav-btn" id="nav-estimations" onclick="goPage('estimations')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Estimation History<span class="nav-badge" id="est-count">0</span></button>
     <button class="nav-btn" id="nav-guide" onclick="goPage('guide')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>User Guide</button>
     <div class="nav-lbl" style="margin-top:8px">Admin</div>
+    <button class="nav-btn" id="nav-usage" onclick="goPage('usage')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 5-7"/></svg>Tokens &amp; Cost</button>
     <button class="nav-btn" id="nav-settings" onclick="goPage('settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings</button>
     <div class="nav-lbl" style="margin-top:6px">Recent</div>
     <div class="recent-wrap" id="recent-wrap"><div class="no-recent">No responses yet</div></div>
@@ -1195,9 +1272,18 @@ textarea.improve-input::placeholder{color:var(--text3)}
           </div>
           <div style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
             <button class="btn btn-primary" id="brief-analyze-btn" onclick="runBriefAnalysis()" disabled style="min-width:210px">
-              ⚡ Analyse & Generate Brief
+              ⚡ Analyse &amp; Generate Executive Summary
             </button>
+            <div class="spd-picker" id="brief-speed-picker" role="radiogroup" aria-label="Model tier">
+              <button type="button" class="spd-opt" data-speed="fast" role="radio" aria-checked="false"
+                      title="Haiku 4.5 — quickest. Best for mechanical extraction.">⚡ Fastest</button>
+              <button type="button" class="spd-opt active" data-speed="balanced" role="radio" aria-checked="true"
+                      title="Sonnet 5 — near-Opus quality at Sonnet speed. Recommended.">⭐ Balanced</button>
+              <button type="button" class="spd-opt" data-speed="quality" role="radio" aria-checked="false"
+                      title="Opus 5 — highest quality, slowest.">🎯 Highest</button>
+            </div>
             <span id="brief-hint" style="font-size:12px;color:var(--text3)">Upload a document first</span>
+            <span id="brief-last-time"></span>
           </div>
         </div>
       </div>
@@ -1478,6 +1564,56 @@ textarea.improve-input::placeholder{color:var(--text3)}
   </div>
 
   <!-- SETTINGS PAGE -->
+  <div class="page" id="page-usage">
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">Tokens &amp; Cost</h1>
+        <p class="page-sub">What every query consumed, what it cost, and where the headroom is</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-ghost btn-sm" onclick="loadUsage()">↻ Refresh</button>
+        <button class="btn btn-ghost btn-sm" onclick="exportUsageCsv()">⬇ Export CSV</button>
+        <button class="btn btn-ghost btn-sm" onclick="resetUsage()">Clear ledger</button>
+      </div>
+    </div>
+
+    <div id="usage-kpis" class="uk-grid"></div>
+    <div id="usage-insights"></div>
+
+    <div class="card">
+      <div class="card-title">Spend by model</div>
+      <div id="usage-by-model"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Spend by operation</div>
+      <div id="usage-by-op"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">What if every call ran on one tier?</div>
+      <p style="font-size:12px;color:var(--text3);margin:-4px 0 12px">
+        Your actual token volume, repriced on each tier. This is the real
+        basis for a switch decision — not a guess.
+      </p>
+      <div id="usage-whatif"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Recent calls</div>
+      <div style="overflow-x:auto"><table class="u-tbl" id="usage-recent"></table></div>
+    </div>
+
+    <p style="font-size:11px;color:var(--text3);line-height:1.6;margin-top:4px">
+      Rates from Anthropic's published pricing, verified <span id="usage-priced">—</span>.
+      Costs exclude prompt-caching discounts unless the API reported cache tokens,
+      and exclude Batch (−50%) and Fast-mode (2x) adjustments unless flagged.
+      <strong>The ledger is stored on the app's filesystem, which is ephemeral on
+      Railway — it resets on redeploy.</strong> Export the CSV before a redeploy if
+      you need the history.
+    </p>
+  </div>
+
   <div class="page" id="page-settings">
     <div class="topbar"><div class="topbar-title">Settings</div></div>
     <div class="content">
@@ -4037,6 +4173,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
     <div class="ov-spin"></div>
     <div class="ov-title" id="ov-title">Processing...</div>
     <div class="ov-sub" id="ov-sub">This may take a moment</div>
+    <div class="ov-clock" id="ov-clock"><span id="ov-clock-val">0.0s</span></div>
     <div class="ov-steps" id="ov-steps"></div>
   </div>
 </div>
@@ -4127,7 +4264,7 @@ async function init(){
 
 // ── Navigation ────────────────────────────────────────────────────────────────
 function goPage(p){
-  ['generate','briefing','library','effort','estimations','billing','settings','guide','evidence','risk','pricing','clarify','outline','polish','solution','proposals','rules','ingest','events','history','downloads','projects','validator','projrfp','answer-review','dashboard','process','starthere','intelligence','capabilities','landing'].forEach(x=>{
+  ['generate','briefing','library','effort','estimations','billing','settings','guide','evidence','risk','pricing','clarify','outline','polish','solution','proposals','rules','ingest','events','history','downloads','projects','validator','projrfp','answer-review','dashboard','process','starthere','intelligence','capabilities','landing','usage'].forEach(x=>{
     const el=document.getElementById('page-'+x);if(el)el.classList.remove('active');
     const n=document.getElementById('nav-'+x);if(n)n.classList.remove('active');
   });
@@ -4138,6 +4275,7 @@ function goPage(p){
   // Update AI chat context when page changes
   if(chatOpen && typeof updateChatContext === 'function'){ updateChatContext(); renderChatSuggestions(); }
   if(p==='billing')initBillingPage();
+  if(p==='usage')loadUsage();
 }
 function switchTab(t){
   ['upload','config','response'].forEach(x=>{
@@ -4980,7 +5118,7 @@ ${rows}
   }
 }
 // ── Executive Brief ──────────────────────────────────────────────────────────
-let S_BRIEF = { file: null, filename: '', data: null, source: null, expand: {}, lang: 'English', langCode: 'en', srcLang: 'Auto-Detect', srcCode: 'auto' };
+let S_BRIEF = { file: null, filename: '', data: null, source: null, docId: null, expand: {}, timing: null, lang: 'English', langCode: 'en', srcLang: 'Auto-Detect', srcCode: 'auto' };
 
 function handleBriefFile(input) {
   const file = input.files[0]; if (!file) return;
@@ -5014,6 +5152,7 @@ function selectBriefLang(btn, programmatic) {
   S_BRIEF.data   = null;
   _lastAudioUrl  = null;
   _voiceBlob     = null;
+  const _lt = document.getElementById('brief-last-time'); if (_lt) _lt.innerHTML = '';
   stopVoice();
   document.getElementById('brief-output').style.display = 'none';
 }
@@ -5088,6 +5227,7 @@ async function runBriefAnalysis() {
     'Reading source (' + srcLabel + ')...',
     'Writing the summary in ' + lang + '...'
   ]);
+  startClock('Executive summary');
   try {
     const fd = new FormData();
     fd.append('rfpDoc', S_BRIEF.file);
@@ -5096,6 +5236,7 @@ async function runBriefAnalysis() {
     fd.append('output_language_code', S_BRIEF.langCode || 'en');
     fd.append('source_language', S_BRIEF.srcCode || 'auto');
     fd.append('source_language_name', S_BRIEF.srcLang || 'Auto-Detect');
+    fd.append('speed', briefSpeed());
     const controller = new AbortController();
     const tid = setTimeout(()=>controller.abort(), 5*60*1000);
     let resp;
@@ -5109,16 +5250,34 @@ async function runBriefAnalysis() {
     if (!resp.ok) { const e=await resp.json().catch(()=>({error:'Server error'})); throw new Error(e.error||'Server error'); }
     const result = await resp.json();
     if (!result.success) throw new Error(result.error || 'Analysis failed');
+    const elapsed = stopClock();
     S_BRIEF.data = result.brief;
     S_BRIEF.source = result.source || null;
+    S_BRIEF.docId  = result.docId || null;   // lets deep dives skip re-extraction
     S_BRIEF.expand = {};              // reset on-demand packs for the new doc
+    S_BRIEF.timing = {
+      brief: elapsed,                       // wall-clock, as the stakeholder sees it
+      server: (result.timing && result.timing.total_ms) || null,
+      extract: (result.timing && result.timing.extract_ms) || null,
+      model: (result.timing && result.timing.model_ms) || null,
+      modelName: (result.timing && result.timing.model) || null,
+      speed: (result.timing && result.timing.speed) || null,
+      usage: result.usage || null,           // tokens + cost for this query
+      expandUsage: {},
+      expand: {},                           // filled per deep-dive section
+    };
     renderBriefSlide(result.brief);
     document.getElementById('brief-output').style.display = 'block';
     document.getElementById('brief-output').scrollIntoView({ behavior:'smooth', block:'start' });
     const _dlv=document.getElementById('btn-dl-voice');if(_dlv)_dlv.style.display='inline-flex';const _waa=document.getElementById('btn-wa-audio');if(_waa)_waa.style.display='inline-flex';
     hideOverlay();
-    toast('Executive brief generated!','success');
-  } catch(e) { hideOverlay(); toast('Error: '+e.message,'error'); }
+    const lt = document.getElementById('brief-last-time');
+    if (lt) lt.innerHTML = timeBadge(elapsed, 30, 'Summary in');
+    if (result.timing && result.timing.fell_back) {
+      toast('Fast model unavailable on this key — used the configured model instead.', 'info');
+    }
+    toast('Executive brief ready in ' + fmtElapsed(elapsed), 'success');
+  } catch(e) { stopClock(); hideOverlay(); toast('Error: '+e.message,'error'); }
 }
 
 function renderBriefSlide(b) {
@@ -5277,6 +5436,8 @@ function renderBriefSlide(b) {
   <!-- ── On-demand deep dives ──────────────────────────────────────────
        The summary above is deliberately fast. Everything heavier is a
        separate call, requested only when someone actually wants it. -->
+  <div id="brief-timing-strip"></div>
+
   <div class="bs-fullsection" id="brief-expand-panel">
     <div class="bs-fullsec-head">
       <div class="bs-fullsec-title">🔎 Go Deeper</div>
@@ -5303,6 +5464,9 @@ function renderBriefSlide(b) {
     </div>
     <div class="bs-footer-meta">RFP Agent · ${new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</div>
   </div>`;
+
+  // Turnaround strip — the headline number for stakeholder demos
+  try { renderTimingStrip(); } catch(e) { /* strip not in DOM yet */ }
 
   // Re-attach any deep-dive sections the user had already pulled in
   try { renderExpandSections(); } catch(e) { /* panel not in DOM yet */ }
@@ -5338,27 +5502,44 @@ const XORDER = ['clarifications','risks','rationale','requirements','effort'];
 async function expandBrief(kind){
   if(!XPACKS[kind]) return;
   if(!S_BRIEF.data){ toast('Generate the executive summary first','error'); return; }
-  if(!S_BRIEF.file){ toast('Re-upload the document to expand this section','error'); return; }
+  if(!S_BRIEF.docId && !S_BRIEF.file){ toast('Re-upload the document to expand this section','error'); return; }
   S_BRIEF.expand = S_BRIEF.expand || {};
 
   // Already loaded → toggle it off
   if(S_BRIEF.expand[kind]){
     delete S_BRIEF.expand[kind];
+    if(S_BRIEF.timing && S_BRIEF.timing.expand) delete S_BRIEF.timing.expand[kind];
+    if(S_BRIEF.timing && S_BRIEF.timing.expandUsage) delete S_BRIEF.timing.expandUsage[kind];
     renderExpandSections();
+    renderTimingStrip();
     return;
   }
 
   const btn = document.getElementById('xb-'+kind);
-  if(btn){ btn.classList.add('loading'); btn.disabled = true; }
+  const btnHtml = btn ? btn.innerHTML : '';
+  let tick = null;
+  const t0 = performance.now();
+  if(btn){
+    btn.classList.add('loading'); btn.disabled = true;
+    // Count up on the button itself so the wait is visible where the user clicked
+    tick = setInterval(()=>{
+      btn.innerHTML = btnHtml + '<span class="tm-inline">' +
+        fmtElapsed(performance.now() - t0) + '</span>';
+    }, 100);
+  }
 
   try{
     const fd = new FormData();
     fd.append('kind', kind);
-    fd.append('rfpDoc', S_BRIEF.file);
+    // Quote the cached extraction when we have one — saves re-uploading the
+    // file and re-parsing it for every single deep dive.
+    if (S_BRIEF.docId) fd.append('docId', S_BRIEF.docId);
+    else               fd.append('rfpDoc', S_BRIEF.file);
     fd.append('output_language', S_BRIEF.lang || 'English');
     fd.append('output_language_code', S_BRIEF.langCode || 'en');
     fd.append('source_language', S_BRIEF.srcCode || 'auto');
     fd.append('source_language_name', S_BRIEF.srcLang || 'Auto-Detect');
+    fd.append('speed', briefSpeed());
     if(S_BRIEF.data && S_BRIEF.data.executive_summary){
       fd.append('briefContext', S_BRIEF.data.executive_summary);
     }
@@ -5377,15 +5558,23 @@ async function expandBrief(kind){
     const out = await resp.json();
     if(!out.success) throw new Error(out.error||'Expand failed');
 
+    const elapsed = performance.now() - t0;
     S_BRIEF.expand[kind] = out.data || {};
+    S_BRIEF.timing = S_BRIEF.timing || { brief:0, expand:{} };
+    S_BRIEF.timing.expand = S_BRIEF.timing.expand || {};
+    S_BRIEF.timing.expand[kind] = elapsed;
+    S_BRIEF.timing.expandUsage = S_BRIEF.timing.expandUsage || {};
+    if (out.usage) S_BRIEF.timing.expandUsage[kind] = out.usage;
     renderExpandSections();
+    renderTimingStrip();
     const node = document.getElementById('xsec-'+kind);
     if(node) node.scrollIntoView({behavior:'smooth',block:'nearest'});
-    toast(XPACKS[kind].label + ' ready','success');
+    toast(XPACKS[kind].label + ' ready in ' + fmtElapsed(elapsed), 'success');
   }catch(e){
     toast('Error: '+e.message,'error');
   }finally{
-    if(btn){ btn.classList.remove('loading'); btn.disabled = false; }
+    if(tick) clearInterval(tick);
+    if(btn){ btn.classList.remove('loading'); btn.disabled = false; btn.innerHTML = btnHtml; }
   }
 }
 
@@ -5413,11 +5602,68 @@ function renderExpandSections(){
           <div class="bs-xsec-title">${meta.icon} ${esc(meta.label)}</div>
           <div class="bs-xsec-sub">${esc(meta.sub)}</div>
         </div>
+        ${(S_BRIEF.timing && S_BRIEF.timing.expand && S_BRIEF.timing.expand[k])
+            ? `<span class="bs-xsec-time">${timeBadge(S_BRIEF.timing.expand[k], 45, 'Generated in')}` +
+              ((S_BRIEF.timing.expandUsage && S_BRIEF.timing.expandUsage[k])
+                ? ` <span class="cost-badge">${fmtUsd(S_BRIEF.timing.expandUsage[k].cost_total)}</span>` : '') +
+              `</span>` : ''}
         <button class="bs-xsec-close" onclick="expandBrief('${k}')" title="Hide this section">✕</button>
       </div>
       ${inner}
     </div>`;
   }).join('');
+}
+
+/** Headline turnaround panel. Shows the summary time, then each deep dive
+ *  as it is pulled in, plus a running total — which is the number people
+ *  actually ask about in a demo. */
+function renderTimingStrip(){
+  const el = document.getElementById('brief-timing-strip');
+  if (!el) return;
+  const t = S_BRIEF.timing;
+  if (!t || !t.brief) { el.innerHTML = ''; return; }
+
+  const parts = [];
+  const expandMs = Object.values(t.expand || {}).reduce((a,b)=>a+b, 0);
+  const total = t.brief + expandMs;
+
+  parts.push(timeBadge(t.brief, 30, 'Summary'));
+  // Roll up the cost of this brief plus any deep dives pulled in
+  let cost = (t.usage && t.usage.cost_total) || 0;
+  let tokIn = (t.usage && t.usage.input_tokens) || 0;
+  let tokOut = (t.usage && t.usage.output_tokens) || 0;
+  Object.values(t.expandUsage || {}).forEach(u => {
+    cost += u.cost_total || 0; tokIn += u.input_tokens || 0; tokOut += u.output_tokens || 0;
+  });
+  XORDER.forEach(k => {
+    if (t.expand && t.expand[k]) {
+      parts.push(timeBadge(t.expand[k], 45, XPACKS[k].label.split(' ')[0]));
+    }
+  });
+
+  const srv = t.server
+    ? ` Server side: ${fmtElapsed(t.server)}${t.extract ? ` (extraction ${fmtElapsed(t.extract)}, model ${fmtElapsed(t.model)})` : ''}.`
+      + (t.modelName ? ` Model: ${esc(t.modelName)}${t.speed === 'fast' ? ' (fast mode)' : ''}.` : '')
+    : '';
+  const note = expandMs
+    ? `Executive summary first, then ${Object.keys(t.expand).length} deep dive${Object.keys(t.expand).length>1?'s':''} on demand.${srv}`
+    : `Executive summary only — deep dives are requested separately below.${srv}`;
+
+  el.innerHTML = `<div class="tm-strip">
+    <div>
+      <div class="tm-strip-lbl">Total turnaround</div>
+      <div class="tm-strip-val">${fmtElapsed(total)}</div>
+    </div>
+    ${cost > 0 ? `<div>
+      <div class="tm-strip-lbl">Cost of this query</div>
+      <div class="tm-strip-val" style="color:#4338CA">${fmtUsd(cost)}</div>
+    </div>` : ''}
+    <div style="display:flex;gap:6px;flex-wrap:wrap">${parts.join('')}
+      ${cost > 0 ? `<span class="cost-badge"><span class="tm-k">Tokens</span>${fmtTok(tokIn)} in · ${fmtTok(tokOut)} out</span>` : ''}
+    </div>
+    <div class="tm-strip-note" style="flex-basis:100%">${note}
+      ${cost > 0 ? ` <a href="#" onclick="goPage('usage');return false;" style="color:#4338CA;font-weight:700">See full token &amp; cost breakdown →</a>` : ''}</div>
+  </div>`;
 }
 
 const XEMPTY = m => `<div class="bs-rat-empty">${esc(m)}</div>`;
@@ -6971,7 +7217,240 @@ async function api(method,url,body){
   if(r.status===401){window.location.href='/';return;}
   const d=await r.json();if(d.error)throw new Error(d.error);return d;
 }
-function showOverlay(t,s=''){document.getElementById('ov-title').textContent=t;document.getElementById('ov-sub').textContent=s||'Please wait...';document.getElementById('ov-steps').innerHTML='';document.getElementById('overlay').classList.add('show');}
+// ════════════════════════════════════════════════════════════════════════
+// Tokens & Cost dashboard
+// ════════════════════════════════════════════════════════════════════════
+let S_USAGE = null;
+
+function fmtUsd(n){
+  const v = Number(n||0);
+  if (v === 0)    return '$0.00';
+  if (v < 0.01)   return '$' + v.toFixed(4);
+  if (v < 1)      return '$' + v.toFixed(3);
+  return '$' + v.toFixed(2);
+}
+function fmtTok(n){
+  const v = Number(n||0);
+  if (v >= 1e6) return (v/1e6).toFixed(2) + 'M';
+  if (v >= 1e3) return (v/1e3).toFixed(1) + 'K';
+  return String(v);
+}
+
+async function loadUsage(){
+  try{
+    const [sRes, wRes, rRes] = await Promise.all([
+      fetch('/api/usage/summary',{credentials:'same-origin'}),
+      fetch('/api/usage/what-if',{credentials:'same-origin'}),
+      fetch('/api/usage/recent?n=50',{credentials:'same-origin'}),
+    ]);
+    const sum = await sRes.json(), wi = await wRes.json(), rec = await rRes.json();
+    if(!sum.success) throw new Error(sum.error||'Could not load usage');
+    S_USAGE = { sum, wi, rec };
+    renderUsage();
+  }catch(e){
+    toast('Could not load usage: '+e.message,'error');
+  }
+}
+
+function renderUsage(){
+  if(!S_USAGE) return;
+  const { sum, wi, rec } = S_USAGE;
+  const t = sum.totals;
+
+  const pv = document.getElementById('usage-priced');
+  if(pv) pv.textContent = sum.pricing_verified || '—';
+
+  // ── KPI tiles ────────────────────────────────────────────────────────
+  document.getElementById('usage-kpis').innerHTML = `
+    <div class="uk"><div class="uk-lbl">Total spend</div>
+      <div class="uk-val money">${fmtUsd(t.cost_total)}</div>
+      <div class="uk-sub">${t.calls} model call${t.calls===1?'':'s'}</div></div>
+    <div class="uk"><div class="uk-lbl">Avg per call</div>
+      <div class="uk-val money">${fmtUsd(t.avg_cost_per_call)}</div>
+      <div class="uk-sub">${t.avg_ms_per_call?fmtElapsed(t.avg_ms_per_call):'—'} average</div></div>
+    <div class="uk"><div class="uk-lbl">Input tokens</div>
+      <div class="uk-val">${fmtTok(t.input_tokens)}</div>
+      <div class="uk-sub">sent to the model</div></div>
+    <div class="uk"><div class="uk-lbl">Output tokens</div>
+      <div class="uk-val">${fmtTok(t.output_tokens)}</div>
+      <div class="uk-sub">generated — priced ~5x input</div></div>
+    <div class="uk"><div class="uk-lbl">Total tokens</div>
+      <div class="uk-val">${fmtTok(t.total_tokens)}</div>
+      <div class="uk-sub">input + output + cache</div></div>`;
+
+  // ── Insights ─────────────────────────────────────────────────────────
+  const ins = sum.insights || [];
+  document.getElementById('usage-insights').innerHTML = ins.length
+    ? '<div style="margin-bottom:16px">' + ins.map(i=>`
+        <div class="u-ins ${esc(i.severity||'low')}">
+          <div style="flex:1;min-width:0">
+            <div class="u-ins-t">${esc(i.title)}</div>
+            <div class="u-ins-d">${esc(i.detail)}</div>
+          </div>
+          ${i.saving?`<div class="u-ins-save">save ${fmtUsd(i.saving)}</div>`:''}
+        </div>`).join('') + '</div>'
+    : '';
+
+  // ── Breakdown tables ─────────────────────────────────────────────────
+  document.getElementById('usage-by-model').innerHTML = breakdownTable(sum.by_model, t.cost_total, 'Model');
+  document.getElementById('usage-by-op').innerHTML    = breakdownTable(sum.by_operation, t.cost_total, 'Operation');
+
+  // ── What-if ──────────────────────────────────────────────────────────
+  const sc = (wi && wi.scenarios) || [];
+  document.getElementById('usage-whatif').innerHTML = sc.length && wi.calls
+    ? `<table class="u-tbl"><thead><tr>
+         <th>Tier</th><th>Model</th><th class="num">Cost for the same tokens</th><th class="num">vs actual</th>
+       </tr></thead><tbody>${sc.map(x=>{
+         const d = x.delta_vs_actual;
+         const col = d < 0 ? '#15803d' : d > 0 ? '#c2410c' : 'var(--text3)';
+         return `<tr>
+           <td><strong>${esc(x.tier)}</strong></td>
+           <td>${esc(x.label||x.model)}</td>
+           <td class="num money">${fmtUsd(x.cost_total)}</td>
+           <td class="num" style="color:${col};font-weight:700">${d===0?'—':(d<0?'−':'+')+fmtUsd(Math.abs(d))}</td>
+         </tr>`;}).join('')}</tbody></table>
+       <p style="font-size:11px;color:var(--text3);margin-top:9px;line-height:1.55">
+         Based on ${wi.calls} recorded call${wi.calls===1?'':'s'}
+         (${fmtTok(wi.totals.input_tokens)} in / ${fmtTok(wi.totals.output_tokens)} out).
+         Cost is only half the decision — check the tier still answers well enough
+         before switching on price alone.</p>`
+    : '<div class="u-empty">No calls recorded yet. Generate a brief and this fills in.</div>';
+
+  // ── Recent calls ─────────────────────────────────────────────────────
+  const rows = (rec && rec.rows) || [];
+  document.getElementById('usage-recent').innerHTML = rows.length
+    ? `<thead><tr>
+         <th>When</th><th>Operation</th><th>Model</th>
+         <th class="num">In</th><th class="num">Out</th><th class="num">Time</th><th class="num">Cost</th>
+       </tr></thead><tbody>${rows.map(r=>`
+         <tr>
+           <td style="white-space:nowrap">${esc(new Date(r.created_at).toLocaleString())}</td>
+           <td>${esc(r.operation||'—')}${r.document?`<div style="font-size:10.5px;color:var(--text3)">${esc(r.document)}</div>`:''}</td>
+           <td>${esc(r.model_label||r.model||'—')}${r.speed?`<div style="font-size:10.5px;color:var(--text3)">${esc(r.speed)} tier</div>`:''}</td>
+           <td class="num">${fmtTok(r.input_tokens)}</td>
+           <td class="num">${fmtTok(r.output_tokens)}</td>
+           <td class="num">${r.ms?fmtElapsed(r.ms):'—'}</td>
+           <td class="num money">${r.known_pricing===false?'<span title="No published rate for this model">n/a</span>':fmtUsd(r.cost_total)}</td>
+         </tr>`).join('')}</tbody>`
+    : '<tbody><tr><td><div class="u-empty">Nothing recorded yet.</div></td></tr></tbody>';
+}
+
+function breakdownTable(obj, grandTotal, headLabel){
+  const entries = Object.entries(obj||{}).sort((a,b)=>b[1].cost_total-a[1].cost_total);
+  if(!entries.length) return '<div class="u-empty">No data yet.</div>';
+  return `<table class="u-tbl"><thead><tr>
+      <th>${esc(headLabel)}</th><th class="num">Calls</th><th class="num">In</th>
+      <th class="num">Out</th><th class="num">Cost</th><th style="width:110px">Share</th>
+    </tr></thead><tbody>${entries.map(([k,v])=>{
+      const pct = grandTotal>0 ? (v.cost_total/grandTotal)*100 : 0;
+      return `<tr>
+        <td><strong>${esc(k)}</strong></td>
+        <td class="num">${v.calls}</td>
+        <td class="num">${fmtTok(v.input_tokens)}</td>
+        <td class="num">${fmtTok(v.output_tokens)}</td>
+        <td class="num money">${fmtUsd(v.cost_total)}</td>
+        <td><div class="u-bar"><div class="u-bar-fill" style="width:${pct.toFixed(1)}%"></div></div>
+            <div style="font-size:10px;color:var(--text3);margin-top:2px">${pct.toFixed(0)}%</div></td>
+      </tr>`;}).join('')}</tbody></table>`;
+}
+
+function exportUsageCsv(){
+  const rows = (S_USAGE && S_USAGE.rec && S_USAGE.rec.rows) || [];
+  if(!rows.length){ toast('Nothing to export yet','error'); return; }
+  const cols = ['created_at','operation','model','model_label','speed','input_tokens',
+                'output_tokens','cache_read_tokens','total_tokens','ms','cost_input',
+                'cost_output','cost_total','document','language'];
+  const esc2 = v => {
+    const t = v==null ? '' : String(v);
+    return /[",\n]/.test(t) ? '"'+t.replace(/"/g,'""')+'"' : t;
+  };
+  const csv = [cols.join(','), ...rows.map(r=>cols.map(c=>esc2(r[c])).join(','))].join('\n');
+  const url = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  const a = document.createElement('a');
+  a.href = url; a.download = 'rfp-token-usage-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  toast('Exported '+rows.length+' rows','success');
+}
+
+async function resetUsage(){
+  if(!confirm('Clear the whole token & cost ledger? This cannot be undone.')) return;
+  try{
+    await fetch('/api/usage/reset',{method:'POST',credentials:'same-origin'});
+    await loadUsage();
+    toast('Ledger cleared','success');
+  }catch(e){ toast('Could not clear: '+e.message,'error'); }
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// Stopwatch — the point of the demo is showing stakeholders the turnaround,
+// so the elapsed time is measured once, shown live, and kept afterwards.
+// ════════════════════════════════════════════════════════════════════════
+let _clockIv = null, _clockT0 = 0;
+
+/** Which model tier the user has selected. Defaults to balanced (Sonnet 5),
+ *  which is the best quality-per-second option in the current lineup. */
+function briefSpeed(){
+  const el = document.querySelector('#brief-speed-picker .spd-opt.active');
+  return (el && el.dataset.speed) || 'balanced';
+}
+
+function selectBriefSpeed(btn){
+  if(!btn) return;
+  document.querySelectorAll('#brief-speed-picker .spd-opt').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-checked','false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-checked','true');
+}
+
+document.addEventListener('click', function(e){
+  const opt = e.target && e.target.closest && e.target.closest('#brief-speed-picker .spd-opt');
+  if(opt) selectBriefSpeed(opt);
+});
+
+/** Format ms as "8.4s" under a minute, "1m 12.3s" over. */
+function fmtElapsed(ms){
+  const s = ms / 1000;
+  if (s < 60) return s.toFixed(1) + 's';
+  const m = Math.floor(s / 60);
+  return m + 'm ' + (s - m * 60).toFixed(1) + 's';
+}
+
+function startClock(label){
+  const box = document.getElementById('ov-clock');
+  const val = document.getElementById('ov-clock-val');
+  if (!box || !val) return;
+  _clockT0 = performance.now();
+  box.classList.add('show');
+  box.innerHTML = '<span id="ov-clock-val">0.0s</span>' +
+    '<span class="ov-clock-lbl">' + esc(label || 'Elapsed') + '</span>';
+  if (_clockIv) clearInterval(_clockIv);
+  // 100ms ticks — fast enough to read as a running clock, cheap enough to ignore
+  _clockIv = setInterval(() => {
+    const el = document.getElementById('ov-clock-val');
+    if (el) el.textContent = fmtElapsed(performance.now() - _clockT0);
+  }, 100);
+}
+
+/** Stop the clock and return the elapsed milliseconds. */
+function stopClock(){
+  if (_clockIv) { clearInterval(_clockIv); _clockIv = null; }
+  const box = document.getElementById('ov-clock');
+  if (box) box.classList.remove('show');
+  return _clockT0 ? performance.now() - _clockT0 : 0;
+}
+
+/** Green under `goodUnder` seconds, amber over — a visual pass/fail for demos. */
+function timeBadge(ms, goodUnder = 30, label = ''){
+  const cls = (ms / 1000) <= goodUnder ? '' : ' slow';
+  return '<span class="tm-badge' + cls + '">⏱' +
+    (label ? '<span class="tm-k">' + esc(label) + '</span>' : '') +
+    fmtElapsed(ms) + '</span>';
+}
+
+function showOverlay(t,s=''){document.getElementById('ov-title').textContent=t;document.getElementById('ov-sub').textContent=s||'Please wait...';document.getElementById('ov-steps').innerHTML='';const c=document.getElementById('ov-clock');if(c)c.classList.remove('show');document.getElementById('overlay').classList.add('show');}
 function showOverlaySteps(t,steps){
   showOverlay(t);
   const el=document.getElementById('ov-steps');
@@ -6980,7 +7459,7 @@ function showOverlaySteps(t,steps){
     if(c<steps.length){if(c>0){const p=document.getElementById('ovs'+(c-1));if(p){p.classList.remove('act');p.classList.add('done');p.textContent='✓ '+steps[c-1];}}const cur=document.getElementById('ovs'+c);if(cur)cur.classList.add('act');c++;}else clearInterval(iv);
   },900);document.getElementById('overlay')._iv=iv;
 }
-function hideOverlay(){const e=document.getElementById('overlay');if(e._iv)clearInterval(e._iv);e.classList.remove('show');}
+function hideOverlay(){const e=document.getElementById('overlay');if(e._iv)clearInterval(e._iv);if(_clockIv){clearInterval(_clockIv);_clockIv=null;}const c=document.getElementById('ov-clock');if(c)c.classList.remove('show');e.classList.remove('show');}
 function toast(msg,type=''){const t=document.createElement('div');t.className='toast '+(type||'');t.textContent=msg;document.getElementById('toasts').appendChild(t);setTimeout(()=>t.remove(),3500);}
 
 // ── Effort Estimation ─────────────────────────────────────────────────────────
