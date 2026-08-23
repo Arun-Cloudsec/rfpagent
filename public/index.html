@@ -530,6 +530,23 @@ textarea.improve-input::placeholder{color:var(--text3)}
 .ov-clock-lbl{display:block;font-family:inherit;font-size:9.5px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--text3);margin-top:4px}
 
+/* ── Deep-dive section extras ── */
+.x-sub{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);
+  margin:14px 0 8px}
+.x-sub:first-child{margin-top:0}
+.x-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.x-chip{font-size:11px;font-weight:700;padding:4px 11px;border-radius:99px;background:#F3F0FA;
+  color:var(--navy);border:1px solid #ECE7F4}
+.x-chip.req{background:#FEF2F2;border-color:#FECACA;color:#b91c1c}
+.x-std{font-size:9.5px;font-weight:800;color:#0f766e;background:#ECFDF5;padding:2px 7px;
+  border-radius:99px;white-space:nowrap}
+.x-validate{font-size:11px;color:#0f766e;margin-top:5px;font-weight:600}
+.x-warn{padding:10px 13px;border-radius:8px;background:rgba(234,88,12,.07);
+  border:1px solid rgba(234,88,12,.28);font-size:11.5px;color:#9a3412;line-height:1.55;margin-bottom:12px}
+.bs-xl-row{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:12px;padding-top:12px;
+  border-top:1px dashed #ECE7F4}
+.bs-xl-note{font-size:11px;color:var(--text3)}
+
 /* ── Deep-dive in-progress card ── */
 .x-pending{border:1.5px dashed rgba(109,105,240,.45);border-radius:var(--radius);
   padding:14px 16px;background:linear-gradient(135deg,rgba(109,105,240,.06),rgba(242,141,100,.04));
@@ -1210,7 +1227,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
           <div class="help-step"><div class="help-num">1</div><div><strong>Upload the RFP/RFI document</strong> — supports .pdf, .docx, .xlsx, .zip (multi-document packages).</div></div>
           <div class="help-step"><div class="help-num">2</div><div><strong>Pick the languages</strong> — set the document's own language (or leave on Auto-Detect) and the language you want the brief written in. Any direction works: Arabic → English, English → Spanish, Tamil → English.</div></div>
           <div class="help-step"><div class="help-num">3</div><div><strong>Click Analyse</strong> — you get the executive summary only: scope, dates, commercials, top requirements and a GO / NO-GO call. This is deliberately fast.</div></div>
-          <div class="help-step"><div class="help-num">4</div><div><strong>Go deeper if you need to</strong> — clarification questions, risks &amp; obligations, decision rationale, full requirements and effort estimates are each one click, underneath the brief.</div></div>
+          <div class="help-step"><div class="help-num">4</div><div><strong>Go deeper if you need to</strong> — clarification questions, risks, security requirements, supporting documents, pricing instructions, assumptions and the full requirements list are each one click, underneath the brief — and the whole pack downloads as a multi-sheet Excel workbook.</div></div>
         </div>
         <div class="help-tip">💡 <strong>Tip:</strong> The summary is what leadership wants first — what this is, what it's worth, when it's due, and whether we should bid. Everything heavier is on demand so you're not waiting for analysis nobody asked for.</div>
       </div>
@@ -4291,7 +4308,7 @@ async function init(){
     // which way the conversion will run before they touch anything.
     try{ updateLangConversionBadge(); }catch(e5){ /* page not mounted */ }
     // Land on the Executive Brief — it is the first thing everyone wants.
-    // Clarifications, risks and effort are requested from the brief afterwards.
+    // Deep dives are requested from the brief afterwards, on demand.
     try{ if(typeof goPage === 'function') goPage('briefing'); }catch(e4){ console.warn('initial page render err:', e4); }
   }catch(e){
     console.error('Init failed:',e);
@@ -5423,7 +5440,8 @@ function renderBriefSlide(b) {
   const sentences   = summaryFull.split(/(?<=[.!?])\s+/);
   const summaryShort = sentences.slice(0,2).join(' ');
 
-  // Deep-dive data (decision rationale, clarifications, risks, effort) is no
+  // Deep-dive data (clarifications, risks, security, documents, pricing,
+  // assumptions, rationale, requirements) is no
   // longer produced by the summary call — it is fetched on demand by
   // expandBrief() and rendered into #brief-expand-body below the slide.
 
@@ -5499,11 +5517,18 @@ function renderBriefSlide(b) {
       <div class="bs-fullsec-sub">The summary is done. Pull in any of these when you need them — each takes a few seconds.</div>
     </div>
     <div class="bs-expand-btns">
-      <button class="btn btn-ghost btn-sm" onclick="expandBrief('clarifications')" id="xb-clarifications">❓ Clarification Questions</button>
-      <button class="btn btn-ghost btn-sm" onclick="expandBrief('risks')"          id="xb-risks">⚠️ Risks &amp; Obligations</button>
-      <button class="btn btn-ghost btn-sm" onclick="expandBrief('rationale')"      id="xb-rationale">⚖️ Decision Rationale</button>
-      <button class="btn btn-ghost btn-sm" onclick="expandBrief('requirements')"   id="xb-requirements">📌 Full Requirements</button>
-      <button class="btn btn-ghost btn-sm" onclick="expandBrief('effort')"         id="xb-effort">📊 Effort &amp; Skills</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('clarifications')"    id="xb-clarifications">❓ Clarification Questions</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('risks')"             id="xb-risks">⚠️ Risks &amp; Obligations</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('security')"          id="xb-security">🔒 Security Requirements</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('documents')"         id="xb-documents">📁 Supporting Documents</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('pricing_requested')" id="xb-pricing_requested">💰 Pricing Info Requested</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('assumptions')"       id="xb-assumptions">🧭 Assumptions</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('rationale')"         id="xb-rationale">⚖️ Decision Rationale</button>
+      <button class="btn btn-ghost btn-sm" onclick="expandBrief('requirements')"      id="xb-requirements">📌 Full Requirements</button>
+    </div>
+    <div class="bs-xl-row">
+      <button class="btn btn-primary btn-sm" onclick="downloadBriefXlsx()" id="btn-dl-xlsx">⬇ Download as Excel</button>
+      <span class="bs-xl-note">One sheet per section, with blank Owner / Status columns for the bid team.</span>
     </div>
     <div id="brief-expand-body"></div>
   </div>
@@ -5541,18 +5566,21 @@ function renderBriefSlide(b) {
 // On-demand deep dives — everything that is NOT the executive summary
 // ════════════════════════════════════════════════════════════════════════════
 // The summary call is deliberately small so it returns fast. Clarifications,
-// risks, decision rationale, full requirements and effort modelling are each a
+// risks, security, documents, pricing instructions and assumptions are each a
 // separate call to /api/brief/expand, made only when the user asks for one.
 // ----------------------------------------------------------------------------
 
 const XPACKS = {
-  clarifications: { icon:'❓', label:'Clarification Questions', sub:'Questions to send the issuer before submitting' },
-  risks:          { icon:'⚠️', label:'Risks & Obligations',     sub:'Delivery, commercial and compliance exposure' },
-  rationale:      { icon:'⚖️', label:'Decision Rationale',      sub:'Criteria behind the GO / NO-GO call' },
-  requirements:   { icon:'📌', label:'Full Requirements',       sub:'Complete extracted requirements list' },
-  effort:         { icon:'📊', label:'Effort & Skills',         sub:'End-to-end delivery estimate' },
+  clarifications:    { icon:'❓', label:'Clarification Questions', sub:'Questions to send the issuer before submitting' },
+  risks:             { icon:'⚠️', label:'Risks & Obligations',     sub:'Delivery, commercial and compliance exposure' },
+  security:          { icon:'🔒', label:'Security Requirements',   sub:"The customer's security, privacy and compliance asks" },
+  documents:         { icon:'📁', label:'Supporting Documents',    sub:'Certificates, forms and artefacts we must submit' },
+  pricing_requested: { icon:'💰', label:'Pricing Information Requested', sub:'What the customer wants priced, and how' },
+  assumptions:       { icon:'🧭', label:'Assumptions (for review)', sub:'Draft assumptions — each needs human sign-off' },
+  rationale:         { icon:'⚖️', label:'Decision Rationale',      sub:'Criteria behind the GO / NO-GO call' },
+  requirements:      { icon:'📌', label:'Full Requirements',       sub:'Complete extracted requirements list' },
 };
-const XORDER = ['clarifications','risks','rationale','requirements','effort'];
+const XORDER = ['clarifications','risks','security','documents','pricing_requested','assumptions','rationale','requirements'];
 
 async function expandBrief(kind){
   if(!XPACKS[kind]) return;
@@ -5655,11 +5683,14 @@ function renderExpandSections(){
   body.innerHTML = loaded.map(k=>{
     const meta = XPACKS[k];
     const inner =
-      k==='clarifications' ? renderXClarifications(S_BRIEF.expand[k]) :
-      k==='risks'          ? renderXRisks(S_BRIEF.expand[k])          :
-      k==='rationale'      ? renderXRationale(S_BRIEF.expand[k])      :
-      k==='requirements'   ? renderXRequirements(S_BRIEF.expand[k])   :
-      k==='effort'         ? renderXEffort(S_BRIEF.expand[k])         : '';
+      k==='clarifications'    ? renderXClarifications(S_BRIEF.expand[k]) :
+      k==='risks'             ? renderXRisks(S_BRIEF.expand[k])          :
+      k==='security'          ? renderXSecurity(S_BRIEF.expand[k])       :
+      k==='documents'         ? renderXDocuments(S_BRIEF.expand[k])      :
+      k==='pricing_requested' ? renderXPricing(S_BRIEF.expand[k])        :
+      k==='assumptions'       ? renderXAssumptions(S_BRIEF.expand[k])    :
+      k==='rationale'         ? renderXRationale(S_BRIEF.expand[k])      :
+      k==='requirements'      ? renderXRequirements(S_BRIEF.expand[k])   : '';
     return `<div class="bs-xsec" id="xsec-${k}">
       <div class="bs-xsec-head">
         <div>
@@ -5885,51 +5916,147 @@ function renderXRequirements(d){
   }).join('');
 }
 
-function renderXEffort(d){
-  const eb = d.effort_breakdown || d || {};
-  const phases = Array.isArray(eb.phases) ? eb.phases : [];
-  const teams  = Array.isArray(eb.team_summary) ? eb.team_summary : [];
-  const skills = Array.isArray(eb.critical_skills) ? eb.critical_skills : [];
-  const total  = eb.total_person_days || phases.reduce((s,p)=>s+(p.teams||[]).reduce((t,x)=>t+(x.person_days||0),0),0);
-  if(!phases.length && !teams.length) return XEMPTY('No effort breakdown extracted.');
+// ── Security requirements ────────────────────────────────────────────────
+function renderXSecurity(d){
+  const reqs = Array.isArray(d.security_requirements) ? d.security_requirements : [];
+  const fws  = Array.isArray(d.compliance_frameworks) ? d.compliance_frameworks : [];
+  const gaps = Array.isArray(d.security_gaps) ? d.security_gaps : [];
+  if(!reqs.length && !fws.length && !gaps.length) return XEMPTY('No security requirements found in this document.');
 
-  const tiles = teams.length ? `<div class="bs-team-tiles">` + teams.map(t=>
-    `<div class="bs-team-tile">
-      <div class="bs-team-name">${esc(t.team||'')}</div>
-      <div class="bs-team-days">${esc(String(t.total_person_days||'—'))}</div>
-      <div class="bs-team-days-l">person-days</div>
-      ${t.fte_peak?`<div class="bs-team-fte">peak FTE: ${esc(String(t.fte_peak))}</div>`:''}
-    </div>`).join('') + `</div>` : '';
+  const fwHtml = fws.length ? `<div class="x-sub">Compliance frameworks named</div>
+    <div class="x-chips">${fws.map(f=>
+      `<span class="x-chip ${f.mandatory?'req':''}">${esc(f.framework||'')}${f.mandatory?' · mandatory':''}</span>`).join('')}</div>` : '';
 
-  const skillsHtml = skills.length ? `<div class="bs-crit-skills">
-    <span class="bs-crit-skills-l">Critical skills:</span>
-    ${skills.slice(0,12).map(x=>`<span class="bs-skill-pill crit">${esc(x)}</span>`).join('')}
-  </div>` : '';
-
-  const phaseHtml = phases.length ? `<div class="bs-phases">` + phases.map(ph=>{
-    const ts = Array.isArray(ph.teams)?ph.teams:[];
-    const pd = ts.reduce((s,t)=>s+(t.person_days||0),0);
-    const tHtml = ts.map(t=>{
-      const sk = Array.isArray(t.skills)?t.skills.slice(0,5):[];
-      return `<div class="bs-phase-team">
-        <div class="bs-phase-team-head">
-          <span class="bs-team-chip">${esc(t.team||'')}</span>
-          <span class="bs-phase-team-meta">${esc(String(t.fte_count||'—'))} FTE · ${esc(String(t.person_days||'—'))} pd</span>
+  const reqHtml = reqs.length ? `<div class="x-sub">Requirements</div>
+    <div class="bs-rationale-grid">${reqs.map(r=>`
+      <div class="bs-rat-row">
+        <div class="bs-rat-body">
+          <div class="bs-rat-head">
+            <span class="bs-rat-criterion">${esc(r.requirement||'')}</span>
+            <span class="bs-rat-weight ${r.mandatory?'w-high':'w-medium'}">${r.mandatory?'MANDATORY':'EXPECTED'}</span>
+          </div>
+          <div class="bs-rat-rationale">
+            ${r.domain?`<span class="bs-risk-cat">${esc(r.domain)}</span> `:''}
+            ${r.standard && !/not specified/i.test(r.standard)?`<span class="x-std">${esc(r.standard)}</span> `:''}
+            ${r.where?`<span class="bs-clar-where">${esc(r.where)}</span>`:''}
+          </div>
+          ${r.evidence_required?`<div class="bs-risk-mit">Evidence: ${esc(r.evidence_required)}</div>`:''}
         </div>
-        ${sk.length?`<div class="bs-skills">${sk.map(x=>`<span class="bs-skill-pill">${esc(x)}</span>`).join('')}</div>`:''}
-      </div>`;
-    }).join('') || XEMPTY('No team breakdown');
-    return `<div class="bs-phase-row">
-      <div class="bs-phase-head">
-        <span class="bs-phase-name">${esc(ph.phase||'')}</span>
-        <span class="bs-phase-meta">${esc(String(ph.duration_weeks||'—'))} wks · ${pd} pd</span>
-      </div>
-      <div class="bs-phase-teams">${tHtml}</div>
-    </div>`;
-  }).join('') + `</div>` : '';
+      </div>`).join('')}</div>` : '';
 
-  return `<div class="bs-xsec-sub" style="margin-bottom:10px">Total estimate: <strong>${total||'—'} person-days</strong></div>`
-    + tiles + skillsHtml + phaseHtml;
+  const gapHtml = gaps.length ? `<div class="x-sub">Not addressed — raise as clarifications</div>
+    <div class="bs-rationale-grid">${gaps.map(g=>
+      `<div class="bs-obl-row"><div><strong>${esc(g.gap||'')}</strong>
+        ${g.why?`<div style="font-size:11px;color:var(--text3);margin-top:3px">${esc(g.why)}</div>`:''}</div></div>`).join('')}</div>` : '';
+
+  return fwHtml + reqHtml + gapHtml;
+}
+
+// ── Supporting documents ─────────────────────────────────────────────────
+function renderXDocuments(d){
+  const docs = Array.isArray(d.supporting_documents) ? d.supporting_documents : [];
+  if(!docs.length) return XEMPTY('No submission documents identified.');
+  const mand = docs.filter(x=>x.mandatory), opt = docs.filter(x=>!x.mandatory);
+  const block = (title, arr) => arr.length ? `<div class="x-sub">${esc(title)} (${arr.length})</div>
+    <div class="bs-rationale-grid">${arr.map(x=>`
+      <div class="bs-rat-row">
+        <div class="bs-rat-body">
+          <div class="bs-rat-head">
+            <span class="bs-rat-criterion">${esc(x.document||'')}</span>
+            ${x.category?`<span class="bs-risk-cat">${esc(x.category)}</span>`:''}
+          </div>
+          <div class="bs-rat-rationale">
+            ${x.format && !/not specified/i.test(x.format)?`<span class="x-std">${esc(x.format)}</span> `:''}
+            ${x.where?`<span class="bs-clar-where">${esc(x.where)}</span>`:''}
+          </div>
+          ${x.notes?`<div class="bs-risk-mit">${esc(x.notes)}</div>`:''}
+        </div>
+      </div>`).join('')}</div>` : '';
+  return block('Mandatory', mand) + block('Optional / conditional', opt);
+}
+
+// ── Pricing information the customer is asking for ───────────────────────
+function renderXPricing(d){
+  const items = Array.isArray(d.pricing_requested) ? d.pricing_requested : [];
+  const rules = Array.isArray(d.commercial_rules) ? d.commercial_rules : [];
+  if(!items.length && !rules.length) return XEMPTY('No pricing instructions found.');
+
+  const itemHtml = items.length ? `<div class="x-sub">What must be priced</div>
+    <div class="bs-rationale-grid">${items.map(x=>`
+      <div class="bs-rat-row">
+        <div class="bs-rat-body">
+          <div class="bs-rat-head">
+            <span class="bs-rat-criterion">${esc(x.item||'')}</span>
+            ${x.pricing_model?`<span class="bs-rat-weight w-medium">${esc(x.pricing_model)}</span>`:''}
+          </div>
+          <div class="bs-rat-rationale">
+            ${x.breakdown_required?`Breakdown: ${esc(x.breakdown_required)}. `:''}
+            ${x.currency?`<span class="x-std">${esc(x.currency)}</span> `:''}
+            ${x.where?`<span class="bs-clar-where">${esc(x.where)}</span>`:''}
+          </div>
+        </div>
+      </div>`).join('')}</div>` : '';
+
+  const ruleHtml = rules.length ? `<div class="x-sub">Commercial rules</div>
+    <div class="bs-rationale-grid">${rules.map(r=>
+      `<div class="bs-obl-row"><span>${esc(r.rule||'')}</span>
+        ${r.where?`<span class="bs-obl-where">${esc(r.where)}</span>`:''}</div>`).join('')}</div>` : '';
+
+  return itemHtml + ruleHtml;
+}
+
+// ── Assumptions — explicitly drafts until a human signs them off ─────────
+function renderXAssumptions(d){
+  const items = Array.isArray(d.assumptions) ? d.assumptions : [];
+  if(!items.length) return XEMPTY('No assumptions identified.');
+  return `<div class="x-warn">⚠️ These are <strong>drafts generated from what the document does not say</strong>.
+    Every one must be reviewed and confirmed by a person before it goes into a submission.</div>
+    <div class="bs-rationale-grid">${items.map(a=>{
+      const c=(a.confidence||'MEDIUM').toUpperCase();
+      return `<div class="bs-rat-row">
+        <div class="bs-rat-body">
+          <div class="bs-rat-head">
+            <span class="bs-rat-criterion">${esc(a.assumption||'')}</span>
+            <span class="bs-rat-weight w-${c==='HIGH'?'high':c==='LOW'?'low':'medium'}">${esc(c)} CONFIDENCE</span>
+          </div>
+          <div class="bs-rat-rationale">
+            ${a.area?`<span class="bs-risk-cat">${esc(a.area)}</span> `:''}
+            ${a.basis?esc(a.basis):''}
+          </div>
+          ${a.impact_if_wrong?`<div class="bs-risk-mit">If wrong: ${esc(a.impact_if_wrong)}</div>`:''}
+          ${a.validate_by?`<div class="x-validate">✓ Validate by: ${esc(a.validate_by)}</div>`:''}
+        </div>
+      </div>`;}).join('')}</div>`;
+}
+
+// ── Excel export ─────────────────────────────────────────────────────────
+async function downloadBriefXlsx(){
+  if(!S_BRIEF.data){ toast('Generate the executive summary first','error'); return; }
+  const btn = document.getElementById('btn-dl-xlsx');
+  const html = btn ? btn.innerHTML : '';
+  if(btn){ btn.disabled = true; btn.innerHTML = '⏳ Building workbook…'; }
+  try{
+    const resp = await fetch('/api/brief/export-xlsx',{
+      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin',
+      body: JSON.stringify({ brief: S_BRIEF.data, expand: S_BRIEF.expand || {} }),
+    });
+    if(!resp.ok){
+      const e = await resp.json().catch(()=>({error:'Export failed'}));
+      throw new Error(e.error||'Export failed');
+    }
+    const blob = await resp.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = ((S_BRIEF.data.title||S_BRIEF.filename||'RFP_Brief')
+                   .replace(/[^\w\-. ]+/g,'_').slice(0,60).trim() || 'RFP_Brief') + '.xlsx';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+    const n = Object.keys(S_BRIEF.expand||{}).length;
+    toast(n ? `Excel downloaded — summary plus ${n} section${n>1?'s':''}`
+            : 'Excel downloaded — summary only. Load sections below for more sheets.', 'success');
+  }catch(e){ toast('Export failed: '+e.message,'error'); }
+  finally{ if(btn){ btn.disabled = false; btn.innerHTML = html; } }
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -6035,7 +6162,15 @@ function mergedBrief(){
       && x.requirements.key_requirements.length) {
     out.key_requirements = x.requirements.key_requirements;   // fuller list wins
   }
-  if (x.effort && x.effort.effort_breakdown) out.effort_breakdown = x.effort.effort_breakdown;
+  if (x.security && Array.isArray(x.security.security_requirements)) {
+    out.security_requirements = x.security.security_requirements;
+  }
+  if (x.documents && Array.isArray(x.documents.supporting_documents)) {
+    out.supporting_documents = x.documents.supporting_documents;
+  }
+  if (x.assumptions && Array.isArray(x.assumptions.assumptions)) {
+    out.assumptions = x.assumptions.assumptions;
+  }
   return out;
 }
 
