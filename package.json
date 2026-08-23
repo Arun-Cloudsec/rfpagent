@@ -1,8 +1,8 @@
 {
   "name": "rfp-agent",
-  "version": "1.2.0",
+  "version": "1.9.1",
   "private": true,
-  "description": "RFP Agent \u2014 AI-powered RFP analysis & response generation with auth + branded exports. Backend for Railway deployment.",
+  "description": "RFP Agent \u2014 fast multilingual Executive Brief with on-demand deep dives, plus branded exports and voice-over.",
   "main": "server.js",
   "engines": {
     "node": ">=18.18 <23"
@@ -10,7 +10,16 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test:smoke": "node scripts/smoke-test.js"
+    "test:smoke": "node scripts/smoke-test.js",
+    "test:lang": "node scripts/lang-test.js",
+    "test:render": "node scripts/render-test.js",
+    "test": "node scripts/render-test.js",
+    "test:fallback": "node scripts/fallback-test.js",
+    "test:models": "node scripts/model-test.js",
+    "test:usage": "node scripts/usage-test.js",
+    "test:cache": "node scripts/cache-test.js",
+    "test:sampling": "node scripts/sampling-test.js",
+    "test:tenant": "node scripts/tenant-test.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.40.1",
@@ -20,10 +29,14 @@
     "express": "^4.21.0",
     "express-rate-limit": "^7.4.0",
     "helmet": "^7.1.0",
+    "jsdom": "^30.0.1",
     "mammoth": "^1.8.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "pdf-parse": "^1.1.1",
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
   }
 }
