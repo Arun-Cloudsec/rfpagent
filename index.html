@@ -553,6 +553,7 @@ textarea.improve-input::placeholder{color:var(--text3)}
 .uk-val{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:24px;font-weight:800;
   color:var(--navy);margin-top:4px;font-variant-numeric:tabular-nums;line-height:1.1}
 .uk-val.money{color:#15803d}
+.uk-val.model{font-size:15px;color:#4338CA;line-height:1.25;font-family:inherit;font-weight:800}
 .uk-sub{font-size:11px;color:var(--text3);margin-top:3px}
 
 .u-tbl{width:100%;border-collapse:collapse;font-size:12px}
@@ -578,6 +579,12 @@ textarea.improve-input::placeholder{color:var(--text3)}
 
 .u-empty{padding:26px;text-align:center;font-size:12.5px;color:var(--text3);
   background:var(--surface2);border:1px dashed var(--border2);border-radius:var(--radius)}
+
+/* Model chip — which model actually answered this query */
+.model-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;
+  background:rgba(39,33,96,.07);border:1px solid rgba(39,33,96,.22);
+  font-size:11px;font-weight:800;color:var(--navy);white-space:nowrap}
+.model-badge .tm-k{font-size:9px;letter-spacing:.06em;opacity:.7;text-transform:uppercase}
 
 /* Per-query cost chip, shown beside the timing badges */
 .cost-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;
@@ -5718,6 +5725,7 @@ function renderTimingStrip(){
     </div>` : ''}
     <div style="display:flex;gap:6px;flex-wrap:wrap">${parts.join('')}
       ${cost > 0 ? `<span class="cost-badge"><span class="tm-k">Tokens</span>${fmtTok(tokIn)} in · ${fmtTok(tokOut)} out</span>` : ''}
+      ${t.modelName ? `<span class="model-badge"><span class="tm-k">Model</span>${esc(prettyModel(t.modelName))}${t.speed?` · ${esc(t.speed)}`:''}</span>` : ''}
     </div>
     <div class="tm-strip-note" style="flex-basis:100%">${note}
       ${cost > 0 ? ` <a href="#" onclick="goPage('usage');return false;" style="color:#4338CA;font-weight:700">See full token &amp; cost breakdown →</a>` : ''}</div>
@@ -7340,6 +7348,17 @@ function fmtUsd(n){
   if (v < 1)      return '$' + v.toFixed(3);
   return '$' + v.toFixed(2);
 }
+/** Turn a model id into something a person reads: claude-sonnet-5 → Sonnet 5. */
+function prettyModel(id){
+  const m = String(id||'');
+  if(/fable/i.test(m))  return 'Claude Fable 5';
+  if(/mythos/i.test(m)) return 'Claude Mythos 5';
+  const fam = /opus/i.test(m) ? 'Opus' : /sonnet/i.test(m) ? 'Sonnet' : /haiku/i.test(m) ? 'Haiku' : null;
+  if(!fam) return m || '—';
+  const ver = (m.match(/(?:opus|sonnet|haiku)-?(\d+(?:[.-]\d+)?)/i)||[])[1];
+  return 'Claude ' + fam + (ver ? ' ' + ver.replace('-', '.') : '');
+}
+
 function fmtTok(n){
   const v = Number(n||0);
   if (v >= 1e6) return (v/1e6).toFixed(2) + 'M';
@@ -7375,6 +7394,19 @@ function renderUsage(){
   const tts = sum.tts || { calls:0, characters:0, cost_total:0, approx_minutes:0 };
   const grand = sum.grand_total_cost != null ? sum.grand_total_cost : t.cost_total;
 
+  // Which model actually answered? It was only visible in the tables further
+  // down the page, which is easy to miss — surface it as a headline tile.
+  const modelEntries = Object.entries(sum.by_model || {})
+    .sort((a,b) => (b[1].calls||0) - (a[1].calls||0));
+  const dom = (() => {
+    if (!modelEntries.length) return { name: '—', sub: 'no model calls yet' };
+    const [name, v] = modelEntries[0];
+    if (modelEntries.length === 1) {
+      return { name, sub: `${v.calls} of ${t.calls} call${t.calls===1?'':'s'}` };
+    }
+    return { name, sub: `${v.calls} of ${t.calls} calls · +${modelEntries.length-1} other model${modelEntries.length>2?'s':''}` };
+  })();
+
   document.getElementById('usage-kpis').innerHTML = `
     <div class="uk"><div class="uk-lbl">Total spend</div>
       <div class="uk-val money">${fmtUsd(grand)}</div>
@@ -7382,6 +7414,9 @@ function renderUsage(){
     <div class="uk"><div class="uk-lbl">Avg per call</div>
       <div class="uk-val money">${fmtUsd(t.avg_cost_per_call)}</div>
       <div class="uk-sub">${t.avg_ms_per_call?fmtElapsed(t.avg_ms_per_call):'—'} average</div></div>
+    <div class="uk"><div class="uk-lbl">Model used</div>
+      <div class="uk-val model">${esc(dom.name)}</div>
+      <div class="uk-sub">${esc(dom.sub)}</div></div>
     <div class="uk"><div class="uk-lbl">Input tokens</div>
       <div class="uk-val">${fmtTok(t.input_tokens)}</div>
       <div class="uk-sub">sent to the model</div></div>
@@ -7469,7 +7504,9 @@ function renderUsage(){
          <tr>
            <td style="white-space:nowrap">${esc(new Date(r.created_at).toLocaleString())}</td>
            <td>${esc(r.operation||'—')}${r.document?`<div style="font-size:10.5px;color:var(--text3)">${esc(r.document)}</div>`:''}</td>
-           <td>${esc(r.model_label||r.model||'—')}${r.speed?`<div style="font-size:10.5px;color:var(--text3)">${esc(r.speed)} tier</div>`:''}</td>
+           <td><strong style="color:#4338CA">${esc(r.model_label||r.model||'—')}</strong>
+             <div style="font-size:10px;color:var(--text3);font-family:'JetBrains Mono',ui-monospace,monospace">${esc(r.model||'')}</div>
+             ${r.speed?`<div style="font-size:10.5px;color:var(--text3)">${esc(r.speed)} tier</div>`:''}</td>
            <td class="num">${r.provider==='elevenlabs'?fmtTok(r.characters)+' ch':fmtTok(r.input_tokens)}</td>
            <td class="num">${r.provider==='elevenlabs'?'~'+(r.approx_minutes||0)+' min':fmtTok(r.output_tokens)}</td>
            <td class="num">${r.ms?fmtElapsed(r.ms):'—'}</td>
