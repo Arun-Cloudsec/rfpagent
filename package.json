@@ -1,6 +1,6 @@
 {
   "name": "rfp-agent",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "private": true,
   "description": "RFP Agent \u2014 fast multilingual Executive Brief with on-demand deep dives, plus branded exports and voice-over.",
   "main": "server.js",
@@ -19,7 +19,8 @@
     "test:usage": "node scripts/usage-test.js",
     "test:cache": "node scripts/cache-test.js",
     "test:sampling": "node scripts/sampling-test.js",
-    "test:tenant": "node scripts/tenant-test.js"
+    "test:tenant": "node scripts/tenant-test.js",
+    "test:xlsx": "node scripts/xlsx-test.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.40.1",
