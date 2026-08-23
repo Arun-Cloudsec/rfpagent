@@ -92,6 +92,8 @@ router.post('/azure/billing/recommend', (_req, res) => {
 //      Turbo v2.5 and Flash v2.5 accept it, so we now gate the field on model.
 // ----------------------------------------------------------------------------
 
+const usageLog = require('../lib/usage');
+const pricing  = require('../lib/pricing');
 const fs   = require('fs');
 const path = require('path');
 
@@ -207,6 +209,7 @@ router.post('/elevenlabs/speak', async (req, res) => {
   // multilingual_v2 makes ElevenLabs reject the whole request.
   if (lang && LANG_ENFORCING_MODELS.has(model)) payload.language_code = lang;
 
+  const tTts0 = Date.now();
   try {
     const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voice}`, {
       method: 'POST',
@@ -230,6 +233,17 @@ router.post('/elevenlabs/speak', async (req, res) => {
     const name = `brief_${lang || 'en'}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.mp3`;
     fs.writeFileSync(path.join(AUDIO_DIR, name), buf);
 
+    // Bill by characters submitted, and log it so the cost dashboard shows
+    // both vendors rather than only Claude tokens.
+    const chars = String(text).length;
+    const cost  = pricing.costOfTts(model, chars);
+    usageLog.recordTts({
+      model, characters: chars, ms: Date.now() - tTts0,
+      userId: (req.user && (req.user.id || req.user.email)) || null,
+      language: lang || null,
+      meta: { voice_id: voice, bytes: buf.length },
+    });
+
     // Shape matches what the frontend player expects: { ok, url, size }.
     res.json({
       ok: true,
@@ -239,6 +253,7 @@ router.post('/elevenlabs/speak', async (req, res) => {
       language_code: payload.language_code || null,
       language_enforced: !!payload.language_code,
       warning,
+      usage: cost,
     });
   } catch (e) {
     res.status(502).json({ error: 'ElevenLabs request failed: ' + e.message });
